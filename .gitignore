@@ -1,0 +1,10 @@
+client/.env
+server/.env
+backup
+
+server/node_modules/
+client/node_modules/
+
+sever/client_info.json
+
+/ngrok.yml
