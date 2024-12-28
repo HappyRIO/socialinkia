@@ -33,7 +33,7 @@ connectCloudinary();
 connectDB();
 
 // List of allowed origins (add any trusted origins as needed)
-const allowedOrigins = [process.env.CLIENT_BASE_URL];
+const allowedOrigins = ["https://auto-social-api.onrender.com/"];
 
 app.use(
   cors({
