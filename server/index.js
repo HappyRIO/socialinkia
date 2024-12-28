@@ -5,14 +5,13 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const logRequestDetails = require("./middleware/logger");
-const port = 4000
+const port = 4000;
 require("dotenv").config();
 
 const connectDB = require("./data/db");
 const { connectCloudinary } = require("./data/file");
 // Initialize express
 const app = express();
-
 
 // Middleware
 app.use(logRequestDetails);
@@ -33,7 +32,7 @@ connectCloudinary();
 connectDB();
 
 // List of allowed origins (add any trusted origins as needed)
-const allowedOrigins = ["https://auto-social-api.onrender.com/"];
+const allowedOrigins = "https://auto-social-api.onrender.com/";
 
 app.use(
   cors({
@@ -49,6 +48,16 @@ app.use(
     optionsSuccessStatus: 200 // For handling preflight requests
   })
 );
+
+// Middleware to handle CORS errors
+app.use((err, req, res, next) => {
+  if (err.message === "Not allowed by CORS") {
+    return res
+      .status(403)
+      .json({ error: "CORS policy does not allow this origin." });
+  }
+  next(err);
+});
 
 // Routes
 const google = require("./routes/auth/Google");
