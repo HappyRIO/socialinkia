@@ -1,11 +1,11 @@
 const express = require("express");
+const isSessionValid = require("../../middleware/isSessionValid");
 const router = express.Router();
 const connectDB = require("../../data/db");
 const Template = require("../../model/Template");
 
 //get all template
 router.get("/all", async (req, res) => {
-  connectDB();
   try {
     const data = await Template.find({});
     res.status(200).json(data);
@@ -17,7 +17,6 @@ router.get("/all", async (req, res) => {
 
 // Route to save a template
 router.post("/create", async (req, res) => {
-  connectDB();
   const { name, data } = req.body;
 
   try {
@@ -32,7 +31,6 @@ router.post("/create", async (req, res) => {
 
 // Route to load a template by ID
 router.get("/:id", async (req, res) => {
-  connectDB();
   const { id } = req.params;
 
   try {
@@ -49,7 +47,6 @@ router.get("/:id", async (req, res) => {
 
 // Route to update a template by ID
 router.put("/:id", async (req, res) => {
-  connectDB();
   const { id } = req.params;
   const { name, data } = req.body;
 
@@ -73,7 +70,6 @@ router.put("/:id", async (req, res) => {
 
 // Route to delete a template by ID
 router.delete("/:id", async (req, res) => {
-  connectDB();
   const { id } = req.params;
 
   try {

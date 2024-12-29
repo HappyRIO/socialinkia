@@ -1,6 +1,6 @@
 const express = require("express");
-const connectDB = require("../../data/db");
 const User = require("../../model/User");
+const isSessionValid = require("../../middleware/isSessionValid");
 const { cloudinary, connectCloudinary } = require("../../data/file");
 const { Readable } = require("stream");
 const router = express.Router();
@@ -21,28 +21,6 @@ const agenda = new Agenda({
   db: { address: `${process.env.DATA_BASE_URL}` },
 });
 
-// Middleware for session validation
-const isSessionValid = async (req, res, next) => {
-  try {
-    connectCloudinary();
-    connectDB();
-    const { sessionToken } = req.cookies;
-
-    if (!sessionToken) {
-      return res.status(401).json({ error: "No session token provided." });
-    }
-
-    const user = await User.findOne({ sessionToken });
-    if (!user || new Date(user.sessionExpiresAt) <= new Date()) {
-      return res.status(401).json({ error: "Invalid or expired session." });
-    }
-
-    req.user = user;
-    next();
-  } catch (error) {
-    res.status(500).json({ error: "Server error" });
-  }
-};
 
 // Cloudinary helpers
 const uploadImagesToCloudinary = async (files) => {

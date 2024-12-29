@@ -3,42 +3,8 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../../model/User");
 const connectDB = require("../../data/db");
+const isSessionValid = require("../../middleware/isSessionValid");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
-// Check if session token is valid
-const isSessionValid = (req, res, next) => {
-  connectDB();
-  console.log("Validating session");
-  const { sessionToken } = req.cookies;
-
-  if (!sessionToken) {
-    console.log("no session token");
-    return res.status(401).json({ error: "No session token provided." });
-  }
-
-  User.findOne({ sessionToken })
-    .then((user) => {
-      if (!user) {
-        console.log({ error: "Invalid session token." });
-        return res.status(401).json({ error: "Invalid session token." });
-      }
-
-      const expirationTime = new Date(user.sessionExpiresAt);
-      const currentTime = new Date();
-      const timeDifference = expirationTime - currentTime;
-
-      if (timeDifference <= 0) {
-        return res.status(401).json({ error: "Session expired." });
-      }
-
-      req.user = user;
-      next();
-    })
-    .catch((error) => {
-      console.error("Error checking session validity:", error);
-      res.status(500).json({ error: "Server error" });
-    });
-};
 
 // Subscription plans (prices in cents)
 const subscriptionPlans = {
