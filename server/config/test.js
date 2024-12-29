@@ -89,18 +89,15 @@ async function generatePost() {
   });
 
   const rawData = await response.json();
-  const messageContent = rawData.choices[0].message;
-  // Attempt to parse the JSON output
-  try {
-    console.log({ messageContent: messageContent });
-    return messageContent;
-  } catch (err) {
-    console.error("Invalid JSON received from OpenAI:", err);
-    return {
-      caption: "Failed to generate post. Please try again.",
-      error: err
-    };
+  let messageContent = rawData.choices[0].message.content;
+
+  // Trim any unwanted quotes from the start and end of the messageContent
+  if (messageContent.startsWith('"') && messageContent.endsWith('"')) {
+    messageContent = messageContent.slice(1, -1);
   }
+
+  console.log({ messageContent });
+  return messageContent;
 }
 
 generatePost();

@@ -15,7 +15,6 @@ export default defineConfig({
   server: {
     host: "localhost",
     port: 5172,
-    // hmr: hmrConfig,
     proxy: {
       "^/(\\?.*)?$": proxyOptions,
       "^/api(/|(\\?.*)?$)": proxyOptions

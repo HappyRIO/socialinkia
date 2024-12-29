@@ -5,7 +5,7 @@ import Dashboard from "./dashboard/page";
 import Login from "./login/page";
 import Signup from "./signup/page";
 import Contact from "./contact/page";
-import TemplatePage from "./dashboard/template/page";
+// import TemplatePage from "./dashboard/template/page";
 import Pending from "./dashboard/posts/page";
 import PrivateRoute from "./components/security/Privatepage";
 import CreateDesign from "./dashboard/creat/design/page";
@@ -69,10 +69,10 @@ const router = createBrowserRouter([
     path: "/dashboard/create/design",
     element: <CreateDesign />,
   },
-  {
-    path: "/dashboard/templates",
-    element: <PrivateRoute Component={TemplatePage} />,
-  },
+  // {
+  //   path: "/dashboard/templates",
+  //   element: <PrivateRoute Component={TemplatePage} />,
+  // },
 
   { path: "*", element: <Error /> },
 ]);

@@ -44,7 +44,11 @@ async function generatePost(companyDetails) {
   });
 
   const rawData = await response.json();
-  const messageContent = rawData.choices[0].message;
+  let messageContent = rawData.choices[0].message;
+  // Trim any unwanted quotes from the start and end of the messageContent
+  if (messageContent.startsWith('"') && messageContent.endsWith('"')) {
+    messageContent = messageContent.slice(1, -1);
+  }
   // Attempt to parse the JSON output
   try {
     console.log({ messageContent: messageContent });

@@ -22,7 +22,7 @@ router.get("/auth/google/login", (req, res) => {
     scope: googleScopes.join(" "),
     access_type: "offline",
     prompt: "consent",
-    state: JSON.stringify({ flow: "login" }),
+    state: JSON.stringify({ flow: "login" })
   });
 
   console.log("Redirecting to Google OAuth for login with query:", queryParams);
@@ -40,7 +40,7 @@ router.get("/auth/google/signup", (req, res) => {
     scope: googleScopes.join(" "),
     access_type: "offline",
     prompt: "consent",
-    state: JSON.stringify({ flow: "signup", plan }),
+    state: JSON.stringify({ flow: "signup", plan })
   });
 
   console.log(`Redirecting to Google OAuth for signup with plan: ${plan}`);
@@ -85,12 +85,12 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
     redirect_uri: `${process.env.SERVER_BASE_URL}/api/google/auth/google/${flow}/callback`,
-    grant_type: "authorization_code",
+    grant_type: "authorization_code"
   });
 
   try {
     const response = await axios.post(tokenEndpoint, requestBody, {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
     });
 
     console.log("Token exchange response:", response.data);
@@ -99,7 +99,7 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
     const profileResponse = await axios.get(
       "https://www.googleapis.com/oauth2/v3/userinfo",
       {
-        headers: { Authorization: `Bearer ${access_token}` },
+        headers: { Authorization: `Bearer ${access_token}` }
       }
     );
 
@@ -126,13 +126,13 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
         email,
         picture,
         password: hashedPassword,
-        subscription: { plan },
+        subscription: { plan }
       });
       await user.save();
       console.log({ newUser: user });
 
       const sessionToken = jwt.sign({ userId: user._id }, JWT_SECRET, {
-        expiresIn: "2h",
+        expiresIn: "2h"
       });
 
       user.sessionToken = sessionToken;
@@ -143,14 +143,14 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: 2 * 60 * 60 * 1000,
+        maxAge: 2 * 60 * 60 * 1000
       });
 
       // Determine redirect URL based on flow type
       const redirectUrl =
         flow === "signup"
-          ? `${process.env.CLIENT_BASE_URL}/subscription/signup/details`
-          : `${process.env.CLIENT_BASE_URL}/dashboard`;
+          ? `/subscription/signup/details`
+          : `/dashboard`;
 
       // Respond with the HTML for the popup window to redirect and close
       return res.status(201).send(`
@@ -166,7 +166,7 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
             if (window.opener) {
                 window.opener.postMessage(
                     { redirectUrl: "${redirectUrl}" },
-                    "${process.env.CLIENT_BASE_URL}"
+                    "/"
                 );
                 window.close();
 
@@ -184,7 +184,8 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
       `);
     } else if (flow === "login" && !user) {
       // Redirect to the subscription page for sign-up
-      const redirectUrl = `${process.env.CLIENT_BASE_URL}/subscription`;
+      const redirectUrl = "/subscription";
+
       return res.status(303).send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -207,12 +208,12 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
         </script>
     </body>
     </html>
-  `);
+`);
     } else {
       console.log("User already exists or logging in.");
 
       const sessionToken = jwt.sign({ userId: user._id }, JWT_SECRET, {
-        expiresIn: "2h",
+        expiresIn: "2h"
       });
 
       user.sessionToken = sessionToken;
@@ -223,45 +224,40 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: 2 * 60 * 60 * 1000,
+        maxAge: 2 * 60 * 60 * 1000
       });
 
       // Determine redirect URL based on flow type
       const redirectUrl =
         flow === "signup"
-          ? `${process.env.CLIENT_BASE_URL}/subscription/signup/details`
-          : `${process.env.CLIENT_BASE_URL}/dashboard`;
+          ? `/subscription/signup/details`
+          : `/dashboard`;
 
       // Respond with the HTML for the popup window to redirect and close
       return res.status(201).send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Redirecting</title>
-        </head>
-        <body>
-            <script>
-            if (window.opener) {
-                window.opener.postMessage(
-                    { redirectUrl: "${redirectUrl}" },
-                    "${process.env.CLIENT_BASE_URL}"
-                );
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Redirecting</title>
+    </head>
+    <body>
+        <script>
+            if (window.opener && !window.opener.closed) {
+                // Redirect the opener window to the subscription page
+                window.opener.location.href = "${redirectUrl}";
+                // Close the current window
                 window.close();
-
-                // // Redirect the opener window to the subscription page
-                // window.opener.location.href = "${redirectUrl}";
-                // // Close the current window
-                // window.close();
             } else {
+                // If opener is unavailable or closed, redirect in the current window
                 window.location.href = "${redirectUrl}";
                 window.close();
             }
-            </script>
-        </body>
-        </html>
-      `);
+        </script>
+    </body>
+    </html>
+`);
     }
   } catch (error) {
     console.error(
@@ -272,7 +268,7 @@ router.get("/auth/google/:flow/callback", async (req, res) => {
     return res.status(500).json({
       error: "Failed to authenticate with Google.",
       errormessage: error.message,
-      fullError: error,
+      fullError: error
     });
   }
 });
