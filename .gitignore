@@ -8,3 +8,4 @@ client/node_modules/
 sever/client_info.json
 
 /ngrok.yml
+/vite_test

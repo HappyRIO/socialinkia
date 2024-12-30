@@ -6,11 +6,12 @@ import { useEffect, useState } from "react";
 export default function TemplatePage() {
   const [customSize, setCustomSize] = useState({
     height: 0,
-    width: 0,
+    width: 0
   });
   const [imageData, setImageDate] = useState([]);
 
   const fakeImageData = [
+    // Facebook
     {
       height: 400,
       width: 600,
@@ -18,28 +19,19 @@ export default function TemplatePage() {
       platform: "Facebook",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/3b5998?font=roboto&text=Facebook",
-      description: "Connect with friends and the world around you.",
+      description: "Connect with friends and the world around you."
     },
     {
-      height: 600,
-      width: 800,
+      height: 800,
+      width: 1200,
       id: 2,
       platform: "Facebook",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/3b5998?font=roboto&text=Facebook",
-      description: "Connect with friends and the world around you.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 3,
-      platform: "Facebook",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/3b5998?font=roboto&text=Facebook",
-      description: "Connect with friends and the world around you.",
+        "https://placehold.co/1200x800/e7e2e1/3b5998?font=roboto&text=Facebook",
+      description: "Connect with friends and the world around you."
     },
 
-    // Twitter (varied sizes)
+    // Twitter
     {
       height: 400,
       width: 600,
@@ -47,28 +39,19 @@ export default function TemplatePage() {
       platform: "Twitter",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/1da1f2?font=roboto&text=Twitter",
-      description: "See what’s happening in the world right now.",
+      description: "See what’s happening in the world right now."
     },
     {
-      height: 600,
-      width: 800,
+      height: 675,
+      width: 1200,
       id: 5,
       platform: "Twitter",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/1da1f2?font=roboto&text=Twitter",
-      description: "See what’s happening in the world right now.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 6,
-      platform: "Twitter",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/1da1f2?font=roboto&text=Twitter",
-      description: "See what’s happening in the world right now.",
+        "https://placehold.co/1200x675/e7e2e1/1da1f2?font=roboto&text=Twitter",
+      description: "See what’s happening in the world right now."
     },
 
-    // Instagram (varied sizes)
+    // Instagram
     {
       height: 400,
       width: 600,
@@ -76,28 +59,19 @@ export default function TemplatePage() {
       platform: "Instagram",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/e4405f?font=roboto&text=Instagram",
-      description: "Share photos and videos with friends.",
+      description: "Share photos and videos with friends."
     },
     {
-      height: 600,
-      width: 800,
+      height: 1080,
+      width: 1350,
       id: 8,
       platform: "Instagram",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/e4405f?font=roboto&text=Instagram",
-      description: "Share photos and videos with friends.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 9,
-      platform: "Instagram",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/e4405f?font=roboto&text=Instagram",
-      description: "Share photos and videos with friends.",
+        "https://placehold.co/1350x1080/e7e2e1/e4405f?font=roboto&text=Instagram",
+      description: "Share photos and videos with friends."
     },
 
-    // LinkedIn (varied sizes)
+    // LinkedIn
     {
       height: 400,
       width: 600,
@@ -105,28 +79,19 @@ export default function TemplatePage() {
       platform: "LinkedIn",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/0077b5?font=roboto&text=LinkedIn",
-      description: "Manage your professional identity.",
+      description: "Manage your professional identity."
     },
     {
-      height: 600,
-      width: 800,
+      height: 768,
+      width: 1536,
       id: 11,
       platform: "LinkedIn",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/0077b5?font=roboto&text=LinkedIn",
-      description: "Manage your professional identity.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 12,
-      platform: "LinkedIn",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/0077b5?font=roboto&text=LinkedIn",
-      description: "Manage your professional identity.",
+        "https://placehold.co/1536x768/e7e2e1/0077b5?font=roboto&text=LinkedIn",
+      description: "Manage your professional identity."
     },
 
-    // TikTok (varied sizes)
+    // TikTok
     {
       height: 400,
       width: 600,
@@ -134,57 +99,30 @@ export default function TemplatePage() {
       platform: "TikTok",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/69c9d0?font=roboto&text=TikTok",
-      description: "Create and discover short, fun videos.",
+      description: "Create and discover short, fun videos."
     },
     {
-      height: 600,
-      width: 800,
+      height: 1080,
+      width: 1920,
       id: 14,
       platform: "TikTok",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/69c9d0?font=roboto&text=TikTok",
-      description: "Create and discover short, fun videos.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 15,
-      platform: "TikTok",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/69c9d0?font=roboto&text=TikTok",
-      description: "Create and discover short, fun videos.",
+        "https://placehold.co/1920x1080/e7e2e1/69c9d0?font=roboto&text=TikTok",
+      description: "Create and discover short, fun videos."
     },
 
-    // Snapchat (varied sizes)
+    // Snapchat
     {
-      height: 400,
-      width: 600,
+      height: 1080,
+      width: 1920,
       id: 16,
       platform: "Snapchat",
       imageUrl:
-        "https://placehold.co/600x400/e7e2e1/fffc00?font=roboto&text=Snapchat",
-      description: "Send a Snap, share a Story.",
-    },
-    {
-      height: 600,
-      width: 800,
-      id: 17,
-      platform: "Snapchat",
-      imageUrl:
-        "https://placehold.co/800x600/e7e2e1/fffc00?font=roboto&text=Snapchat",
-      description: "Send a Snap, share a Story.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 18,
-      platform: "Snapchat",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/fffc00?font=roboto&text=Snapchat",
-      description: "Send a Snap, share a Story.",
+        "https://placehold.co/1920x1080/e7e2e1/fffc00?font=roboto&text=Snapchat",
+      description: "Send a Snap, share a Story."
     },
 
-    // Pinterest (varied sizes)
+    // Pinterest
     {
       height: 400,
       width: 600,
@@ -192,28 +130,19 @@ export default function TemplatePage() {
       platform: "Pinterest",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/e60023?font=roboto&text=Pinterest",
-      description: "Discover new ideas to try and share.",
+      description: "Discover new ideas to try and share."
     },
     {
-      height: 600,
-      width: 800,
+      height: 1000,
+      width: 1500,
       id: 20,
       platform: "Pinterest",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/e60023?font=roboto&text=Pinterest",
-      description: "Discover new ideas to try and share.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 21,
-      platform: "Pinterest",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/e60023?font=roboto&text=Pinterest",
-      description: "Discover new ideas to try and share.",
+        "https://placehold.co/1500x1000/e7e2e1/e60023?font=roboto&text=Pinterest",
+      description: "Discover new ideas to try and share."
     },
 
-    // YouTube (varied sizes)
+    // YouTube
     {
       height: 400,
       width: 600,
@@ -221,28 +150,19 @@ export default function TemplatePage() {
       platform: "YouTube",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/ff0000?font=roboto&text=YouTube",
-      description: "Watch, like, and share videos.",
+      description: "Watch, like, and share videos."
     },
     {
-      height: 600,
-      width: 800,
+      height: 720,
+      width: 1280,
       id: 23,
       platform: "YouTube",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/ff0000?font=roboto&text=YouTube",
-      description: "Watch, like, and share videos.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 24,
-      platform: "YouTube",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/ff0000?font=roboto&text=YouTube",
-      description: "Watch, like, and share videos.",
+        "https://placehold.co/1280x720/e7e2e1/ff0000?font=roboto&text=YouTube",
+      description: "Watch, like, and share videos."
     },
 
-    // Reddit (varied sizes)
+    // Reddit
     {
       height: 400,
       width: 600,
@@ -250,28 +170,19 @@ export default function TemplatePage() {
       platform: "Reddit",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/ff4500?font=roboto&text=Reddit",
-      description: "Dive into communities and discussions.",
+      description: "Dive into communities and discussions."
     },
     {
-      height: 600,
-      width: 800,
+      height: 800,
+      width: 1200,
       id: 26,
       platform: "Reddit",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/ff4500?font=roboto&text=Reddit",
-      description: "Dive into communities and discussions.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 27,
-      platform: "Reddit",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/ff4500?font=roboto&text=Reddit",
-      description: "Dive into communities and discussions.",
+        "https://placehold.co/1200x800/e7e2e1/ff4500?font=roboto&text=Reddit",
+      description: "Dive into communities and discussions."
     },
 
-    // WhatsApp (varied sizes)
+    // WhatsApp
     {
       height: 400,
       width: 600,
@@ -279,26 +190,17 @@ export default function TemplatePage() {
       platform: "WhatsApp",
       imageUrl:
         "https://placehold.co/600x400/e7e2e1/25d366?font=roboto&text=WhatsApp",
-      description: "Send messages and make calls anywhere.",
+      description: "Send messages and make calls anywhere."
     },
     {
-      height: 600,
-      width: 800,
+      height: 800,
+      width: 1200,
       id: 29,
       platform: "WhatsApp",
       imageUrl:
-        "https://placehold.co/800x600/e7e2e1/25d366?font=roboto&text=WhatsApp",
-      description: "Send messages and make calls anywhere.",
-    },
-    {
-      height: 300,
-      width: 400,
-      id: 30,
-      platform: "WhatsApp",
-      imageUrl:
-        "https://placehold.co/400x300/e7e2e1/25d366?font=roboto&text=WhatsApp",
-      description: "Send messages and make calls anywhere.",
-    },
+        "https://placehold.co/1200x800/e7e2e1/25d366?font=roboto&text=WhatsApp",
+      description: "Send messages and make calls anywhere."
+    }
   ];
 
   useEffect(() => {
@@ -309,7 +211,7 @@ export default function TemplatePage() {
     const { name, value } = event.target;
     setCustomSize((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }));
   }
 

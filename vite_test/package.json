@@ -10,9 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@toast-ui/react-image-editor": "^3.15.2",
+    "photoeditorsdk": "^5.19.3",
     "react": "^18.3.1",
+    "react-color": "^2.19.3",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.1"
+    "react-router-dom": "^7.1.1",
+    "styled-components": "^6.1.13",
+    "tui-image-editor": "^3.15.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

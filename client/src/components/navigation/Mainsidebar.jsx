@@ -181,7 +181,7 @@ export default function Mainsidebar({ menufunction, menustate, pagename }) {
                   <span>create</span>
                 </NavLink>
               </li>
-              {/* <li className="rounded-sm">
+              <li className="rounded-sm">
                 <NavLink
                   to="/dashboard/templates"
                   className={({ isActive }) =>
@@ -193,7 +193,7 @@ export default function Mainsidebar({ menufunction, menustate, pagename }) {
                   <LayoutPanelTop />
                   <span>template</span>
                 </NavLink>
-              </li> */}
+              </li>
               <li className="rounded-sm">
                 <NavLink
                   to="/dashboard/posts"
