@@ -376,23 +376,23 @@ router.put(
       );
 
       // console.log(updatedUser);
-     const user = await User.findById(req.user._id);
+      const user = await User.findById(req.user._id);
 
-     if (user.isNewUser) {
-       const generatedPosts = await postAutoGenerator({
-         mainUser,
-         updatedUser
-       });
+      if (user.isNewUser) {
+        const generatedPosts = await postAutoGenerator({
+          mainUser,
+          updatedUser
+        });
 
-       await User.findByIdAndUpdate(
-         req.user._id,
-         {
-           $push: { posts: { $each: generatedPosts } },
-           $set: { isNewUser: false }
-         },
-         { new: true }
-       );
-     }
+        await User.findByIdAndUpdate(
+          req.user._id,
+          {
+            $push: { posts: { $each: generatedPosts } },
+            $set: { isNewUser: false }
+          },
+          { new: true }
+        );
+      }
 
       res.status(200).json({
         message: "User details updated successfully",

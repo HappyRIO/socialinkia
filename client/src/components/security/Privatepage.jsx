@@ -8,13 +8,10 @@ const PrivateRoute = ({ Component }) => {
 
   const validateUser = async () => {
     try {
-      const response = await fetch(
-        `/api/auth/check-user`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/auth/check-user`, {
+        method: "GET",
+        credentials: "include"
+      });
       if (response.ok) {
         setIsAuthenticated(true);
       } else {

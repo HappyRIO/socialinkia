@@ -277,7 +277,7 @@ export default function TemplatePage() {
             </div>
           </div>
         </div>
-        <div className="samplecardsZone w-full columns-2 md:columns-4 gap-4">
+        {/* <div className="samplecardsZone w-full columns-2 md:columns-4 gap-4">
           {imageData.map((data, index) => (
             <Link
               key={index}
@@ -290,7 +290,7 @@ export default function TemplatePage() {
               />
             </Link>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
