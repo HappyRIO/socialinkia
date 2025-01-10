@@ -32,7 +32,8 @@ connectCloudinary();
 connectDB();
 
 // List of allowed origins (add any trusted origins as needed)
-const allowedOrigins = "https://auto-social-api.onrender.com/";
+// const allowedOrigins = "https://auto-social-api.onrender.com/";
+const allowedOrigins = "http://localhost:4000/";
 
 app.use(
   cors({

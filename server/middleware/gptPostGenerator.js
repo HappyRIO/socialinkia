@@ -44,14 +44,19 @@ async function generatePost(companyDetails) {
   });
 
   const rawData = await response.json();
-  let messageContent = rawData.choices[0].message;
+  let messageContent = rawData.choices[0].message.content;
+
   // Trim any unwanted quotes from the start and end of the messageContent
-  if (messageContent.startsWith('"') && messageContent.endsWith('"')) {
+  if (
+    typeof messageContent === "string" &&
+    messageContent.startsWith('"') &&
+    messageContent.endsWith('"')
+  ) {
     messageContent = messageContent.slice(1, -1);
   }
+
   // Attempt to parse the JSON output
   try {
-    console.log({ messageContent: messageContent });
     return messageContent;
   } catch (err) {
     console.error("Invalid JSON received from OpenAI:", err);

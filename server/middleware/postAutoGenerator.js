@@ -15,7 +15,8 @@ async function postAutoGenerator({ mainUser, updatedUser }) {
   for (let i = 0; i < iterations; i++) {
     const companyDetails = updatedUser.companyDetails;
     const generatedData = await gptPostGenerator(companyDetails);
-    const postContent = generatedData.content; // Extract the content field
+    const postContent = generatedData; // Extract the content field
+    console.log({ autogen: postContent });
     generatedPosts.push({ text: postContent, status: "draft" });
   }
 

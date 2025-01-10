@@ -246,11 +246,7 @@ router.put(
         communication_style,
         communication_style_other
       } = req.body;
-
-      console.log("Request body:", req.body);
-      console.log("Uploaded files:", req.files);
-
-      connectCloudinary();
+      console.log({ "Uploaded files:": req.files });
 
       // Ensure companyDetails exists before accessing its properties
       const companyDetails = req.user.companyDetails || {};
@@ -307,22 +303,34 @@ router.put(
         await deleteImagesFromCloudinary(removedPhotos);
       }
 
-      // Ensure `business_definition` is an array
-      const business_definition_array = Array.isArray(business_definition)
-        ? business_definition
-        : business_definition.split(",");
+      // function to enssure it stored as an arrey
+      function parseStringToArray(input) {
+        if (typeof input === "string") {
+          try {
+            // Attempt to parse the string as JSON
+            const parsedArray = JSON.parse(input);
+            // Ensure the parsed result is an array
+            if (Array.isArray(parsedArray)) {
+              return parsedArray;
+            }
+          } catch (error) {
+            // If JSON parsing fails, check for comma-separated values
+            if (input.includes(",")) {
+              // Split the string by commas and trim whitespace
+              return input.split(",").map((item) => item.trim());
+            }
+            console.error("Error parsing string to array:", error);
+          }
+        }
+        // Return the input as-is if it's not a string or not a valid array string
+        return input;
+      }
 
-      // Ensure `age_range` is an array
-      const age_range_array = Array.isArray(age_range)
-        ? age_range
-        : age_range.split(",");
+      // Convert string representations to arrays
+      const business_definition_array = parseStringToArray(business_definition);
+      const customer_type_array = parseStringToArray(customer_type);
+      const age_range_array = parseStringToArray(age_range);
 
-      // Ensure `customer_type` is an array
-      const customer_type_array = Array.isArray(customer_type)
-        ? customer_type
-        : customer_type.split(",");
-
-      // Now you can use `business_definition_array`, `age_range_array`, and `customer_type_array` as arrays
       // Prepare update data
       const updateData = {
         companyDetails: {
@@ -367,6 +375,8 @@ router.put(
           communication_style_other
         }
       };
+
+      console.log({ data: updateData });
 
       // Update user document
       const updatedUser = await User.findByIdAndUpdate(
