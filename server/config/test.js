@@ -90,6 +90,7 @@ async function generatePost() {
 
   const rawData = await response.json();
   let messageContent = rawData.choices[0].message.content;
+  console.log({ fake: messageContent });
 
   // Trim any unwanted quotes from the start and end of the messageContent
   if (messageContent.startsWith('"') && messageContent.endsWith('"')) {
