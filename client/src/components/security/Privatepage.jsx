@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import Loader from "../fragments/Loader";
 
 // eslint-disable-next-line react/prop-types
 const PrivateRoute = ({ Component }) => {
@@ -29,7 +30,7 @@ const PrivateRoute = ({ Component }) => {
     validateUser();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
   return isAuthenticated ? <Component /> : <Navigate to="/login" />;
 };
 

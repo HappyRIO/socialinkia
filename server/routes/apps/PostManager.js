@@ -9,7 +9,7 @@ const Agenda = require("agenda");
 const {
   publishToFacebook,
   publishToInstagram,
-  publishToGmb,
+  publishToGmb
 } = require("../../handlers/PostRoutesHandler");
 
 // Multer configuration
@@ -18,9 +18,8 @@ const upload = multer({ storage });
 
 // Initialize Agenda for scheduling
 const agenda = new Agenda({
-  db: { address: `${process.env.DATA_BASE_URL}` },
+  db: { address: `${process.env.DATA_BASE_URL}` }
 });
-
 
 // Cloudinary helpers
 const uploadImagesToCloudinary = async (files) => {
@@ -97,7 +96,7 @@ async function deleteMedia(mediaUrls) {
       }
 
       await cloudinary.uploader.destroy(`automedia/${publicId}`, {
-        resource_type: resourceType,
+        resource_type: resourceType
       });
     }
   } catch (error) {
@@ -133,7 +132,7 @@ const schedulePost = async (postId, userId) => {
 
       if (post.platform.insta) {
         console.log({
-          message: `posted ${post._id} to insta for ${user._id}`,
+          message: `posted ${post._id} to insta for ${user._id}`
         });
         const instaResult = await publishToInstagram(post, user);
         // post.socialPlatformIds.insta = instaResult.postId;
@@ -142,7 +141,7 @@ const schedulePost = async (postId, userId) => {
 
       if (post.platform.gmb) {
         console.log({
-          message: `posted ${post._id} to gmb for ${user._id}`,
+          message: `posted ${post._id} to gmb for ${user._id}`
         });
         const gmbResult = await publishToGmb(post, user);
         // post.socialPlatformIds.gmb = gmbResult.postId;
@@ -181,7 +180,7 @@ router.post(
   isSessionValid,
   upload.fields([
     { name: "images", maxCount: 10 },
-    { name: "videos", maxCount: 5 },
+    { name: "videos", maxCount: 5 }
   ]),
   async (req, res) => {
     try {
@@ -199,7 +198,7 @@ router.post(
         platform: JSON.parse(platform),
         uploadDate,
         images: imageUrls,
-        videos: videoUrls,
+        videos: videoUrls
       };
 
       req.user.posts.push(post);
@@ -282,7 +281,7 @@ router.put(
   isSessionValid,
   upload.fields([
     { name: "images", maxCount: 10 },
-    { name: "videos", maxCount: 5 },
+    { name: "videos", maxCount: 5 }
   ]),
   async (req, res) => {
     try {

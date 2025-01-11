@@ -1,41 +1,38 @@
 import { useEffect, useState } from "react";
 import PostContainer from "./fragments/PostContainer";
+import Loader from "../Loader";
 
 export default function AllPosts() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("all");
+  const [loading, setLoading] = useState(false);
   const [allpost, setallpost] = useState([]);
   const [publisedpost, setpublisedpost] = useState([]);
   const [scheduledpost, setscheduledpost] = useState([]);
   const [failedpost, setfailedpost] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
         const [allRes, scheduledRes, publishedRes, failedRes] =
           await Promise.all([
             fetch(`/api/posts/all`, {
               method: "GET",
-              credentials: "include",
+              credentials: "include"
             }),
-            fetch(
-              `/api/posts/scheduled`,
-              {
-                method: "GET",
-                credentials: "include",
-              }
-            ),
-            fetch(
-              `/api/posts/published`,
-              {
-                method: "GET",
-                credentials: "include",
-              }
-            ),
+            fetch(`/api/posts/scheduled`, {
+              method: "GET",
+              credentials: "include"
+            }),
+            fetch(`/api/posts/published`, {
+              method: "GET",
+              credentials: "include"
+            }),
             fetch(`/api/posts/failed`, {
               method: "GET",
-              credentials: "include",
-            }),
+              credentials: "include"
+            })
           ]);
 
         const allData = await allRes.json();
@@ -52,13 +49,20 @@ export default function AllPosts() {
           Array.isArray(publishedData.posts) ? publishedData.posts : []
         );
         setfailedpost(Array.isArray(failedData.posts) ? failedData.posts : []);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
+        alert("encountard an error");
         console.error("Error fetching posts:", error);
       }
     };
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full flex flex-col justify-center items-center">

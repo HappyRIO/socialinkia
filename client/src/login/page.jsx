@@ -67,9 +67,13 @@ export default function Login() {
     );
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      {loading ? <Loader /> : null}
+      {/* {loading ? <Loader /> : null} */}
       <div className="nav w-full">
         <Header />
       </div>

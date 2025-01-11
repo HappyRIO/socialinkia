@@ -1,7 +1,23 @@
 import { Facebook, Instagram, Store } from "lucide-react";
 import ResponsiveSidebar from "../components/navigation/ResponsiveSidebar";
+import { useEffect } from "react";
 
 export default function Dashboard() {
+  function handleGetPost() {
+    fetch("/api/facebook/posts")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  }
+
+  useEffect(() => {
+    handleGetPost();
+  }, []);
+
   return (
     <div className="w-full gap-3 flex flex-row justify-center items-center">
       <div className="sidebar w-fit">

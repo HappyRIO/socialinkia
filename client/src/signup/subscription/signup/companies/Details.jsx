@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Loader from "../../../../components/fragments/Loader";
 
 const BusinessForm = () => {
   const [loading, setLoading] = useState(false);
@@ -158,6 +159,10 @@ const BusinessForm = () => {
       setLoading(false);
     }
   };
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className="w-full flex flex-col justify-center items-center">

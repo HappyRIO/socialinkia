@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
-import { toast, ToastContainer } from "react-toastify";
 import { Facebook, Instagram, Store } from "lucide-react";
+import Loader from "../../components/fragments/Loader";
 
 export default function Profile() {
   const [formData, setFormData] = useState({
@@ -54,6 +54,7 @@ export default function Profile() {
 
   useEffect(() => {
     async function fetchUserInfo() {
+      setLoading(true);
       try {
         const response = await fetch(`/api/auth/user/details`, {
           method: "GET",
@@ -68,7 +69,16 @@ export default function Profile() {
           ...data.user.companyDetails,
           photos: data.user.companyDetails?.photos || []
         });
-        setconnectgmb(data.user.gmbrefreshToken);
+        if (data.user.gmbrefreshToken) {
+          setconnectgmb(true);
+        }
+        if (data.user.selectedFacebookBusinessPage) {
+          setconnectfb(true);
+        }
+        if (data.user.selectedInstagramBusinessPage) {
+          setconnectig(true);
+        }
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
@@ -95,7 +105,6 @@ export default function Profile() {
               business_definition: [...currentSelections, value]
             };
           } else {
-            toast.error("You can select up to 3 options only.");
             return prev;
           }
         } else {
@@ -158,7 +167,7 @@ export default function Profile() {
       });
 
       if (response.ok) {
-        toast("Profile updated successfully", { theme: "dark" });
+        setLoading(false);
       } else {
         console.error("Update failed:", response.statusText);
         alert("Update failed. Please try again.");
@@ -193,28 +202,28 @@ export default function Profile() {
   function handleconnectFacebook() {
     openAuthPopup(`/api/facebook/auth/facebook`, () => {
       setconnectfb(true);
-      toast("Facebook connected", { theme: "dark" });
     });
   }
 
   function handleconnectInstagram() {
     openAuthPopup(`/api/instagram/auth/instagram`, () => {
       setconnectig(true);
-      toast("Instagram connected", { theme: "dark" });
     });
   }
 
   function handleconnectGoogleMyBusiness() {
     openAuthPopup(`/api/gmb/auth/gmb`, () => {
       setconnectig(true);
-      toast("google connected", { theme: "dark" });
       window.location.href = "/dashboard/profile";
     });
   }
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      <ToastContainer position="top-right" autoClose={3000} />
       <div className="side-bar">
         <ResponsiveSidebar pagename="Profile" />
       </div>
@@ -243,7 +252,7 @@ export default function Profile() {
           </button>
         </div>
 
-        {loading && <div className="spinner">Loading...</div>}
+        {/* {loading && <Loader />} */}
         <form
           onSubmit={handleSubmit}
           className="form flex flex-col gap-2 justify-center w-full"
@@ -910,7 +919,7 @@ export default function Profile() {
             type="submit"
             className="bg-accent text-white rounded-lg w-full"
           >
-            Update Details
+            {loading ? "Updating Details......." : "Update Details"}
           </button>
         </form>
       </div>

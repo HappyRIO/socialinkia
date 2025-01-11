@@ -5,6 +5,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const logRequestDetails = require("./middleware/logger");
+const TimeBasedPostGenerator = require("./handlers/TimeBasedPostGenerator");
 const port = 4000;
 require("dotenv").config();
 
@@ -30,6 +31,7 @@ app.use(
 
 connectCloudinary();
 connectDB();
+TimeBasedPostGenerator();
 
 // List of allowed origins (add any trusted origins as needed)
 // const allowedOrigins = "https://auto-social-api.onrender.com/";

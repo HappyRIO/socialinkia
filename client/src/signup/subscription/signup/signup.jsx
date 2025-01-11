@@ -13,7 +13,7 @@ export default function SignupMain() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    subscription: `${plan}`,
+    subscription: `${plan}`
   });
 
   const navigate = useNavigate();
@@ -27,17 +27,14 @@ export default function SignupMain() {
     setLoading(true);
     e.preventDefault();
     try {
-      const response = await fetch(
-        `/api/auth/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-          credentials: "include", // Send cookies with the request
-        }
-      );
+      const response = await fetch(`/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData),
+        credentials: "include" // Send cookies with the request
+      });
 
       if (response.ok) {
         setLoading(false);
@@ -96,10 +93,11 @@ export default function SignupMain() {
       "width=500,height=600"
     );
   };
-
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      {loading ? <Loader /> : null}
       <div className="nav w-full">
         <Header />
       </div>

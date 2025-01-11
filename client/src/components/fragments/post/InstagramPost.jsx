@@ -1,16 +1,19 @@
 // InstagramPost
 import { useEffect, useState } from "react";
 import PostContainer from "./fragments/PostContainer";
+import Loader from "../Loader";
 
 export default function InstagramPost() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("all");
+  const [loading, setLoading] = useState(false);
   const [allpost, setallpost] = useState([]);
   const [publisedpost, setpublisedpost] = useState([]);
   const [scheduledpost, setscheduledpost] = useState([]);
   const [failedpost, setfailedpost] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
         const [allRes, scheduledRes, publishedRes, failedRes] =
@@ -48,13 +51,21 @@ export default function InstagramPost() {
         setscheduledpost(filterInstaPost(scheduledData.posts));
         setpublisedpost(filterInstaPost(publishedData.posts));
         setfailedpost(filterInstaPost(failedData.posts));
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
+        alert("encountard an error");
         console.error("Error fetching posts:", error);
       }
     };
 
     fetchData();
   }, []);
+
+    if (loading) {
+      return <Loader />;
+    }
+  
 
   return (
     <div className="w-full flex flex-col justify-center items-center">

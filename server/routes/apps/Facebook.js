@@ -58,7 +58,7 @@ router.get("/auth/facebook/callback", async (req, res) => {
         client_id: process.env.FACEBOOK_APP_ID,
         client_secret: process.env.FACEBOOK_APP_SECRET,
         redirect_uri: process.env.FACEBOOK_REDIRECT_URI,
-        code,
+        code
       }),
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
@@ -110,7 +110,7 @@ router.get("/auth/facebook/callback", async (req, res) => {
           facebookId: profileData.id,
           email: profileData.email,
           facebookAccessToken: access_token,
-          facebookTokenExpiry: tokenExpiryDate,
+          facebookTokenExpiry: tokenExpiryDate
         });
       }
     }
@@ -136,7 +136,7 @@ router.get("/auth/facebook/callback", async (req, res) => {
     const data = {
       message: "Select an facebook business account to continue",
       user: user._id,
-      pages: pagesData.data,
+      pages: pagesData.data
     };
 
     console.log({ message: data.message });
@@ -212,8 +212,8 @@ router.get("/select-facebook-account", async (req, res) => {
         selectedFacebookBusinessPage: {
           id: accountId,
           name: accountName,
-          accessToken: accountAccessToken,
-        },
+          accessToken: accountAccessToken
+        }
       },
       { new: true }
     );
@@ -281,8 +281,8 @@ const validateAndRefreshToken = async (req, res, next) => {
             grant_type: "fb_exchange_token",
             client_id: process.env.FACEBOOK_APP_ID,
             client_secret: process.env.FACEBOOK_APP_SECRET,
-            fb_exchange_token: user.facebookAccessToken,
-          },
+            fb_exchange_token: user.facebookAccessToken
+          }
         }
       );
 
@@ -303,53 +303,8 @@ const validateAndRefreshToken = async (req, res, next) => {
   }
 };
 
-// ------------------ Posting to Facebook -------------------
-router.post("/post", validateAndRefreshToken, async (req, res) => {
-  const { message, images } = req.body;
-
-  if (!message && (!images || images.length === 0)) {
-    return res
-      .status(400)
-      .json({ error: "Message or at least one image URL is required." });
-  }
-
-  try {
-    // Post the content
-    const postResponse = await axios.post(
-      `https://graph.facebook.com/v17.0/me/feed`,
-      {
-        access_token: req.facebookAccessToken,
-        message,
-      }
-    );
-
-    const postId = postResponse.data.id;
-
-    if (images && images.length > 0) {
-      // Upload images to the post
-      const imageUploadPromises = images.map((imageUrl) =>
-        axios.post(`https://graph.facebook.com/v17.0/${postId}/photos`, {
-          access_token: req.facebookAccessToken,
-          url: imageUrl,
-          published: false,
-        })
-      );
-
-      await Promise.all(imageUploadPromises);
-    }
-
-    res.json({
-      message: "Content with multiple images posted successfully!",
-      postId,
-    });
-  } catch (error) {
-    console.error("Error posting to Facebook:", error.message);
-    res.status(500).json({ error: "Failed to post content on Facebook." });
-  }
-});
-
 // Fetch user's posts
-router.get("/posts", validateAndRefreshToken, async (req, res) => {
+router.get("/posts", isSessionValid, async (req, res) => {
   try {
     const response = await axios.get(
       `https://graph.facebook.com/v17.0/me/posts?access_token=${req.facebookAccessToken}`

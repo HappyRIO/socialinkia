@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ResponsiveSidebar from "../../../components/navigation/ResponsiveSidebar";
-import { toast, ToastContainer } from "react-toastify";
+import Loader from "../../../components/fragments/Loader";
 
 export default function PostCreation() {
   const [postText, setPostText] = useState("");
+  const [loading, setLoading] = useState(false);
   const [aitext, setAitext] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [filePreviews, setFilePreviews] = useState([]);
@@ -100,6 +101,7 @@ export default function PostCreation() {
 
   // Handle form submission to post data to the backend
   const handleSubmit = () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("text", postText);
     formData.append("platform", JSON.stringify(platform)); // Stringify platform object
@@ -117,18 +119,8 @@ export default function PostCreation() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        setLoading(false);
         if (data.message === "Post created successfully") {
-          toast(`Post created successfully!`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark"
-          });
-          console.log("Post created successfully:", data);
           reroute("/dashboard/posts");
         }
       })
@@ -137,17 +129,12 @@ export default function PostCreation() {
       });
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      <ToastContainer
-        position="top-left"
-        autoClose={3000} // Optional: auto close after 3 seconds
-        hideProgressBar={false} // Optional: show progress bar
-        closeOnClick
-        pauseOnHover
-        draggable
-        pauseOnFocusLoss
-      />
       <div className="navzone w-fit">
         <ResponsiveSidebar pagename={"Create Post"} />
       </div>

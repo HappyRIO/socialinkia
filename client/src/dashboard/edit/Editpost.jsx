@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
 import { Facebook, Instagram, Store } from "lucide-react";
+import Loader from "../../components/fragments/Loader";
 
 export default function Editpost() {
   const { postId } = useParams();
+  const [loading, setLoading] = useState(false);
   const [postText, setPostText] = useState("");
   const [aitext, setAitext] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -14,17 +15,18 @@ export default function Editpost() {
     all: true,
     gmb: true,
     insta: true,
-    fbook: true,
+    fbook: true
   });
   const [uploadDate, setUploaddata] = useState({
-    date: "",
+    date: ""
   });
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/posts/${postId}`, {
       method: "GET",
-      credentials: "include",
+      credentials: "include"
     })
       .then((response) => response.json())
       .then((data) => {
@@ -35,16 +37,16 @@ export default function Editpost() {
           setUploaddata({ date: uploadDate });
           const previews = [
             ...(images || []).map((url) => ({ preview: url, type: "image" })),
-            ...(videos || []).map((url) => ({ preview: url, type: "video" })),
+            ...(videos || []).map((url) => ({ preview: url, type: "video" }))
           ];
           setFilePreviews(previews);
+          setLoading(false);
         } else {
-          toast.error("Failed to load post details");
+          alert("faild to load post details");
         }
       })
       .catch((error) => {
         console.error("Error fetching post details:", error);
-        toast.error("Error fetching post details");
       });
   }, [postId]);
 
@@ -98,7 +100,7 @@ export default function Editpost() {
     const previews = files.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
-      type: file.type.startsWith("video") ? "video" : "image",
+      type: file.type.startsWith("video") ? "video" : "image"
     }));
 
     setSelectedFiles((prev) => [...prev, ...files]);
@@ -106,6 +108,7 @@ export default function Editpost() {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("text", postText);
     formData.append("platform", JSON.stringify(platform));
@@ -129,54 +132,46 @@ export default function Editpost() {
     fetch(`/api/posts/${postId}`, {
       method: "PUT",
       body: formData,
-      credentials: "include",
+      credentials: "include"
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.message === "Post updated successfully") {
-          toast.success("Post updated successfully!");
-          // navigate("/dashboard/posts");
+          navigate("/dashboard/posts");
+          setLoading(false);
         } else {
-          toast.error("Failed to update post");
+          setLoading(false);
+          alert("post update error, kindly check your internet connection");
         }
       })
       .catch((error) => {
         console.error("Error updating post:", error);
-        toast.error("Error updating post");
       });
   };
 
   function handledeletepost() {
-    fetch(
-      `/api/posts/${postId}`,
-      {
-        method: "DELETE",
-        credentials: "include",
-      }
-    )
+    setLoading(true);
+    fetch(`/api/posts/${postId}`, {
+      method: "DELETE",
+      credentials: "include"
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.message === "Post deleted successfully") {
-          toast.success("Post deleted successfully!");
           navigate("/dashboard/posts");
         } else {
-          toast.error("Failed to delete post", {
-            theme: "dark",
-          });
+          setLoading(false);
+          alert("post update error, kindly check your internet connection");
         }
       });
   }
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      <ToastContainer
-        position="top-left"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-      />
       <div className="navzone w-fit">
         <ResponsiveSidebar pagename={"Edit Post"} />
       </div>

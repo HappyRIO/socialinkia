@@ -91,6 +91,7 @@ const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   isNewUser: { type: Boolean, required: true, default: true },
   password: { type: String },
+  lastPostGenerationDate: { type: Date, default: null },
 
   // post manager
   posts: [postSchema],

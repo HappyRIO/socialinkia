@@ -1,9 +1,11 @@
-import "../css/loader.css";
-
 export default function Loader() {
   return (
-    <div className="w-screen bg-accent h-[100vh] absolute left-0 top-0 z-[999999] flex justify-center items-center">
-      <div className="loader"></div>
+    <div className="w-screen h-screen min-h-screen min-w-screen fixed flex justify-center items-center bg-[rgba(0,0,0,0.71)]">
+      <div className="flex-col gap-4 w-full flex items-center justify-center">
+        <div className="w-20 h-20 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-blue-400 rounded-full">
+          <div className="w-16 h-16 border-4 border-transparent text-red-400 text-2xl animate-spin flex items-center justify-center border-t-red-400 rounded-full"></div>
+        </div>
+      </div>
     </div>
   );
 }

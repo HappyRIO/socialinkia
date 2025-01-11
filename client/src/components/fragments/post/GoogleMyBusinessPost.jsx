@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import PostContainer from "./fragments/PostContainer";
+import Loader from "../Loader";
 
 export default function GoogleMyBusinessPost() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
   const [allpost, setallpost] = useState([]);
   const [publisedpost, setpublisedpost] = useState([]);
@@ -10,6 +12,7 @@ export default function GoogleMyBusinessPost() {
   const [failedpost, setfailedpost] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
         const [allRes, scheduledRes, publishedRes, failedRes] =
@@ -45,13 +48,20 @@ export default function GoogleMyBusinessPost() {
         setscheduledpost(filterGmbPost(scheduledData.posts));
         setpublisedpost(filterGmbPost(publishedData.posts));
         setfailedpost(filterGmbPost(failedData.posts));
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
+        alert("encountard an error");
         console.error("Error fetching posts:", error);
       }
     };
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full flex flex-col justify-center items-center">

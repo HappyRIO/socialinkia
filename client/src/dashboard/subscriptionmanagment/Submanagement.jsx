@@ -1,29 +1,28 @@
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
 import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
+import Loader from "../../components/fragments/Loader";
 
 export default function Submanagement() {
   const [subscriptionData, setSubscriptionData] = useState(null);
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState("basic");
+  const [loading, setLoading] = useState(true); // Loading state
   const [cardDetails, setCardDetails] = useState({
     cardNumber: "",
     expiryMonth: "",
     expiryYear: "",
-    cvc: "",
+    cvc: ""
   });
 
   // Fetch user details on mount
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(
-          `/api/subscription/details`,
-          {
-            credentials: "include",
-            method: "GET",
-          }
-        );
+        const response = await fetch(`/api/subscription/details`, {
+          credentials: "include",
+          method: "GET"
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch user details");
@@ -47,6 +46,7 @@ export default function Submanagement() {
         const data = await response.json();
         if (data.paymentHistory) {
           setPaymentHistory(data.paymentHistory);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching payment history:", error);
@@ -77,8 +77,8 @@ export default function Submanagement() {
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            subscriptionId: subscriptionData.subscriptionId,
-          }),
+            subscriptionId: subscriptionData.subscriptionId
+          })
         }
       );
       if (response.ok) {
@@ -100,6 +100,7 @@ export default function Submanagement() {
   const handleSubscriptionSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch(
         `${
           import.meta.env.VITE_SERVER_BASE_URL
@@ -110,25 +111,32 @@ export default function Submanagement() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             plan: selectedPlan,
-            cardDetails,
-          }),
+            cardDetails
+          })
         }
       );
 
       const data = await response.json();
       if (response.ok) {
         alert("Subscription successful!");
+        setLoading(false);
         setSubscriptionData(data.subscriptionDetails);
       } else {
+        setLoading(false);
         console.error("Subscription failed:", data.error);
       }
     } catch (error) {
+      setLoading(false);
       console.error("Error during subscription:", error);
     }
   };
 
   if (!subscriptionData) {
-    return <div>Loading...</div>;
+    return <Loader />;
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (

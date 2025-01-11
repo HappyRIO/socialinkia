@@ -1,11 +1,12 @@
 // CreateTemplate
 import { useState } from "react";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
-// import { toast, ToastContainer } from "react-toastify";
 import { Facebook, Instagram, Store } from "lucide-react";
+import Loader from "../../components/fragments/Loader";
 
 export default function PostCreation() {
   const [postText, setPostText] = useState("");
+  const [loading, setLoading] = useState(false);
   // const [aitext, setAitext] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   // const [generate, setgenerate] = useState(false);
@@ -67,6 +68,7 @@ export default function PostCreation() {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("text", postText);
     formData.append("platform", JSON.stringify(platform));
@@ -116,38 +118,12 @@ export default function PostCreation() {
       });
   };
 
-  // async function handleGeneratePost() {
-  //   setgenerate(true);
-  //   try {
-  //     const response = await fetch(
-  //       `${
-  //         import.meta.env.VITE_SERVER_BASE_URL
-  //       }/api/gpt/generate-posts?aitext=${encodeURIComponent(aitext)}`,
-  //       {
-  //         method: "GET",
-  //         credentials: "include",
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-
-  //     const posts = await response.json(); // Expect an array of posts
-  //     console.log("Generated Posts:", posts.caption);
-  //     setgenerate(false);
-  //     // Assuming `setPostText` can handle an array of posts
-  //     setPostText(posts.caption);
-  //   } catch (error) {
-  //     console.error("Error generating posts:", error);
-  //     setgenerate(false);
-  //     setPostText(["Failed to generate posts."]); // Optional fallback
-  //   }
-  // }
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      {/* <ToastContainer position="top-left" autoClose={3000} pauseOnFocusLoss /> */}
       <div className="navzone w-fit">
         <ResponsiveSidebar pagename={"Create Post"} />
       </div>
