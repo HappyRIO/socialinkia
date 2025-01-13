@@ -307,7 +307,7 @@ const validateAndRefreshToken = async (req, res, next) => {
 router.get("/posts", isSessionValid, async (req, res) => {
   try {
     const response = await axios.get(
-      `https://graph.facebook.com/v17.0/me/posts?access_token=${req.facebookAccessToken}`
+      `https://graph.facebook.com/v17.0/me/posts?access_token=${req.selectedFacebookBusinessPage?.accessToken}`
     );
     res.json(response.data);
   } catch (error) {

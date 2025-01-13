@@ -3,16 +3,11 @@ const gptPostGenerator = require("../middleware/gptPostGenerator");
 const User = require("../model/User");
 
 function TimeBasedPostGenerator() {
-  console.log({
-    AutopostGenerator: "starting cron job system for testing every 3 minutes..."
-  });
+  console.log("starting cron job system for monthly post generation.");
 
-  // Schedule the task to run every 3 minutes
+  // Schedule the task to run every 1 day
   cron.schedule("0 0 1 * *", async () => {
-    console.log({
-      AutopostGenerator:
-        "cron job system running every 3 minutes for testing..."
-    });
+    console.log("cron job system running");
     try {
       const users = await User.find(); // Retrieve all users from the database
 

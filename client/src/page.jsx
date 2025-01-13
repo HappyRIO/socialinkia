@@ -9,7 +9,7 @@ import {
   Fullscreen,
   Languages,
   MessageSquareHeart,
-  ScrollText,
+  ScrollText
 } from "lucide-react";
 import "./assets/css/scrollingcss.css";
 import FAQSection from "./components/fragments/Faqsection";
@@ -39,7 +39,7 @@ export default function Home() {
                     Free trial <ArrowRight />
                   </button>
                 </Link>
-                <Link to={"/signup"}>
+                <Link to={"/#howitworks"}>
                   <button className="p-4 bg-accent rounded-full flex flex-row items-center animate-pulse">
                     See how it works <ArrowRight />
                   </button>
@@ -121,7 +121,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col md:flex-row gap-6 py-10 justify-center items-center max-w-[1500px]">
+      <div
+        id="howitworks"
+        className="w-full flex flex-col md:flex-row gap-6 py-10 justify-center items-center max-w-[1500px]"
+      >
         <div className="image-zone w-full md:1/2">
           <img src="/images/mobile.png" alt="" />
         </div>

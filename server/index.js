@@ -35,7 +35,8 @@ TimeBasedPostGenerator();
 
 // List of allowed origins (add any trusted origins as needed)
 // const allowedOrigins = "https://auto-social-api.onrender.com/";
-const allowedOrigins = "http://localhost:4000/";
+// const allowedOrigins = "http://localhost:4000/";
+const allowedOrigins = process.env.CLIENT_BASE_URL;
 
 app.use(
   cors({
