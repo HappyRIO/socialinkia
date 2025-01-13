@@ -44,7 +44,7 @@ const BusinessForm = () => {
     valuable_content: [],
     valuable_content_other: "",
     communication_style: "",
-    communication_style_other: "",
+    communication_style_other: ""
   });
 
   const handleChange = (e) => {
@@ -55,7 +55,7 @@ const BusinessForm = () => {
       setFormData((prev) => ({
         ...prev,
         logo: logoFile,
-        logoPreview: URL.createObjectURL(logoFile),
+        logoPreview: URL.createObjectURL(logoFile)
       }));
     } else if (name === "photos" && files) {
       const photoFiles = Array.from(files);
@@ -64,7 +64,7 @@ const BusinessForm = () => {
       setFormData((prev) => ({
         ...prev,
         photos: photoFiles,
-        photosPreview: photoPreviews,
+        photosPreview: photoPreviews
       }));
     } else if (name === "business_definition") {
       setFormData((prev) => {
@@ -136,14 +136,11 @@ const BusinessForm = () => {
         }
       });
 
-      const response = await fetch(
-        `/api/auth/user/details`,
-        {
-          method: "PUT",
-          body: form,
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/auth/user/details`, {
+        method: "PUT",
+        body: form,
+        credentials: "include"
+      });
 
       if (response.ok) {
         console.log("Details uploaded successfully");
@@ -161,7 +158,11 @@ const BusinessForm = () => {
   };
 
   if (loading) {
-    return <Loader />
+    return (
+      <div className="fixed inset-0 flex justify-center items-center">
+        <Loader />
+      </div>
+    );
   }
 
   return (

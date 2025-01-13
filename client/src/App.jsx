@@ -17,6 +17,7 @@ import Aboutus from "./components/page/about/Aboutus";
 import Subscrptionmain from "./signup/subscription/sub";
 import SignupMain from "./signup/subscription/signup/signup";
 import BusinessForm from "./signup/subscription/signup/companies/Details";
+import PostAnalysis from "./dashboard/posts/analysis/page";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
     element: <PrivateRoute Component={PostCreation} />
   },
   { path: "/dashboard/posts", element: <PrivateRoute Component={Pending} /> },
+  {
+    path: "/dashboard/analize/:postId",
+    element: <PrivateRoute Component={PostAnalysis} />
+  },
   {
     path: "/dashboard/posts/edit/:postId",
     element: <PrivateRoute Component={Editpost} />

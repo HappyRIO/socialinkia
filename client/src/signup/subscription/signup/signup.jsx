@@ -93,9 +93,15 @@ export default function SignupMain() {
       "width=500,height=600"
     );
   };
+
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="fixed inset-0 flex justify-center items-center">
+        <Loader />
+      </div>
+    );
   }
+
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <div className="nav w-full">

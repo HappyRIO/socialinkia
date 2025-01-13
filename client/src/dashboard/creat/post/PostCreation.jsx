@@ -129,142 +129,146 @@ export default function PostCreation() {
       });
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   return (
     <div className="w-full flex flex-row justify-center items-center">
       <div className="navzone w-fit">
         <ResponsiveSidebar pagename={"Create Post"} />
       </div>
-      <div className="contentzone pt-3 px-2 ml-0 sm:ml-64 w-full flex flex-col gap-3 justify-center items-center">
-        <div className="mininav w-full">
-          <button
-            onClick={handleBackClick}
-            className="px-2 py-2 w-full bg-accent rounded-lg"
-          >
-            Back
-          </button>
-        </div>
-        <div className="editorpage p-2 bg-background2 rounded-lg w-full flex flex-col gap-2 justify-center items-center">
-          <div className="w-full flex flex-col gap-2 sm:flex-row">
-            <div className="w-full flex justify-center items-center">
-              <div className="releasedate max-w-[350px] flex flex-col justify-center items-center">
-                <label htmlFor="date">Upload date</label>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="contentzone pt-3 px-2 ml-0 sm:ml-64 w-full flex flex-col gap-3 justify-center items-center">
+          <div className="mininav w-full">
+            <button
+              onClick={handleBackClick}
+              className="px-2 py-2 w-full bg-accent rounded-lg"
+            >
+              Back
+            </button>
+          </div>
+          <div className="editorpage p-2 bg-background2 rounded-lg w-full flex flex-col gap-2 justify-center items-center">
+            <div className="w-full flex flex-col gap-2 sm:flex-row">
+              <div className="w-full flex justify-center items-center">
+                <div className="releasedate max-w-[350px] flex flex-col justify-center items-center">
+                  <label htmlFor="date">Upload date</label>
+                  <input
+                    className="bg-background p-2 rounded-lg w-full text-text"
+                    type="datetime-local"
+                    name="date"
+                    id="date"
+                    required
+                    value={uploaddata.date}
+                    onChange={handleDateChange}
+                  />
+                </div>
+              </div>
+              <div className="w-full flex justify-center items-center">
+                <div className="selectionZone flex flex-col gap-2">
+                  <label htmlFor="socialSelect" className="text-xl">
+                    Select platform
+                  </label>
+                  <select
+                    id="socialSelect"
+                    className="rounded-lg p-2 text-center text-accent"
+                    onChange={handleChange}
+                  >
+                    <option className="text-text" value="all">
+                      All
+                    </option>
+                    <option className="text-text" value="google">
+                      google
+                    </option>
+                    <option className="text-text" value="fbook">
+                      Facebook
+                    </option>
+                    <option className="text-text" value="insta">
+                      Instagram
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="postText w-full flex flex-col gap-2">
+              <input
+                onChange={handleAiTextChange}
+                className="rounded-lg p-2 w-full"
+                type="text"
+                value={aitext}
+                placeholder="Prompt AI assistant ..."
+              />
+              <textarea
+                className="w-full rounded-lg focus:border-accent p-2"
+                name="postText"
+                id="postText"
+                placeholder="Write your post..."
+                rows="10"
+                value={postText}
+                onChange={handleTextChange}
+              />
+            </div>
+            <div className="postImages columns-2 gap-2 sm:gap-4">
+              {/* Display image previews here */}
+              {filePreviews.length > 0 &&
+                filePreviews.map((preview, index) => (
+                  <div key={index} className="relative w-full mb-2 sm:mb-4">
+                    <img
+                      className="w-full object-cover rounded-lg"
+                      src={preview}
+                      alt="Image Preview"
+                    />
+                    {/* Delete icon */}
+                    <button
+                      className="absolute top-1 right-1 text-red-500 font-bold"
+                      onClick={() => handleImageRemove(index)}
+                    >
+                      D
+                    </button>
+                  </div>
+                ))}
+            </div>
+            <div className="w-full">
+              <div className="rounded-md w-full border border-accent p-4 shadow-md">
+                <label
+                  htmlFor="upload"
+                  className="flex flex-col items-center gap-2 cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-10 w-10 fill-white stroke-accent"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  <span className="text-text font-medium">Upload files</span>
+                </label>
                 <input
-                  className="bg-background p-2 rounded-lg w-full text-text"
-                  type="datetime-local"
-                  name="date"
-                  id="date"
-                  required
-                  value={uploaddata.date}
-                  onChange={handleDateChange}
+                  id="upload"
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                  multiple
                 />
               </div>
             </div>
-            <div className="w-full flex justify-center items-center">
-              <div className="selectionZone flex flex-col gap-2">
-                <label htmlFor="socialSelect" className="text-xl">
-                  Select platform
-                </label>
-                <select
-                  id="socialSelect"
-                  className="rounded-lg p-2 text-center text-accent"
-                  onChange={handleChange}
-                >
-                  <option className="text-text" value="all">
-                    All
-                  </option>
-                  <option className="text-text" value="google">
-                    google
-                  </option>
-                  <option className="text-text" value="fbook">
-                    Facebook
-                  </option>
-                  <option className="text-text" value="insta">
-                    Instagram
-                  </option>
-                </select>
-              </div>
-            </div>
+            <button
+              className="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
+              onClick={handleSubmit}
+            >
+              Submit Post
+            </button>
           </div>
-          <div className="postText w-full flex flex-col gap-2">
-            <input
-              onChange={handleAiTextChange}
-              className="rounded-lg p-2 w-full"
-              type="text"
-              value={aitext}
-              placeholder="Prompt AI assistant ..."
-            />
-            <textarea
-              className="w-full rounded-lg focus:border-accent p-2"
-              name="postText"
-              id="postText"
-              placeholder="Write your post..."
-              rows="10"
-              value={postText}
-              onChange={handleTextChange}
-            />
-          </div>
-          <div className="postImages columns-2 gap-2 sm:gap-4">
-            {/* Display image previews here */}
-            {filePreviews.length > 0 &&
-              filePreviews.map((preview, index) => (
-                <div key={index} className="relative w-full mb-2 sm:mb-4">
-                  <img
-                    className="w-full object-cover rounded-lg"
-                    src={preview}
-                    alt="Image Preview"
-                  />
-                  {/* Delete icon */}
-                  <button
-                    className="absolute top-1 right-1 text-red-500 font-bold"
-                    onClick={() => handleImageRemove(index)}
-                  >
-                    D
-                  </button>
-                </div>
-              ))}
-          </div>
-          <div className="w-full">
-            <div className="rounded-md w-full border border-accent p-4 shadow-md">
-              <label
-                htmlFor="upload"
-                className="flex flex-col items-center gap-2 cursor-pointer"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 fill-white stroke-accent"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                <span className="text-text font-medium">Upload files</span>
-              </label>
-              <input
-                id="upload"
-                type="file"
-                className="hidden"
-                onChange={handleFileChange}
-                multiple
-              />
-            </div>
-          </div>
-          <button
-            className="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
-            onClick={handleSubmit}
-          >
-            Submit Post
-          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }

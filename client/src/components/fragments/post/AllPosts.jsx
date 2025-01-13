@@ -94,7 +94,7 @@ export default function AllPosts() {
         </div>
       </div>
 
-      <div className="w-full gap-2 flex flex-col justify-center items-center">
+      <div className="w-full overflow-y-scroll gap-2 flex flex-col justify-center items-center">
         {filter === "all" ? (
           <>
             {Array.isArray(allpost) &&

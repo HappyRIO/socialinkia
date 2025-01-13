@@ -131,157 +131,153 @@ export default function Submanagement() {
     }
   };
 
-  if (!subscriptionData) {
-    return <Loader />;
-  }
-
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <div className="w-full flex flex-row justify-center items-center">
       <div className="navbarzone w-fit">
         <ResponsiveSidebar pagename={"Subscription"} />
       </div>
-      <div className="contentzone mt-3 ml-0 sm:ml-64 w-full">
-        <div className="subscription-info p-4 bg-background2 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Your Subscription</h2>
-          <div className="subscription-details mb-4">
-            <p>
-              <strong>Plan:</strong> {subscriptionData.plan}
-            </p>
-            <p>
-              <strong>Status:</strong> {subscriptionData.status}
-            </p>
-            <p>
-              <strong>Amount:</strong> {subscriptionData.amount}
-            </p>
-            {subscriptionData.trialEnd && (
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="contentzone mt-3 ml-0 sm:ml-64 w-full">
+          <div className="subscription-info p-4 bg-background2 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold mb-4">Your Subscription</h2>
+            <div className="subscription-details mb-4">
               <p>
-                <strong>Trial End:</strong>{" "}
-                {new Date(
-                  subscriptionData.trialEnd * 1000
-                ).toLocaleDateString()}
+                <strong>Plan:</strong> {subscriptionData.plan}
               </p>
-            )}
-          </div>
-          <div className="actions flex gap-4 mt-4">
-            <button
-              className="bg-primary text-white py-2 px-4 rounded-md"
-              onClick={handleDownloadPDF}
-            >
-              Download History as PDF
-            </button>
-            {subscriptionData.status === "Active" && (
+              <p>
+                <strong>Status:</strong> {subscriptionData.status}
+              </p>
+              <p>
+                <strong>Amount:</strong> {subscriptionData.amount}
+              </p>
+              {subscriptionData.trialEnd && (
+                <p>
+                  <strong>Trial End:</strong>{" "}
+                  {new Date(
+                    subscriptionData.trialEnd * 1000
+                  ).toLocaleDateString()}
+                </p>
+              )}
+            </div>
+            <div className="actions flex gap-4 mt-4">
               <button
-                className="bg-red-500 text-white py-2 px-4 rounded-md"
-                onClick={handleCancelSubscription}
+                className="bg-primary text-white py-2 px-4 rounded-md"
+                onClick={handleDownloadPDF}
               >
-                Cancel Subscription
+                Download History as PDF
               </button>
-            )}
-          </div>
-          <div className="plan-upgrade mt-4">
-            <label className="block mb-2 font-semibold">Upgrade Plan:</label>
-            <select
-              className="px-4 py-2 border rounded"
-              value={subscriptionData.plan}
-              onChange={(e) => setSelectedPlan(e.target.value)}
-            >
-              <option value="basic">Basic</option>
-              <option value="standard">Standard</option>
-              <option value="premium">Premium</option>
-            </select>
-            <form onSubmit={handleSubscriptionSubmit} className="mt-4">
-              <h3 className="text-lg font-semibold">Payment Details</h3>
-              <input
-                type="text"
-                name="cardNumber"
-                placeholder="Card Number"
-                value={cardDetails.cardNumber}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-2 border rounded"
-                required
-              />
-              <input
-                type="text"
-                name="expiryMonth"
-                placeholder="Expiry Month (MM)"
-                value={cardDetails.expiryMonth}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-2 border rounded"
-                required
-              />
-              <input
-                type="text"
-                name="expiryYear"
-                placeholder="Expiry Year (YY)"
-                value={cardDetails.expiryYear}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-2 border rounded"
-                required
-              />
-              <input
-                type="text"
-                name="cvc"
-                placeholder="CVC"
-                value={cardDetails.cvc}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-2 border rounded"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-primary text-white py-2 px-4 rounded-md mt-4"
+              {subscriptionData.status === "Active" && (
+                <button
+                  className="bg-red-500 text-white py-2 px-4 rounded-md"
+                  onClick={handleCancelSubscription}
+                >
+                  Cancel Subscription
+                </button>
+              )}
+            </div>
+            <div className="plan-upgrade mt-4">
+              <label className="block mb-2 font-semibold">Upgrade Plan:</label>
+              <select
+                className="px-4 py-2 border rounded"
+                value={subscriptionData.plan}
+                onChange={(e) => setSelectedPlan(e.target.value)}
               >
-                Upgrade Subscription
-              </button>
-            </form>
+                <option value="basic">Basic</option>
+                <option value="standard">Standard</option>
+                <option value="premium">Premium</option>
+              </select>
+              <form onSubmit={handleSubscriptionSubmit} className="mt-4">
+                <h3 className="text-lg font-semibold">Payment Details</h3>
+                <input
+                  type="text"
+                  name="cardNumber"
+                  placeholder="Card Number"
+                  value={cardDetails.cardNumber}
+                  onChange={handleInputChange}
+                  className="w-full mt-2 p-2 border rounded"
+                  required
+                />
+                <input
+                  type="text"
+                  name="expiryMonth"
+                  placeholder="Expiry Month (MM)"
+                  value={cardDetails.expiryMonth}
+                  onChange={handleInputChange}
+                  className="w-full mt-2 p-2 border rounded"
+                  required
+                />
+                <input
+                  type="text"
+                  name="expiryYear"
+                  placeholder="Expiry Year (YY)"
+                  value={cardDetails.expiryYear}
+                  onChange={handleInputChange}
+                  className="w-full mt-2 p-2 border rounded"
+                  required
+                />
+                <input
+                  type="text"
+                  name="cvc"
+                  placeholder="CVC"
+                  value={cardDetails.cvc}
+                  onChange={handleInputChange}
+                  className="w-full mt-2 p-2 border rounded"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="bg-primary text-white py-2 px-4 rounded-md mt-4"
+                >
+                  Upgrade Subscription
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
 
-        <div className="w-full mt-4 bg-background2 rounded-lg flex flex-col justify-center items-center p-6">
-          <h2 className="text-xl font-semibold mb-4">Payment History</h2>
-          <table className="w-full table-auto border-collapse border border-gray-200">
-            <thead>
-              <tr className="bg-background rounded-lg">
-                <th className="px-4 py-2 text-left">Date</th>
-                <th className="px-4 py-2 text-left">Amount</th>
-                <th className="px-4 py-2 text-left">Status</th>
-                <th className="px-4 py-2 text-left">Currency</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paymentHistory.length > 0 ? (
-                paymentHistory.map((payment, index) => (
-                  <tr key={index} className="border-b border-gray-200">
-                    <td className="px-4 py-2">
-                      {new Date(payment.date).toLocaleDateString()}
-                    </td>
-                    <td className="px-4 py-2">{`$${(
-                      payment.amount / 100
-                    ).toFixed(2)}`}</td>
-                    <td className="px-4 py-2 capitalize">{payment.status}</td>
-                    <td className="px-4 py-2">
-                      {payment.currency.toUpperCase()}
+          <div className="w-full mt-4 bg-background2 rounded-lg flex flex-col justify-center items-center p-6">
+            <h2 className="text-xl font-semibold mb-4">Payment History</h2>
+            <table className="w-full table-auto border-collapse border border-gray-200">
+              <thead>
+                <tr className="bg-background rounded-lg">
+                  <th className="px-4 py-2 text-left">Date</th>
+                  <th className="px-4 py-2 text-left">Amount</th>
+                  <th className="px-4 py-2 text-left">Status</th>
+                  <th className="px-4 py-2 text-left">Currency</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paymentHistory.length > 0 ? (
+                  paymentHistory.map((payment, index) => (
+                    <tr key={index} className="border-b border-gray-200">
+                      <td className="px-4 py-2">
+                        {new Date(payment.date).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-2">{`$${(
+                        payment.amount / 100
+                      ).toFixed(2)}`}</td>
+                      <td className="px-4 py-2 capitalize">{payment.status}</td>
+                      <td className="px-4 py-2">
+                        {payment.currency.toUpperCase()}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="4"
+                      className="px-4 py-2 text-center text-gray-500"
+                    >
+                      No payment history available
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan="4"
-                    className="px-4 py-2 text-center text-gray-500"
-                  >
-                    No payment history available
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

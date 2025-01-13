@@ -68,7 +68,11 @@ export default function Login() {
   };
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="fixed inset-0 flex justify-center items-center">
+        <Loader />
+      </div>
+    );
   }
 
   return (
