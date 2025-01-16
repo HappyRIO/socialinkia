@@ -71,6 +71,7 @@ const SubscriptionSchema = new Schema({
 
 const postSchema = new Schema({
   text: { type: String },
+  platformID: { type: String },
   platform: {
     all: { type: Boolean, default: false },
     xcom: { type: Boolean, default: false },

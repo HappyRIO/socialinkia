@@ -8,7 +8,7 @@ import {
   Instagram,
   ReplaceAll,
   Settings,
-  Store,
+  X,
   Video,
   CassetteTape,
   CircleOff
@@ -136,7 +136,7 @@ export default function PostContainer({ data }) {
                   <>
                     {fbook && <Facebook />}
                     {insta && <Instagram />}
-                    {gmb && <Store />}
+                    {gmb && <X />}
                   </>
                 )}
               </div>

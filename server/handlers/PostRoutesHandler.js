@@ -221,6 +221,7 @@ const publishToFacebook = async (post, user) => {
 };
 
 const publishToXcom = async (post, user) => {
+  console.log("runing x posting function......");
   try {
     if (
       !user ||
@@ -235,9 +236,13 @@ const publishToXcom = async (post, user) => {
     }
 
     const refreshAccessToken = async (refreshToken) => {
+      console.log({
+        clientId: process.env.X_CLIENT_ID,
+        clientSecret: process.env.X_CLIENT_SECRET
+      });
       const client = new TwitterApi({
-        clientId,
-        clientSecret
+        clientId: process.env.X_CLIENT_ID,
+        clientSecret: process.env.X_CLIENT_SECRET
       });
 
       try {

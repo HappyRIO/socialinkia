@@ -1,7 +1,7 @@
 // CreateTemplate
 import { useState } from "react";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
-import { Facebook, Instagram, Store } from "lucide-react";
+import { Facebook, Instagram, X } from "lucide-react";
 import Loader from "../../components/fragments/Loader";
 
 export default function PostCreation() {
@@ -12,7 +12,7 @@ export default function PostCreation() {
   // const [generate, setgenerate] = useState(false);
   const [filePreviews, setFilePreviews] = useState([]);
   const [platform, setPlatform] = useState({
-    all: true,
+    all: false,
     xcom: true,
     insta: true,
     fbook: true
@@ -111,9 +111,6 @@ export default function PostCreation() {
       })
       .catch((error) => {
         // Show error message in toast and log for debugging
-        // toast.error(`Failed to create post: ${error.message}`, {
-        //   theme: "dark",
-        // });
         console.error("Error creating post:", error);
       });
   };
@@ -165,7 +162,7 @@ export default function PostCreation() {
                 </div>
                 <div className="googl flex flex-col justify-center items-center">
                   <label htmlFor="google">
-                    <Store />
+                    <X />
                   </label>
                   <input
                     onChange={handleChange}
