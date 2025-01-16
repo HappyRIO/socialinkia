@@ -72,7 +72,7 @@ const templateRoutes = require("./routes/apps/template");
 const contactRoutes = require("./routes/forms/contact");
 const paymentRoutes = require("./routes/apps/Stripe");
 const PostRoutes = require("./routes/apps/PostManager");
-const GmbRoutes = require("./routes/apps/Gmb");
+const xcom = require("./routes/apps/Xcom");
 const GptRoute = require("./routes/apps/GPT");
 
 // Test route
@@ -93,7 +93,7 @@ app.use("/api/templates", templateRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/subscription", paymentRoutes);
 app.use("/api/posts", PostRoutes);
-app.use("/api/gmb", GmbRoutes);
+app.use("/api/x", xcom);
 app.use("/api/gpt", GptRoute);
 
 // Serve static files for the React app

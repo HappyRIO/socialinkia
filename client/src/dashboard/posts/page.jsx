@@ -10,31 +10,31 @@ export default function Pending() {
   const [showall, setShowall] = useState(true);
   const [showfbook, setShowfbook] = useState(false);
   const [showinsta, setShowinsta] = useState(false);
-  const [showgmb, setShowgmb] = useState(false);
+  const [showxcom, setshowxcom] = useState(false);
 
   function handleshowall() {
     setShowall(true);
     setShowfbook(false);
     setShowinsta(false);
-    setShowgmb(false);
+    setshowxcom(false);
   }
   function handleshowinsta() {
     setShowall(false);
     setShowfbook(false);
     setShowinsta(true);
-    setShowgmb(false);
+    setshowxcom(false);
   }
   function handleshowfbook() {
     setShowall(false);
     setShowfbook(true);
     setShowinsta(false);
-    setShowgmb(false);
+    setshowxcom(false);
   }
-  function handleshowgmb() {
+  function handleshowxcom() {
     setShowall(false);
     setShowfbook(false);
     setShowinsta(false);
-    setShowgmb(true);
+    setshowxcom(true);
   }
 
   return (
@@ -76,9 +76,9 @@ export default function Pending() {
               <Instagram /> <span className="hidden sm:block">instagram</span>
             </div>
             <div
-              onClick={handleshowgmb}
+              onClick={handleshowxcom}
               className={`gmb-selector hover:bg-accent flex gap-2 flex-row justify-center items-center cursor-pointer text-center w-full ${
-                showgmb
+                showxcom
                   ? "border-[2px] border-accent border-b-[2px] border-b-background2"
                   : "border-b-[2px] border-b-accent"
               }`}
@@ -90,7 +90,8 @@ export default function Pending() {
             {showall && <AllPosts />}
             {showfbook && <FacebookPosts />}
             {showinsta && <InstagramPost />}
-            {showgmb && <GoogleMyBusinessPost />}
+            {/* google my business servers as xcom */}
+            {showxcom && <GoogleMyBusinessPost />}
           </div>
         </div>
       </div>

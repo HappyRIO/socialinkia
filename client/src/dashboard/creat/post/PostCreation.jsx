@@ -11,7 +11,7 @@ export default function PostCreation() {
   const [filePreviews, setFilePreviews] = useState([]);
   const [platform, setplatform] = useState({
     all: true,
-    google: false,
+    xcom: false,
     insta: false,
     fbook: false
   });
@@ -29,22 +29,22 @@ export default function PostCreation() {
       if (selectedValue === "fbook") {
         updatedState.fbook = true;
         updatedState.insta = false;
-        updatedState.google = false;
+        updatedState.xcom = false;
         updatedState.both = false;
       } else if (selectedValue === "insta") {
         updatedState.fbook = false;
-        updatedState.google = false;
+        updatedState.xcom = false;
         updatedState.insta = true;
         updatedState.both = false;
-      } else if (selectedValue === "google") {
-        updatedState.google = true;
+      } else if (selectedValue === "xcom") {
+        updatedState.xcom = true;
         updatedState.fbook = false;
         updatedState.insta = false;
         updatedState.both = false;
       } else {
         updatedState.fbook = false;
         updatedState.insta = false;
-        updatedState.google = false;
+        updatedState.xcom = false;
         updatedState.both = true;
       }
 
@@ -179,8 +179,8 @@ export default function PostCreation() {
                     <option className="text-text" value="all">
                       All
                     </option>
-                    <option className="text-text" value="google">
-                      google
+                    <option className="text-text" value="xcom">
+                      xcom
                     </option>
                     <option className="text-text" value="fbook">
                       Facebook

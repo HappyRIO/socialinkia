@@ -52,8 +52,8 @@ router.get("/auth/instagram", isSessionValid, async (req, res) => {
       selectedInstagramBusinessPage: {
         id: instagramBusinessAccountId,
         name: user.selectedFacebookBusinessPage.name,
-        accessToken: instagramAccessToken, // Assuming we are using the FB page's access token
-      },
+        accessToken: instagramAccessToken // Assuming we are using the FB page's access token
+      }
     });
 
     res.send("Instagram business account data saved successfully.");
@@ -62,42 +62,6 @@ router.get("/auth/instagram", isSessionValid, async (req, res) => {
     res.status(500).send("Error processing Instagram authorization.");
   }
 });
-
-// // Step 1: Redirect to Instagram for authorization
-// router.get("/auth/instagram", isSessionValid, async (req, res) => {
-//   console.log("Firing Instagram auth");
-
-//   const instagramRedirectUri = process.env.INSTAGRAM_REDIRECT_URI;
-//   const instagramClientId = process.env.FACEBOOK_APP_ID; // Shared with Facebook OAuth flow
-
-//   if (!instagramClientId || !instagramRedirectUri) {
-//     return res.status(500).send("Instagram Client ID or Redirect URI not set.");
-//   }
-
-//   const user = req.user;
-
-//   const igbusiness = fetch(
-//     `https://graph.facebook.com/v17.0/${user.selectedFacebookBusinessPage.id}?fields=instagram_business_account&access_token=${user.selectedFacebookBusinessPage.accessToken}`
-//   );
-
-//   const saveUser = User.findByIdAndUpdate{
-//     user._id,{
-
-//     }
-//   }
-
-//   // const scope = [
-//   //   "instagram_basic",
-//   //   "instagram_content_publish",
-//   //   "instagram_manage_insights",
-//   //   "pages_show_list",
-//   //   "business_management",
-//   // ].join(",");
-
-//   // const instagramAuthUrl = `https://www.facebook.com/v17.0/dialog/oauth?client_id=${instagramClientId}&redirect_uri=${instagramRedirectUri}&state=${req.user._id}&response_type=code&scope=${scope}`;
-
-//   // res.redirect(instagramAuthUrl);
-// });
 
 // Step 2: Handle Instagram OAuth callback
 router.get("/auth/instagram/callback", async (req, res) => {
@@ -117,7 +81,7 @@ router.get("/auth/instagram/callback", async (req, res) => {
       client_secret: process.env.FACEBOOK_APP_SECRET,
       grant_type: "authorization_code",
       redirect_uri: process.env.INSTAGRAM_REDIRECT_URI,
-      code,
+      code
     };
 
     console.log("Payload for token exchange:", tokenPayload);
@@ -202,8 +166,8 @@ router.get("/select-instagram-account", async (req, res) => {
         selectedInstagramBusinessPage: {
           id: accountId,
           name: accountName,
-          accessToken,
-        },
+          accessToken
+        }
       },
       { new: true }
     );
@@ -257,8 +221,8 @@ const validateAndRefreshToken = async (req, res, next) => {
         {
           params: {
             grant_type: "ig_refresh_token",
-            access_token: user.instagramAccessToken,
-          },
+            access_token: user.instagramAccessToken
+          }
         }
       );
 
@@ -304,7 +268,7 @@ router.post("/post", validateAndRefreshToken, async (req, res) => {
       {
         image_url: imageUrl,
         caption: caption,
-        access_token: req.instagramAccessToken,
+        access_token: req.instagramAccessToken
       }
     );
 
@@ -315,13 +279,13 @@ router.post("/post", validateAndRefreshToken, async (req, res) => {
       `https://graph.facebook.com/v17.0/${process.env.INSTAGRAM_USER_ID}/media_publish`,
       {
         creation_id: mediaContainerId,
-        access_token: req.instagramAccessToken,
+        access_token: req.instagramAccessToken
       }
     );
 
     res.status(200).json({
       message: "Content posted successfully!",
-      postId: publishResponse.data.id,
+      postId: publishResponse.data.id
     });
   } catch (error) {
     console.error("Error posting content on Instagram:", error.message);
@@ -338,14 +302,14 @@ router.get("/user/media", validateAndRefreshToken, async (req, res) => {
         params: {
           fields:
             "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp",
-          access_token: req.instagramAccessToken,
-        },
+          access_token: req.instagramAccessToken
+        }
       }
     );
 
     res.status(200).json({
       message: "User media retrieved successfully!",
-      media: mediaResponse.data.data,
+      media: mediaResponse.data.data
     });
   } catch (error) {
     console.error("Error retrieving user media:", error.message);
@@ -366,14 +330,14 @@ router.get(
         {
           params: {
             metric: "impressions,reach,engagement",
-            access_token: req.instagramAccessToken,
-          },
+            access_token: req.instagramAccessToken
+          }
         }
       );
 
       res.status(200).json({
         message: "Post insights retrieved successfully!",
-        insights: insightsResponse.data.data,
+        insights: insightsResponse.data.data
       });
     } catch (error) {
       console.error("Error retrieving post insights:", error.message);

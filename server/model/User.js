@@ -73,7 +73,7 @@ const postSchema = new Schema({
   text: { type: String },
   platform: {
     all: { type: Boolean, default: false },
-    gmb: { type: Boolean, default: false },
+    xcom: { type: Boolean, default: false },
     insta: { type: Boolean, default: false },
     fbook: { type: Boolean, default: false }
   },
@@ -92,28 +92,14 @@ const UserSchema = new Schema({
   isNewUser: { type: Boolean, required: true, default: true },
   password: { type: String },
   lastPostGenerationDate: { type: Date, default: null },
-
   // post manager
   posts: [postSchema],
-
   // account deactivation manager
   deleted: { type: Boolean, default: false },
-
-  // google my biz
-  gmbRefreshToken: { type: String },
-  // gmbLoactions: { type: String },
-
   // facebook zone
-  //  unique: true, sparse: true
   facebookId: { type: String },
   facebookAccessToken: { type: String },
   facebookTokenExpiry: { type: Date, default: null },
-
-  // instagram zone
-  // // , unique: true, sparse: true
-  // instagramId: { type: String },
-  // instagramAccessToken: { type: String },
-  // instagramTokenExpiry: { type: Date, default: null },
 
   // selected google business
   selectedFacebookBusinessPage: {
@@ -123,10 +109,11 @@ const UserSchema = new Schema({
   },
 
   // selected google business page
-  selectedGoogleBusinessPage: {
-    id: { type: String }, // Store the page ID
-    name: { type: String }, // Optionally store the page name
-    accessToken: { type: String } // Store page-specific access token if needed
+  selectedXcom: {
+    id: { type: String }, // User's Twitter ID
+    username: { type: String }, // User's Twitter username
+    accessToken: { type: String }, // Access token
+    refreshToken: { type: String } // Refresh token
   },
 
   // selected instagram business page

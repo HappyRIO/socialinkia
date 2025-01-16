@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
-import { Facebook, Instagram, Store } from "lucide-react";
+import { Facebook, Instagram, X } from "lucide-react";
 import Loader from "../../components/fragments/Loader";
 
 export default function Profile() {
@@ -50,7 +50,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const [connectfb, setconnectfb] = useState(false);
   const [connectig, setconnectig] = useState(false);
-  const [connectgmb, setconnectgmb] = useState(null);
+  const [connectxcom, setconnectxcom] = useState(null);
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -69,8 +69,8 @@ export default function Profile() {
           ...data.user.companyDetails,
           photos: data.user.companyDetails?.photos || []
         });
-        if (data.user.gmbrefreshToken) {
-          setconnectgmb(true);
+        if (data.user.selectedXcom) {
+          setconnectxcom(true);
         }
         if (data.user.selectedFacebookBusinessPage) {
           setconnectfb(true);
@@ -211,8 +211,8 @@ export default function Profile() {
     });
   }
 
-  function handleconnectGoogleMyBusiness() {
-    openAuthPopup(`/api/gmb/auth/gmb`, () => {
+  function handleConnectXcom() {
+    openAuthPopup(`/api/x/auth/xcom`, () => {
       setconnectig(true);
       window.location.href = "/dashboard/profile";
     });
@@ -233,11 +233,11 @@ export default function Profile() {
         <div className="w-full ml-0 sm:ml-64 py-3 px-2 flex flex-col justify-center items-center">
           <div className="flex gap-2 flex-col sm:flex-row justify-between w-full px-4 py-2">
             <button
-              className="bg-red-500 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
-              onClick={handleconnectGoogleMyBusiness}
+              className="bg-black w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+              onClick={handleConnectXcom}
             >
-              {connectgmb ? "google connected" : "connect google"}
-              <Store />
+              {connectxcom ? "x.com connected" : "connect x.com"}
+              <X />
             </button>
             <button
               onClick={handleconnectFacebook}

@@ -6,11 +6,13 @@ const connectDB = require("../../data/db");
 const isSessionValid = require("../../middleware/isSessionValid");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+console.log(process.env.STRIPE_SECRET_KEY);
+
 // Subscription plans (prices in cents)
 const subscriptionPlans = {
   monthly: { basic: 10000, standard: 25000, premium: 30000 },
   yearly: 300000,
-  payAsYouGo: 1000, // $10 per hour
+  payAsYouGo: 1000 // $10 per hour
 };
 
 // Route to create a payment intent for one-time payments
@@ -20,7 +22,7 @@ router.post("/create-payment-intent", async (req, res) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency,
-      automatic_payment_methods: { enabled: true },
+      automatic_payment_methods: { enabled: true }
     });
     res.status(200).json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
@@ -82,8 +84,9 @@ router.post("/create-payment-intent", async (req, res) => {
 // });
 
 // Route to create a subscription with a 1-week free trial
-router.post("/create-subscription", isSessionValid, async (req, res) => {
+router.post("/create-subscription", async (req, res) => {
   const { plan, cardDetails } = req.body;
+  console.log(req.body);
   const price = subscriptionPlans.monthly[plan];
 
   try {
@@ -93,14 +96,14 @@ router.post("/create-subscription", isSessionValid, async (req, res) => {
         number: cardDetails.cardNumber,
         exp_month: cardDetails.expiryMonth,
         exp_year: cardDetails.expiryYear,
-        cvc: cardDetails.cvc,
-      },
+        cvc: cardDetails.cvc
+      }
     });
 
     const customer = await stripe.customers.create({
       payment_method: paymentMethod.id,
       email: req.user.email,
-      invoice_settings: { default_payment_method: paymentMethod.id },
+      invoice_settings: { default_payment_method: paymentMethod.id }
     });
 
     const subscription = await stripe.subscriptions.create({
@@ -110,36 +113,37 @@ router.post("/create-subscription", isSessionValid, async (req, res) => {
           price_data: {
             currency: "usd",
             recurring: { interval: "month" },
-            unit_amount: price,
-          },
-        },
+            unit_amount: price
+          }
+        }
       ],
       trial_period_days: 5,
-      expand: ["latest_invoice.payment_intent"],
+      expand: ["latest_invoice.payment_intent"]
     });
 
-    const user = await User.findById(req.user._id);
-    user.subscription = {
-      id: subscription.id,
-      active: true,
-      plan,
-      amount: price,
-      currency: "usd",
-      trialEnd: new Date(subscription.trial_end * 1000), // Convert from timestamp
-      renewalDate: new Date(subscription.current_period_end * 1000),
-    };
+    // const user = await User.findById(req.user._id);
+    // user.subscription = {
+    //   id: subscription.id,
+    //   active: true,
+    //   plan,
+    //   amount: price,
+    //   currency: "usd",
+    //   trialEnd: new Date(subscription.trial_end * 1000), // Convert from timestamp
+    //   renewalDate: new Date(subscription.current_period_end * 1000)
+    // };
 
-    // Add the first payment to payment history
-    user.subscription.paymentHistory.push({
-      amount: price,
-      currency: "usd",
-      status: "succeeded", // Assuming the payment is successful
-      date: new Date(),
-    });
+    // // Add the first payment to payment history
+    // user.subscription.paymentHistory.push({
+    //   amount: price,
+    //   currency: "usd",
+    //   status: "succeeded", // Assuming the payment is successful
+    //   date: new Date()
+    // });
 
-    await user.save();
+    // await user.save();
 
-    res.status(200).json({ subscriptionDetails: user.subscription });
+    res.status(201).json({ message: "done and dusted ✔✔✔✔" });
+    // res.status(200).json({ subscriptionDetails: user.subscription });
   } catch (error) {
     console.error("Error creating subscription:", error);
     res.status(500).json({ error: "Failed to create subscription" });
@@ -188,7 +192,7 @@ router.get("/subscription-status", isSessionValid, async (req, res) => {
         : null,
       renewalDate: subscription.current_period_end
         ? new Date(subscription.current_period_end * 1000)
-        : null,
+        : null
     });
   } catch (error) {
     console.error("Error checking subscription status:", error);
@@ -215,7 +219,7 @@ router.get("/details", isSessionValid, async (req, res) => {
         : "0.00",
       trialEnd: subscription.trialEnd || null,
       renewalDate: subscription.renewalDate || null,
-      subscriptionId: subscription.id || null,
+      subscriptionId: subscription.id || null
     };
 
     res.status(200).json(subscriptionDetails);
@@ -248,7 +252,7 @@ router.get("/subscription-history", isSessionValid, async (req, res) => {
         : "0.00",
       trialEnd: subscription.trialEnd || null,
       renewalDate: subscription.renewalDate || null,
-      paymentHistory: subscription.paymentHistory || [], // Return payment history
+      paymentHistory: subscription.paymentHistory || [] // Return payment history
     };
 
     res.status(200).json(subscriptionHistory);
@@ -280,7 +284,7 @@ router.post(
 
       // Find the subscription from the invoice
       const user = await User.findOne({
-        "subscription.id": invoice.subscription,
+        "subscription.id": invoice.subscription
       });
       if (user) {
         // Add payment to the payment history
@@ -288,7 +292,7 @@ router.post(
           amount: invoice.amount_paid,
           currency: invoice.currency,
           status: "succeeded",
-          date: new Date(invoice.created * 1000),
+          date: new Date(invoice.created * 1000)
         });
 
         await user.save();

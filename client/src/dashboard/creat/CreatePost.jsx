@@ -13,7 +13,7 @@ export default function PostCreation() {
   const [filePreviews, setFilePreviews] = useState([]);
   const [platform, setPlatform] = useState({
     all: true,
-    gmb: true,
+    xcom: true,
     insta: true,
     fbook: true
   });
@@ -34,13 +34,13 @@ export default function PostCreation() {
         updatedState.fbook = isChecked;
       } else if (selectedValue === "insta") {
         updatedState.insta = isChecked;
-      } else if (selectedValue === "gmb") {
-        updatedState.gmb = isChecked;
+      } else if (selectedValue === "xcom") {
+        updatedState.xcom = isChecked;
       }
 
       // Update "all" to be true if any platform is selected, false if none are selected
       updatedState.all =
-        updatedState.fbook || updatedState.insta || updatedState.gmb;
+        updatedState.fbook || updatedState.insta || updatedState.xcom;
 
       return updatedState;
     });
@@ -171,9 +171,9 @@ export default function PostCreation() {
                     onChange={handleChange}
                     type="checkbox"
                     name="platform"
-                    value="gmb" // Set the value to "gmb"
+                    value="xcom" // Set the value to "xcom"
                     id="google"
-                    checked={platform.gmb} // Check if gmb is true
+                    checked={platform.xcom} // Check if xcom is true
                   />
                 </div>
               </div>

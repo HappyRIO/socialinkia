@@ -42,7 +42,7 @@ export default function GoogleMyBusinessPost() {
 
         // Filter posts where 'fbook' is true
         const filterGmbPost = (posts) =>
-          Array.isArray(posts) ? posts.filter((post) => post.platform.gmb) : [];
+          Array.isArray(posts) ? posts.filter((post) => post.platform.xcom) : [];
 
         setallpost(filterGmbPost(allData.posts));
         setscheduledpost(filterGmbPost(scheduledData.posts));

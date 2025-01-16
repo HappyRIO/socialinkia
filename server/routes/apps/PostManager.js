@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../../model/User");
 const isSessionValid = require("../../middleware/isSessionValid");
-const { cloudinary, connectCloudinary } = require("../../data/file");
+const { cloudinary } = require("../../data/file");
 const { Readable } = require("stream");
 const router = express.Router();
 const multer = require("multer");
@@ -9,7 +9,7 @@ const Agenda = require("agenda");
 const {
   publishToFacebook,
   publishToInstagram,
-  publishToGmb
+  publishToXcom
 } = require("../../handlers/PostRoutesHandler");
 
 // Multer configuration
@@ -139,13 +139,13 @@ const schedulePost = async (postId, userId) => {
         console.log(instaResult);
       }
 
-      if (post.platform.gmb) {
+      if (post.platform.xcom) {
         console.log({
-          message: `posted ${post._id} to gmb for ${user._id}`
+          message: `posted ${post._id} to xcom for ${user._id}`
         });
-        const gmbResult = await publishToGmb(post, user);
-        // post.socialPlatformIds.gmb = gmbResult.postId;
-        console.log(gmbResult);
+        const xcomresult = await publishToXcom(post, user);
+        // post.socialPlatformIds.gmb = xcomresult.postId;
+        console.log(xcomresult);
       }
 
       // Update post status to "published"
