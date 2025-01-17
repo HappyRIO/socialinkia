@@ -1,4 +1,4 @@
-const gptPostGenerator = require("./gptPostGenerator");
+const postGenerator = require("./PostGenerator");
 
 async function postAutoGenerator({ mainUser, updatedUser }) {
   let iterations = 0;
@@ -14,10 +14,14 @@ async function postAutoGenerator({ mainUser, updatedUser }) {
 
   for (let i = 0; i < iterations; i++) {
     const companyDetails = updatedUser.companyDetails;
-    const generatedData = await gptPostGenerator(companyDetails);
+    const generatedData = await postGenerator(companyDetails);
     const postContent = generatedData; // Extract the content field
     console.log({ autogen: postContent });
-    generatedPosts.push({ text: postContent, status: "draft" });
+    generatedPosts.push({
+      text: postContent.text,
+      images: [`${postContent.image}`],
+      status: "draft"
+    });
   }
 
   return generatedPosts;

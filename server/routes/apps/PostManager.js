@@ -1,8 +1,6 @@
 const express = require("express");
 const User = require("../../model/User");
 const isSessionValid = require("../../middleware/isSessionValid");
-const { cloudinary } = require("../../data/file");
-const { Readable } = require("stream");
 const router = express.Router();
 const multer = require("multer");
 const Agenda = require("agenda");
@@ -11,6 +9,9 @@ const {
   publishToInstagram,
   publishToXcom
 } = require("../../handlers/PostRoutesHandler");
+const uploadImagesToCloudinary = require("../../handlers/UploadImageToCloudinary");
+const uploadVideosToCloudinary = require("../../handlers/UploadVideoToCloudinary");
+const deletemediafromcloudinary = require("../../handlers/DeleteMediaFromCloudinary");
 
 // Multer configuration
 const storage = multer.memoryStorage();
@@ -20,89 +21,6 @@ const upload = multer({ storage });
 const agenda = new Agenda({
   db: { address: `${process.env.DATA_BASE_URL}` }
 });
-
-// Cloudinary helpers
-const uploadImagesToCloudinary = async (files) => {
-  console.log("processing images");
-  const urls = [];
-  for (const file of files) {
-    const result = await new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: "automedia" },
-        (error, result) => {
-          if (error) {
-            console.error("Cloudinary upload error:", error);
-            reject(error);
-          } else {
-            resolve(result.secure_url);
-          }
-        }
-      );
-      Readable.from(file.buffer).pipe(stream);
-    });
-    urls.push(result);
-  }
-  return urls;
-};
-
-const uploadVideosToCloudinary = async (files) => {
-  console.log("Processing videos...");
-  const urls = [];
-
-  for (const file of files) {
-    const result = await new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: "automedia/videos", resource_type: "video" }, // Specify the folder path
-        (error, result) => {
-          if (error) {
-            console.error("Cloudinary upload error:", error);
-            reject(error);
-          } else {
-            resolve(result.secure_url);
-          }
-        }
-      );
-
-      // Stream the file buffer to Cloudinary
-      Readable.from(file.buffer).pipe(stream);
-    });
-
-    urls.push(result);
-  }
-
-  return urls;
-};
-
-//helper function for deleting images
-async function deleteImagesFromCloudinary(imageUrls) {
-  for (const url of imageUrls) {
-    const publicId = url.split("/").pop().split(".")[0]; // Extract Cloudinary public ID
-    await cloudinary.uploader.destroy(`automedia / ${publicId}`);
-  }
-}
-
-async function deleteMedia(mediaUrls) {
-  try {
-    for (const url of mediaUrls) {
-      const publicId = url.split("/").pop().split(".")[0]; // Extract Cloudinary public ID
-      const resourceType = url.includes("/video/") ? "video" : "image"; // Determine resource type
-
-      if ((resourceType = "video")) {
-        console.log("video resourse deleting");
-      }
-
-      if ((resourceType = "image")) {
-        console.log("image resourse deleting");
-      }
-
-      await cloudinary.uploader.destroy(`automedia/${publicId}`, {
-        resource_type: resourceType
-      });
-    }
-  } catch (error) {
-    console.error("Error deleting media from Cloudinary:", error);
-  }
-}
 
 // Schedule a post for publishing
 const schedulePost = async (postId, userId) => {
@@ -317,7 +235,7 @@ router.put(
       // Delete removed media from Cloudinary
       const removedMedia = [...removedImages, ...removedVideos];
       if (removedMedia.length > 0) {
-        await deleteMedia(removedMedia);
+        await deletemediafromcloudinary(removedMedia);
       }
 
       function updateTime(uploadDate, post) {
@@ -370,7 +288,7 @@ router.delete("/:id", isSessionValid, async (req, res) => {
     }
 
     if (post.images.length) {
-      await deleteImagesFromCloudinary(post.images);
+      await deletemediafromcloudinary(post.images);
     }
 
     req.user.posts.pull(req.params.id);

@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-import lineClamp from "@tailwindcss/line-clamp";
-import aspectRatio from "@tailwindcss/aspect-ratio";
+// import lineClamp from "@tailwindcss/line-clamp";
+// import aspectRatio from "@tailwindcss/aspect-ratio";
 
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
     extend: {
@@ -18,12 +18,13 @@ export default {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
         accent: "var(--accent)",
-        card: "var(--card)",
+        card: "var(--card)"
       },
       screens: {
-        xsm: "400px",
-      },
-    },
+        xsm: "400px"
+      }
+    }
   },
-  plugins: [lineClamp, aspectRatio],
+  // plugins: [lineClamp, aspectRatio],
+  plugins: []
 };

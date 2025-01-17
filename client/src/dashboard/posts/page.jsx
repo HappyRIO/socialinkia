@@ -1,4 +1,4 @@
-import { Facebook, GalleryHorizontal, Instagram, Store } from "lucide-react";
+import { Facebook, GalleryHorizontal, Instagram, X } from "lucide-react";
 import AllPosts from "../../components/fragments/post/AllPosts";
 import FacebookPosts from "../../components/fragments/post/FacebookPosts";
 import GoogleMyBusinessPost from "../../components/fragments/post/GoogleMyBusinessPost";
@@ -83,7 +83,7 @@ export default function Pending() {
                   : "border-b-[2px] border-b-accent"
               }`}
             >
-              <Store /> <span className="hidden sm:block">google</span>
+              <X /> <span className="hidden sm:block">x.com</span>
             </div>
           </div>
           <div className="postzone bg-background2 w-full">

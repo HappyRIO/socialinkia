@@ -1,6 +1,6 @@
 const cron = require("node-cron");
-const gptPostGenerator = require("../middleware/gptPostGenerator");
 const User = require("../model/User");
+const postGenerator = require("./PostGenerator");
 
 function TimeBasedPostGenerator() {
   console.log("starting cron job system for monthly post generation.");
@@ -31,11 +31,11 @@ function TimeBasedPostGenerator() {
 
           for (let i = 0; i < iterations; i++) {
             const companyDetails = user.companyDetails;
-            const generatedData = await gptPostGenerator(companyDetails);
+            const generatedData = await postGenerator(companyDetails);
             const postContent = generatedData;
             console.log(`generating new monthly post for ${user?.email} `);
             const newPost = {
-              text: postContent,
+              text: postContent.text,
               platform: {
                 all: false,
                 gmb: false,
@@ -43,7 +43,7 @@ function TimeBasedPostGenerator() {
                 fbook: false
               },
               uploadDate: new Date().toISOString(),
-              images: [],
+              images: [`${postContent.image}`],
               videos: [],
               status: "draft"
             };

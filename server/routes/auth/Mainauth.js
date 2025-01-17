@@ -8,7 +8,7 @@ const router = express.Router();
 const { cloudinary, connectCloudinary } = require("../../data/file");
 const { Readable } = require("stream");
 const multer = require("multer");
-const postAutoGenerator = require("../../middleware/postAutoGenerator");
+const postAutoGenerator = require("../../handlers/postAutoGenerator");
 const isSessionValid = require("../../middleware/isSessionValid");
 
 // Multer configuration for in-memory file storage

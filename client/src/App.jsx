@@ -18,6 +18,7 @@ import Subscrptionmain from "./signup/subscription/sub";
 import SignupMain from "./signup/subscription/signup/signup";
 import BusinessForm from "./signup/subscription/signup/companies/Details";
 import PostAnalysis from "./dashboard/posts/analysis/page";
+import CalendarPage from "./dashboard/calender/page";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -51,6 +52,8 @@ const router = createBrowserRouter([
     element: <PrivateRoute Component={PostCreation} />
   },
   { path: "/dashboard/posts", element: <PrivateRoute Component={Pending} /> },
+  // { path: "/dashboard/posts", element: <Pending /> },
+  { path: "/dashboard/calender", element: <CalendarPage /> },
   {
     path: "/dashboard/analize/:postId",
     element: <PrivateRoute Component={PostAnalysis} />

@@ -12,14 +12,14 @@ const proxyOptions = {
 export default defineConfig({
   plugins: [react()],
   // base: "/autosocial/",
-  server: {
-    host: "localhost",
-    port: 5172,
-    proxy: {
-      "^/(\\?.*)?$": proxyOptions,
-      "^/api(/|(\\?.*)?$)": proxyOptions
-    }
-  },
+  // server: {
+  //   host: "localhost",
+  //   port: 5172,
+  //   proxy: {
+  //     "^/(\\?.*)?$": proxyOptions,
+  //     "^/api(/|(\\?.*)?$)": proxyOptions
+  //   }
+  // },
   build: {
     rollupOptions: {
       output: {
