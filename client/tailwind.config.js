@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 // import lineClamp from "@tailwindcss/line-clamp";
 // import aspectRatio from "@tailwindcss/aspect-ratio";
+import scrollbarHide from "tailwind-scrollbar-hide";
 
 export default {
   content: [
@@ -26,5 +27,5 @@ export default {
     }
   },
   // plugins: [lineClamp, aspectRatio],
-  plugins: []
+  plugins: [scrollbarHide]
 };

@@ -1,11 +1,11 @@
-client/.env
-server/.env
-backup
+# client/.env
+# server/.env
+# backup
 
 server/node_modules/
 client/node_modules/
 
-sever/client_info.json
+# sever/client_info.json
 
 /ngrok.yml
 /vite_test

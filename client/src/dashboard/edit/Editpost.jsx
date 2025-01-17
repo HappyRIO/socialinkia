@@ -8,7 +8,6 @@ export default function Editpost() {
   const { postId } = useParams();
   const [loading, setLoading] = useState(false);
   const [postText, setPostText] = useState("");
-  const [aitext, setAitext] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [filePreviews, setFilePreviews] = useState([]);
   const [platform, setplatform] = useState({
@@ -80,10 +79,6 @@ export default function Editpost() {
 
   const handleTextChange = (e) => {
     setPostText(e.target.value);
-  };
-
-  const handleAiTextChange = (e) => {
-    setAitext(e.target.value);
   };
 
   const handleDateChange = (e) => {
@@ -235,13 +230,6 @@ export default function Editpost() {
               </div>
             </div>
             <div className="postText w-full flex flex-col gap-2">
-              {/* <input
-              onChange={handleAiTextChange}
-              className="rounded-lg p-2 w-full"
-              type="text"
-              value={aitext}
-              placeholder="Prompt AI assistant ..."
-            /> */}
               <textarea
                 className="w-full rounded-lg focus:border-accent p-2"
                 name="postText"
@@ -319,18 +307,6 @@ export default function Editpost() {
                   className="bg-background p-2 rounded-lg w-full"
                 />
               </div>
-              {/* <div className="w-full flex flex-col gap-1 justify-center items-center">
-              <label>Select platform</label>
-              <select
-                onChange={handleChange}
-                className="rounded-lg p-2 text-center"
-              >
-                <option value="all">All</option>
-                <option value="gmb">Google</option>
-                <option value="fbook">Facebook</option>
-                <option value="insta">Instagram</option>
-              </select>
-            </div> */}
             </div>
             <div className="button-space w-full flex flex-col sm:flex-row gap-10 justify-center items-center">
               <button

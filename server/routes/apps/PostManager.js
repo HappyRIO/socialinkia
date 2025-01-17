@@ -114,7 +114,7 @@ router.post(
       const post = {
         text,
         platform: JSON.parse(platform),
-        uploadDate,
+        uploadDate: new Date(uploadDate).toISOString(), // Convert local time to UTC
         images: imageUrls,
         videos: videoUrls
       };
@@ -216,58 +216,51 @@ router.put(
       const uploadedImageUrls = await uploadImagesToCloudinary(newImages);
       const uploadedVideoUrls = await uploadVideosToCloudinary(newVideos);
 
-      // Ensure existingImages and existingVideos are arrays
+      // Normalize `images` and `videos` fields into arrays
       const existingImages = Array.isArray(req.body.images)
         ? req.body.images
-        : [];
-      const existingVideos = Array.isArray(req.body.videos)
-        ? req.body.videos
+        : req.body.images
+        ? [req.body.images]
         : [];
 
-      // Check for removed images and videos
+      const existingVideos = Array.isArray(req.body.videos)
+        ? req.body.videos
+        : req.body.videos
+        ? [req.body.videos]
+        : [];
+
+      // Filter out invalid URLs (e.g., blob URLs)
+      const validImages = existingImages.filter((url) =>
+        url.startsWith("https://res.cloudinary.com")
+      );
+      const validVideos = existingVideos.filter((url) =>
+        url.startsWith("https://res.cloudinary.com")
+      );
+
+      // Identify removed images and videos
       const removedImages = post.images.filter(
-        (url) => !existingImages.includes(url)
+        (url) => !validImages.includes(url)
       );
       const removedVideos = post.videos.filter(
-        (url) => !existingVideos.includes(url)
+        (url) => !validVideos.includes(url)
       );
 
       // Delete removed media from Cloudinary
-      const removedMedia = [...removedImages, ...removedVideos];
-      if (removedMedia.length > 0) {
-        await deletemediafromcloudinary(removedMedia);
+      if (removedImages.length > 0 || removedVideos.length > 0) {
+        await deletemediafromcloudinary([...removedImages, ...removedVideos]);
       }
 
-      function updateTime(uploadDate, post) {
-        const currentTime = new Date();
-        console.log(currentTime.toLocaleString()); // Local time as a string
-        console.log(currentTime.toUTCString()); // UTC time as a string
+      // Update the post's media with only retained and newly uploaded URLs
+      post.images = [...validImages, ...uploadedImageUrls];
+      post.videos = [...validVideos, ...uploadedVideoUrls];
 
-        // Only update the time if the post status is "failed"
-        if (post.status === "failed") {
-          const newTime = new Date(currentTime.getTime() + 5 * 60000); // Add 5 minutes
-          const formattedNewTime = newTime.toISOString().slice(0, 16); // Format to "YYYY-MM-DDTHH:MM"
-
-          console.log(currentTime);
-          if (uploadDate === post.uploadDate) {
-            return formattedNewTime;
-          } else {
-            return uploadDate || post.uploadDate;
-          }
-        }
-
-        // If the post status is not "failed", return the existing uploadDate
-        return uploadDate || post.uploadDate;
-      }
-
-      // Update post fields
+      // Update other post fields
       post.text = text || post.text;
       post.status = "scheduled";
-      post.uploadDate = updateTime(uploadDate, post); // Call the function with arguments
+      post.uploadDate = uploadDate || post.uploadDate;
       post.platform = platform ? JSON.parse(platform) : post.platform;
-      post.images = [...existingImages, ...uploadedImageUrls];
-      post.videos = [...existingVideos, ...uploadedVideoUrls];
 
+      // Save changes and reschedule the post
       await req.user.save();
       await schedulePost(post._id, req.user._id);
 
@@ -289,6 +282,10 @@ router.delete("/:id", isSessionValid, async (req, res) => {
 
     if (post.images.length) {
       await deletemediafromcloudinary(post.images);
+    }
+
+    if (post.videos.length) {
+      await deletemediafromcloudinary(post.videos);
     }
 
     req.user.posts.pull(req.params.id);

@@ -176,31 +176,11 @@ export default function PostCreation() {
               </div>
             </div>
             <div className="postText w-full flex flex-col gap-2">
-              {/* <div className="promt-ai flex flex-col md:flex-row gap-2">
-              <div className="w-full">
-                <input
-                  onChange={handleAiTextChange}
-                  className="rounded-lg p-2 w-full"
-                  type="text"
-                  value={aitext}
-                  placeholder="Prompt AI assistant ( optional )..."
-                />
-              </div>
-              <div className="promt-space">
-                <button
-                  onClick={handleGeneratePost}
-                  className="p-2 bg-accent rounded-lg"
-                >
-                  {generate ? "generating....." : "generate"}
-                </button>
-              </div>
-            </div> */}
-
               <textarea
                 className="w-full rounded-lg focus:border-accent p-2"
                 name="postText"
                 id="postText"
-                placeholder="you can generate post or Write your post..."
+                placeholder="Write your post..."
                 rows="7"
                 value={postText}
                 onChange={handleTextChange}

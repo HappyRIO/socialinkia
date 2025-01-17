@@ -331,8 +331,7 @@ const publishToXcom = async (post, user) => {
 
     return {
       success: true,
-      postId: response.data.id,
-      url: `https://x.com/${user.selectedXcom.username}/status/${response.data.id}`
+      postId: response.data.id
     };
   } catch (error) {
     console.error("Error publishing to X.com:", error);
