@@ -160,6 +160,11 @@ const BusinessForm = () => {
   if (loading) {
     return (
       <div className="fixed inset-0 flex justify-center items-center">
+        <div className="w-full absolute inset-0 animate-pulse font-bold text-3xl text-center flex justify-center items-center">
+          <div className="w-fit">
+            <p>Generating posts .....</p>
+          </div>
+        </div>
         <Loader />
       </div>
     );

@@ -6,7 +6,8 @@ const { createCanvas, loadImage } = require("canvas");
 const uploadImagesToCloudinary = require("./UploadImageToCloudinary");
 
 // Load environment variables
-dotenv.config({ path: "../.env" });
+// dotenv.config({ path: "../.env" });
+dotenv.config();
 
 const CHATGPT_API_URL = "https://api.openai.com/v1/chat/completions";
 const CHATGPT_API_KEY = process.env.GPT_API_KEY;
@@ -59,7 +60,7 @@ async function getDominantColor(imagePath) {
 
 // Function to generate an image with the text prompt
 async function generateImage(prompt) {
-  const backgroundFolder = "../images/backgroundimages";
+  const backgroundFolder = path.join(__dirname, "../images/backgroundimages");
   const randomBackgroundPath = getRandomBackground(backgroundFolder);
 
   const dominantColor = await getDominantColor(randomBackgroundPath);
@@ -154,6 +155,7 @@ async function postGenerator(companyDetails) {
   });
 
   const rawData = await response.json();
+  console.log(rawData);
   let messageContent = rawData.choices[0].message.content.trim();
   // Remove any unnecessary double or single quotes at the beginning and end of the string
   messageContent = messageContent.replace(/^["']+|["']+$/g, "").trim();

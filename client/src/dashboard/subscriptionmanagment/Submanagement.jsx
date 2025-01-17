@@ -144,13 +144,15 @@ export default function Submanagement() {
             <h2 className="text-xl font-semibold mb-4">Your Subscription</h2>
             <div className="subscription-details mb-4">
               <p>
-                <strong>Plan:</strong> {subscriptionData.plan}
+                <strong>Plan:</strong> {subscriptionData?.plan || "undefines"}
               </p>
               <p>
-                <strong>Status:</strong> {subscriptionData.status}
+                <strong>Status:</strong>{" "}
+                {subscriptionData?.status || "loading.."}
               </p>
               <p>
-                <strong>Amount:</strong> {subscriptionData.amount}
+                <strong>Amount:</strong>{" "}
+                {subscriptionData?.amount || "loading.."}
               </p>
               {subscriptionData.trialEnd && (
                 <p>
