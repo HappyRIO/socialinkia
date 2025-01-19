@@ -237,7 +237,8 @@ export default function Profile() {
               onClick={handleConnectXcom}
             >
               {connectxcom ? "x.com connected" : "connect x.com"}
-              <X />
+              {/* <X /> */}
+              <img className="w-6 h-6" src="/icons/xcom.svg" alt="" />
             </button>
             <button
               onClick={handleconnectFacebook}

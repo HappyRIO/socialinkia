@@ -11,15 +11,15 @@ const initialPosts = [
     title: "New product launch!",
     uploadDate: "2025-01-16T09:00",
     platform: "Facebook",
-    description: "Our latest product is launching soon!"
+    description: "Our latest product is launching soon!",
   },
   {
     id: "2",
     title: "New blog post",
     uploadDate: "2025-01-16T11:00",
     platform: "Instagram",
-    description: "Check out our latest blog post."
-  }
+    description: "Check out our latest blog post.",
+  },
 ];
 
 export default function CalendarPage() {
@@ -32,7 +32,7 @@ export default function CalendarPage() {
     setLoading(true); // Optional: To ensure loading state is updated before fetching
     fetch("/api/posts/all", {
       method: "GET",
-      credentials: "include"
+      credentials: "include",
     })
       .then((res) => res.json()) // Call res.json() to parse the response
       .then((data) => {
@@ -71,8 +71,36 @@ export default function CalendarPage() {
       </div>
       <div className="contentzone flex flex-col gap-3 pt-3 px-2 ml-0 sm:ml-64 w-full">
         <h2 className="text-xl font-bold">Post Scheduler</h2>
-        <div className="w-full flex gap-4">
-          <Calendar onChange={handleDateChange} value={selectedDate} />
+        <div className="w-full flex justify-center items-center sm:flex-row sm:gap-2">
+          <div className="w-fit">
+            <Calendar onChange={handleDateChange} value={selectedDate} />
+          </div>
+          <div className="w-full h-full hidden gap-4 sm:flex flex-col justify-center items-center">
+            <div className="w-full h-full gap-2 p-2 rounded-md text-center bg-background2 flex flex-col justify-center items-center">
+              <div className="w-full text-center">
+                <p>Published post</p>
+              </div>
+              <div className="w-full text-center">
+                <p>14</p>
+              </div>
+            </div>
+            <div className="w-full h-full gap-2 p-2 rounded-md text-center bg-background2 flex flex-col justify-center items-center">
+              <div className="w-full text-center">
+                <p>Scheduled post</p>
+              </div>
+              <div className="w-full text-center">
+                <p>27</p>
+              </div>
+            </div>
+            <div className="w-full h-full gap-2 p-2 rounded-md text-center bg-background2 flex flex-col justify-center items-center">
+              <div className="w-full text-center">
+                <p>Faild post</p>
+              </div>
+              <div className="w-full text-center">
+                <p>6</p>
+              </div>
+            </div>
+          </div>
         </div>
         {loading ? (
           <Loader />

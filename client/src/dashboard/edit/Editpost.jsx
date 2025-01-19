@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
-import { Facebook, Instagram, Store } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 import Loader from "../../components/fragments/Loader";
 
 export default function Editpost() {
@@ -216,7 +216,7 @@ export default function Editpost() {
                 </div>
                 <div className="googl flex flex-col justify-center items-center">
                   <label htmlFor="google">
-                    <Store />
+                  <img className="w-6 h-6" src="/icons/xcomb.svg" alt="" /> 
                   </label>
                   <input
                     onChange={handleChange}

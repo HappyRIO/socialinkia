@@ -1,7 +1,7 @@
 // CreateTemplate
 import { useState } from "react";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
-import { Facebook, Instagram, X } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 import Loader from "../../components/fragments/Loader";
 
 export default function PostCreation() {
@@ -162,7 +162,7 @@ export default function PostCreation() {
                 </div>
                 <div className="googl flex flex-col justify-center items-center">
                   <label htmlFor="google">
-                    <X />
+                  <img className="w-6 h-6" src="/icons/xcomb.svg" alt="" /> 
                   </label>
                   <input
                     onChange={handleChange}

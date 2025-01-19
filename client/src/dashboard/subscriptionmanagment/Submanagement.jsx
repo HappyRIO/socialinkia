@@ -154,7 +154,7 @@ export default function Submanagement() {
                 <strong>Amount:</strong>{" "}
                 {subscriptionData?.amount || "loading.."}
               </p>
-              {subscriptionData.trialEnd && (
+              {subscriptionData?.trialEnd && (
                 <p>
                   <strong>Trial End:</strong>{" "}
                   {new Date(

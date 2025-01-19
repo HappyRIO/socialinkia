@@ -13,7 +13,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function PostContainer({ data }) {
-  const { fbook, insta, gmb } = data?.platform || {};
+  const { fbook, insta, xcom } = data?.platform || {};
   const [postContent, setPostContent] = useState(data?.text || "");
 
   const textColor =
@@ -25,7 +25,7 @@ export default function PostContainer({ data }) {
       ? "text-green-500"
       : "text-black";
 
-  const platformCount = [fbook, insta, gmb].filter(Boolean).length;
+  const platformCount = [fbook, insta, xcom].filter(Boolean).length;
   const isButtonEnabled =
     data?.status === "scheduled" ||
     data?.status === "failed" ||
@@ -45,7 +45,7 @@ export default function PostContainer({ data }) {
                   <>
                     {fbook && <Facebook />}
                     {insta && <Instagram />}
-                    {gmb && <Store />}
+                    {xcom && <img className="w-6 h-6" src="/icons/xcom.svg" alt="" />}
                   </>
                 )}
               </div>
@@ -132,7 +132,7 @@ export default function PostContainer({ data }) {
                   <>
                     {fbook && <Facebook />}
                     {insta && <Instagram />}
-                    {gmb && <X />}
+                    {xcom && <X />}
                   </>
                 )}
               </div>
