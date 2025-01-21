@@ -6,7 +6,8 @@ const { createCanvas, loadImage } = require("canvas");
 const uploadImagesToCloudinary = require("./UploadImageToCloudinary");
 
 // Load environment variables
-dotenv.config({ path: "../.env" });
+// dotenv.config({ path: "../.env" });
+dotenv.config();
 
 const CHATGPT_API_URL = "https://api.openai.com/v1/chat/completions";
 const CHATGPT_API_KEY = process.env.GPT_API_KEY;
@@ -58,8 +59,8 @@ async function getDominantColor(imagePath) {
 }
 
 // Function to generate an image with the text prompt
-async function generateImage(prompt, outputFilePath) {
-  const backgroundFolder = "../images/backgroundimages";
+async function generateImage(prompt) {
+  const backgroundFolder = path.join(__dirname, "../images/backgroundimages");
   const randomBackgroundPath = getRandomBackground(backgroundFolder);
 
   const dominantColor = await getDominantColor(randomBackgroundPath);
@@ -122,21 +123,14 @@ async function generateImage(prompt, outputFilePath) {
   const textY = canvas.height / 2;
   wrapText(ctx, prompt, textX, textY, maxWidth, 50);
 
-  // Save final image
-  const finalBuffer = canvas.toBuffer("image/png");
-  fs.writeFileSync(outputFilePath, finalBuffer);
-  console.log(`Final image with text saved to ${outputFilePath}`);
+  const buffer = canvas.toBuffer("image/png");
+  const imageUrl = await uploadImagesToCloudinary([{ buffer }]);
+
+  return imageUrl;
 }
 
 // Function to generate a social media post
-async function generatePost() {
-  const companyDetails = {
-    companyTradeName: "Metro Tech",
-    businessSector: "IT Services",
-    communication_style: "joke",
-    communication_style_other: "geek, IT humor, sass jokes"
-  };
-
+async function postGenerator(companyDetails) {
   const response = await fetch(CHATGPT_API_URL, {
     method: "POST",
     headers: {
@@ -161,22 +155,22 @@ async function generatePost() {
   });
 
   const rawData = await response.json();
+  console.log(rawData);
   let messageContent = rawData.choices[0].message.content.trim();
-
-  console.log({ messageContent });
-
-  const outputFilePath = "./socialMediaPost.png";
-  const imageUrl = uploadImagesToCloudinary(outputFilePath);
-  await generateImage(messageContent, outputFilePath);
+  // Remove any unnecessary double or single quotes at the beginning and end of the string
+  messageContent = messageContent.replace(/^["']+|["']+$/g, "").trim();
+  const postimagegenerator = await generateImage(messageContent);
 
   const generatedPost = {
     text: messageContent,
-    image: imageUrl
+    image: postimagegenerator
   };
+
+  console.log(generatedPost);
 
   return generatedPost;
 }
 
-generatePost().catch(console.error);
+// postGenerator().catch(console.error);
 
-// module.exports = generatePost;
+module.exports = postGenerator;

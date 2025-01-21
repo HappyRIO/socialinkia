@@ -5,6 +5,7 @@ const BusinessForm = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     userName: "",
+    language: "",
     logo: null,
     logoPreview: null, // For preview
     companyTradeName: "",
@@ -44,7 +45,7 @@ const BusinessForm = () => {
     valuable_content: [],
     valuable_content_other: "",
     communication_style: "",
-    communication_style_other: ""
+    communication_style_other: "",
   });
 
   const handleChange = (e) => {
@@ -55,7 +56,7 @@ const BusinessForm = () => {
       setFormData((prev) => ({
         ...prev,
         logo: logoFile,
-        logoPreview: URL.createObjectURL(logoFile)
+        logoPreview: URL.createObjectURL(logoFile),
       }));
     } else if (name === "photos" && files) {
       const photoFiles = Array.from(files);
@@ -64,7 +65,7 @@ const BusinessForm = () => {
       setFormData((prev) => ({
         ...prev,
         photos: photoFiles,
-        photosPreview: photoPreviews
+        photosPreview: photoPreviews,
       }));
     } else if (name === "business_definition") {
       setFormData((prev) => {
@@ -74,7 +75,7 @@ const BusinessForm = () => {
           if (currentDefinitions.length < 3) {
             return {
               ...prev,
-              business_definition: [...currentDefinitions, value]
+              business_definition: [...currentDefinitions, value],
             };
           }
         } else {
@@ -83,7 +84,7 @@ const BusinessForm = () => {
             ...prev,
             business_definition: currentDefinitions.filter(
               (item) => item !== value
-            )
+            ),
           };
         }
         return prev; // Return previous state if no changes are made
@@ -96,7 +97,7 @@ const BusinessForm = () => {
 
         return {
           ...prevData,
-          customer_type: updatedCustomerType
+          customer_type: updatedCustomerType,
         };
       });
     } else if (name === "age_range") {
@@ -107,13 +108,13 @@ const BusinessForm = () => {
 
         return {
           ...prevData,
-          age_range: updatedAgeRange
+          age_range: updatedAgeRange,
         };
       });
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: value
+        [name]: value,
       }));
     }
   };
@@ -139,7 +140,7 @@ const BusinessForm = () => {
       const response = await fetch(`/api/auth/user/details`, {
         method: "PUT",
         body: form,
-        credentials: "include"
+        credentials: "include",
       });
 
       if (response.ok) {
@@ -269,10 +270,73 @@ const BusinessForm = () => {
                 "Trips",
                 "Spirituality/Esotericism",
                 "Chiropodist",
-                "Other"
+                "Other",
               ].map((sector) => (
                 <option key={sector} value={sector}>
                   {sector}
+                </option>
+              ))}
+            </select>
+            <select
+              className="p-2 rounded-lg w-full"
+              name="language"
+              value={formData.language}
+              onChange={handleChange}
+            >
+              <option value="">Main business language</option>
+              {[
+                "English",
+                "Spanish",
+                "French",
+                "German",
+                "Chinese",
+                "Japanese",
+                "Korean",
+                "Italian",
+                "Portuguese",
+                "Russian",
+                "Arabic",
+                "Hindi",
+                "Bengali",
+                "Punjabi",
+                "Javanese",
+                "Vietnamese",
+                "Telugu",
+                "Marathi",
+                "Tamil",
+                "Urdu",
+                "Turkish",
+                "Persian",
+                "Swahili",
+                "Dutch",
+                "Greek",
+                "Hebrew",
+                "Thai",
+                "Malay",
+                "Indonesian",
+                "Filipino",
+                "Swedish",
+                "Norwegian",
+                "Danish",
+                "Finnish",
+                "Polish",
+                "Czech",
+                "Hungarian",
+                "Romanian",
+                "Bulgarian",
+                "Ukrainian",
+                "Serbian",
+                "Croatian",
+                "Slovak",
+                "Slovenian",
+                "Lithuanian",
+                "Latvian",
+                "Estonian",
+                "Icelandic",
+                "Maltese",
+              ].map((language, index) => (
+                <option key={index} value={language}>
+                  {language}
                 </option>
               ))}
             </select>
@@ -355,7 +419,7 @@ const BusinessForm = () => {
                     "Valladolid",
                     "Biscay (Bizkaia)",
                     "Zamora",
-                    "Saragossa"
+                    "Saragossa",
                   ].map((province) => (
                     <option key={province} value={province}>
                       {province}
@@ -524,7 +588,7 @@ const BusinessForm = () => {
                 "Speed",
                 "Technology",
                 "Traditional",
-                "Vision"
+                "Vision",
               ].map((item) => (
                 <label key={item}>
                   <input
@@ -732,7 +796,7 @@ const BusinessForm = () => {
                 "46_55",
                 "56_65",
                 "over_65",
-                "companies"
+                "companies",
               ].map((age) => (
                 <label key={age}>
                   <input
@@ -762,7 +826,7 @@ const BusinessForm = () => {
                 "sporting_events",
                 "cultural_activities",
                 "geeky_content",
-                "social_issues"
+                "social_issues",
               ].map((content) => (
                 <label key={content}>
                   <input
@@ -820,7 +884,7 @@ const BusinessForm = () => {
                 "persuasive",
                 "informative",
                 "technical",
-                "motivational"
+                "motivational",
               ].map((style) => (
                 <option key={style} value={style}>
                   {style.charAt(0).toUpperCase() + style.slice(1)}

@@ -213,6 +213,7 @@ router.put(
     try {
       const {
         userName,
+        language,
         companyTradeName,
         businessSector,
         addressVisible,
@@ -335,6 +336,7 @@ router.put(
       const updateData = {
         companyDetails: {
           userName,
+          language,
           logo: logoUrl || companyDetails.logo,
           companyTradeName,
           businessSector,

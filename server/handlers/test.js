@@ -10,8 +10,8 @@ const PEXELS_API_URL = "https://api.pexels.com/v1/search";
 const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 
 console.log({
-  CHATGPT_API_KEY: process.env.GPT_API_KEY,
-  PEXELS_API_KEY: process.env.PEXELS_API_KEY,
+  PEXELS_API_KEY: PEXELS_API_KEY,
+  CHATGPT_API_KEY: CHATGPT_API_KEY,
 });
 
 // Function to fetch an image from Pexels API
@@ -37,6 +37,7 @@ async function getPexelsImage(query) {
 
   // Choose a random image from the results
   const randomIndex = Math.floor(Math.random() * data.photos.length);
+  console.log({ pexels_image: data.photos[randomIndex].src.original });
   return data.photos[randomIndex].src.original;
 }
 
@@ -57,34 +58,9 @@ async function postGenerator(companyDetails) {
         },
         {
           role: "user",
-          content: `Create a ${companyDetails.communication_style} ${
-            companyDetails.communication_style_other
-              ? `and ${companyDetails.communication_style_other}`
-              : ""
-          } super short and customer-centric post for
-    Name: ${companyDetails.companyTradeName}
-    Business definition: ${companyDetails.business_definition} ${
-            companyDetails.business_definition_other
-              ? `and ${companyDetails.business_definition_other}`
-              : ""
-          }
-    Language: ${companyDetails.language}
-    Sector: ${companyDetails.businessSector}
-    ${
-      companyDetails.webPage
-        ? `Add the website: ${companyDetails.webPageUrl} of ${companyDetails.companyTradeName}`
-        : ""
-    }
-    ${
-      companyDetails.showContactInfo
-        ? `Add the contact info: ${companyDetails.contactInfo} of ${companyDetails.companyTradeName}`
-        : ""
-    }
-    ${
-      companyDetails.addressVisible
-        ? `Add the address: country: ${companyDetails.country}, province: ${companyDetails.province}, locality: ${companyDetails.locality}, postalCode: ${companyDetails.postalCode} of ${companyDetails.companyTradeName}`
-        : ""
-    }`,
+          content: `Create a ${companyDetails.communication_style}, super short and customer-centric post for
+          Name: ${companyDetails.companyTradeName}
+          Sector: ${companyDetails.businessSector}`,
         },
       ],
     }),
@@ -93,6 +69,8 @@ async function postGenerator(companyDetails) {
   const rawData = await response.json();
   let messageContent = rawData?.choices[0]?.message?.content?.trim();
   messageContent = messageContent?.replace(/^['"]+|['"]+$/g, "").trim();
+
+  console.log({ messageContent: messageContent });
 
   // Fetch image from Pexels API based on the prompt content
   const imageUrl = await getPexelsImage(messageContent);
@@ -113,5 +91,12 @@ async function postGenerator(companyDetails) {
   console.log(generatedPost);
   return generatedPost;
 }
-// postGenerator()
-module.exports = postGenerator;
+
+const companyDetails = {
+  companyTradeName: "metro tesh",
+  communication_style: "joke",
+  businessSector: "IT solution",
+};
+
+postGenerator(companyDetails);
+// module.exports = postGenerator;

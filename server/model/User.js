@@ -5,6 +5,7 @@ const CompanyDetailsSchema = new Schema({
   userName: { type: String, default: "" }, // Updated key to match `formData`
   logo: { type: String, default: "" }, // Binary image data or Cloudinary URL
   companyTradeName: { type: String, default: "" },
+  language: { type: String, default: "english" },
   businessSector: { type: String, default: "" },
   addressVisible: { type: String, enum: ["YES", "NO"], default: "NO" },
   country: { type: String, default: "" },
@@ -40,7 +41,7 @@ const CompanyDetailsSchema = new Schema({
   valuable_content: [{ type: String }], // Array for valuable content types
   valuable_content_other: { type: String, default: "" },
   communication_style: { type: String, default: "" },
-  communication_style_other: { type: String, default: "" }
+  communication_style_other: { type: String, default: "" },
 });
 
 const PaymentHistorySchema = new Schema({
@@ -50,8 +51,8 @@ const PaymentHistorySchema = new Schema({
   status: {
     type: String,
     enum: ["succeeded", "failed", "pending"],
-    default: "succeeded"
-  }
+    default: "succeeded",
+  },
 });
 
 const SubscriptionSchema = new Schema({
@@ -60,13 +61,13 @@ const SubscriptionSchema = new Schema({
   plan: {
     type: String,
     enum: ["basic", "standard", "premium"],
-    default: "basic"
+    default: "basic",
   }, // Plan type (e.g., 'basic', 'standard', 'premium')
   trialEnd: { type: Date }, // End date of trial period if any
   amount: { type: Number }, // Amount per billing period
   currency: { type: String, default: "usd" },
   renewalDate: { type: Date }, // Next billing date
-  paymentHistory: [PaymentHistorySchema] // Array of past payments
+  paymentHistory: [PaymentHistorySchema], // Array of past payments
 });
 
 const postSchema = new Schema({
@@ -76,7 +77,7 @@ const postSchema = new Schema({
     all: { type: Boolean, default: false },
     xcom: { type: Boolean, default: false },
     insta: { type: Boolean, default: false },
-    fbook: { type: Boolean, default: false }
+    fbook: { type: Boolean, default: false },
   },
   uploadDate: { type: String }, // Use ISO 8601 format for consistency
   images: [String],
@@ -84,8 +85,8 @@ const postSchema = new Schema({
   status: {
     type: String,
     enum: ["scheduled", "published", "failed", "draft"],
-    default: "scheduled"
-  }
+    default: "scheduled",
+  },
 });
 
 const UserSchema = new Schema({
@@ -106,7 +107,7 @@ const UserSchema = new Schema({
   selectedFacebookBusinessPage: {
     id: { type: String }, // Store the page ID
     name: { type: String }, // Optionally store the page name
-    accessToken: { type: String } // Store page-specific access token if needed
+    accessToken: { type: String }, // Store page-specific access token if needed
   },
 
   // selected google business page
@@ -114,14 +115,14 @@ const UserSchema = new Schema({
     id: { type: String }, // User's Twitter ID
     username: { type: String }, // User's Twitter username
     accessToken: { type: String }, // Access token
-    refreshToken: { type: String } // Refresh token
+    refreshToken: { type: String }, // Refresh token
   },
 
   // selected instagram business page
   selectedInstagramBusinessPage: {
     id: { type: String }, // Store the page ID
     name: { type: String }, // Optionally store the page name
-    accessToken: { type: String } // Store page-specific access token if needed
+    accessToken: { type: String }, // Store page-specific access token if needed
   },
 
   // subscription manager
@@ -137,7 +138,7 @@ const UserSchema = new Schema({
   sessionExpiresAt: { type: Date },
 
   // companies detail manager
-  companyDetails: CompanyDetailsSchema
+  companyDetails: CompanyDetailsSchema,
 });
 
 const User = mongoose.model("User", UserSchema);

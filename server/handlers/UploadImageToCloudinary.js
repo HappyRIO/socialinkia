@@ -2,6 +2,7 @@ const { cloudinary, connectCloudinary } = require("../data/file");
 const { Readable } = require("stream");
 
 const uploadImagesToCloudinary = async (files) => {
+  // connectCloudinary();
   console.log("processing images");
   const urls = [];
   for (const file of files) {
