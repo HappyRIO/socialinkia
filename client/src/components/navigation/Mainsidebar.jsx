@@ -103,7 +103,7 @@ export default function Mainsidebar({ menufunction, menustate, pagename }) {
         if (response.ok) {
           const data = await response.json(); // Parse the response as JSON
           setUserData(data.user.companyDetails);
-          console.log(data); // Log the parsed data
+          // console.log(data); // Log the parsed data
         } else {
           console.error("Failed to fetch user data:", response.status);
         }

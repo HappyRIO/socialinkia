@@ -2,17 +2,18 @@ const fetch = require("node-fetch");
 const dotenv = require("dotenv");
 const uploadImagesToCloudinary = require("./UploadImageToCloudinary");
 
-dotenv.config({ path: "../.env" });
+// dotenv.config({ path: "../.env" });
+dotenv.config();
 
 const CHATGPT_API_URL = "https://api.openai.com/v1/chat/completions";
 const CHATGPT_API_KEY = process.env.GPT_API_KEY;
 const PEXELS_API_URL = "https://api.pexels.com/v1/search";
 const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 
-console.log({
-  CHATGPT_API_KEY: process.env.GPT_API_KEY,
-  PEXELS_API_KEY: process.env.PEXELS_API_KEY,
-});
+// console.log({
+//   CHATGPT_API_KEY: process.env.GPT_API_KEY,
+//   PEXELS_API_KEY: process.env.PEXELS_API_KEY,
+// });
 
 // Function to fetch an image from Pexels API
 async function getPexelsImage(query) {

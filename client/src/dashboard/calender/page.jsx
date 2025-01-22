@@ -5,46 +5,47 @@ import Calendar from "react-calendar";
 import PostContainer from "../../components/fragments/post/fragments/PostContainer";
 import Loader from "../../components/fragments/Loader";
 
-const initialPosts = [
-  {
-    id: "1",
-    title: "New product launch!",
-    uploadDate: "2025-01-16T09:00",
-    platform: "Facebook",
-    description: "Our latest product is launching soon!",
-  },
-  {
-    id: "2",
-    title: "New blog post",
-    uploadDate: "2025-01-16T11:00",
-    platform: "Instagram",
-    description: "Check out our latest blog post.",
-  },
-];
-
 export default function CalendarPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [postCounts, setPostCounts] = useState({
+    published: 0,
+    scheduled: 0,
+    failed: 0,
+  });
 
   useEffect(() => {
-    setLoading(true); // Optional: To ensure loading state is updated before fetching
+    setLoading(true);
     fetch("/api/posts/all", {
       method: "GET",
       credentials: "include",
     })
-      .then((res) => res.json()) // Call res.json() to parse the response
+      .then((res) => res.json())
       .then((data) => {
-        setPosts(data?.posts); // Update the posts state with the fetched data
+        setPosts(data?.posts || []);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
       })
       .finally(() => {
-        setLoading(false); // Ensure loading state is updated when the fetch is complete
+        setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    const counts = posts.reduce(
+      (acc, post) => {
+        if (post.status === "published") acc.published += 1;
+        if (post.status === "scheduled") acc.scheduled += 1;
+        if (post.status === "failed") acc.failed += 1;
+        return acc;
+      },
+      { published: 0, scheduled: 0, failed: 0 }
+    );
+    setPostCounts(counts);
+  }, [posts]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -57,8 +58,7 @@ export default function CalendarPage() {
       return false;
     }
 
-    // Convert both dates to local date strings (YYYY-MM-DD)
-    const postDateString = postDate.toLocaleDateString("en-CA"); // "en-CA" ensures ISO-like format
+    const postDateString = postDate.toLocaleDateString("en-CA");
     const selectedDateString = selectedDate.toLocaleDateString("en-CA");
 
     return postDateString === selectedDateString;
@@ -81,7 +81,7 @@ export default function CalendarPage() {
                 <p>Published post</p>
               </div>
               <div className="w-full text-center">
-                <p>14</p>
+                <p>{postCounts.published}</p>
               </div>
             </div>
             <div className="w-full h-full gap-2 p-2 rounded-md text-center bg-background2 flex flex-col justify-center items-center">
@@ -89,15 +89,15 @@ export default function CalendarPage() {
                 <p>Scheduled post</p>
               </div>
               <div className="w-full text-center">
-                <p>27</p>
+                <p>{postCounts.scheduled}</p>
               </div>
             </div>
             <div className="w-full h-full gap-2 p-2 rounded-md text-center bg-background2 flex flex-col justify-center items-center">
               <div className="w-full text-center">
-                <p>Faild post</p>
+                <p>Failed post</p>
               </div>
               <div className="w-full text-center">
-                <p>6</p>
+                <p>{postCounts.failed}</p>
               </div>
             </div>
           </div>

@@ -6,7 +6,7 @@ const connectDB = require("../../data/db");
 const isSessionValid = require("../../middleware/isSessionValid");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-console.log(process.env.STRIPE_SECRET_KEY);
+// console.log(process.env.STRIPE_SECRET_KEY);
 
 // Subscription plans (prices in cents)
 const subscriptionPlans = {
