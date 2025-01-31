@@ -3,6 +3,9 @@ import Loader from "../../../../components/fragments/Loader";
 
 const BusinessForm = () => {
   const [loading, setLoading] = useState(false);
+  const [connectfb, setconnectfb] = useState(false);
+  const [connectig, setconnectig] = useState(false);
+  const [connectxcom, setconnectxcom] = useState(null);
   const [formData, setFormData] = useState({
     userName: "",
     language: "",
@@ -157,6 +160,44 @@ const BusinessForm = () => {
       setLoading(false);
     }
   };
+  
+  function openAuthPopup(url, onSuccess) {
+    const width = 500;
+    const height = 600;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+    const authWindow = window.open(
+      url,
+      "AuthPopup",
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
+
+    const timer = setInterval(() => {
+      if (authWindow.closed) {
+        clearInterval(timer);
+        onSuccess();
+      }
+    }, 500);
+  }
+
+  function handleconnectFacebook() {
+    openAuthPopup(`/api/facebook/auth/facebook`, () => {
+      setconnectfb(true);
+    });
+  }
+
+  function handleconnectInstagram() {
+    openAuthPopup(`/api/instagram/auth/instagram`, () => {
+      setconnectig(true);
+    });
+  }
+
+  function handleConnectXcom() {
+    openAuthPopup(`/api/x/auth/xcom`, () => {
+      setconnectig(true);
+      window.location.href = "/dashboard/profile";
+    });
+  }
 
   if (loading) {
     return (
@@ -174,6 +215,30 @@ const BusinessForm = () => {
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <div className="useless w-full h-10 bg-background2"></div>
+       <div className="flex gap-2 flex-col sm:flex-row justify-between w-full px-4 py-2">
+            <button
+              className="bg-black w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+              onClick={handleConnectXcom}
+            >
+              {connectxcom ? "x.com connected" : "connect x.com"}
+              {/* <X /> */}
+              <img className="w-6 h-6" src="/icons/xcom.svg" alt="" />
+            </button>
+            <button
+              onClick={handleconnectFacebook}
+              className="bg-blue-500 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+            >
+              {connectfb ? "Facebook Connected" : "Connect Facebook"}
+              <Facebook />
+            </button>
+            <button
+              onClick={handleconnectInstagram}
+              className="bg-red-400 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+            >
+              {connectig ? "Instagram Connected" : "Connect Instagram"}
+              <Instagram />
+            </button>
+          </div>
       <div className="form-space rounded-lg my-3">
         <form
           onSubmit={handleFormSubmission}
