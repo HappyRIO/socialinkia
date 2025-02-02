@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Loader from "../../../../components/fragments/Loader";
+import { Facebook, Instagram, X } from "lucide-react";
 
 const BusinessForm = () => {
   const [loading, setLoading] = useState(false);
@@ -194,7 +195,7 @@ const BusinessForm = () => {
 
   function handleConnectXcom() {
     openAuthPopup(`/api/x/auth/xcom`, () => {
-      setconnectig(true);
+      setconnectxcom(true);
       window.location.href = "/dashboard/profile";
     });
   }
