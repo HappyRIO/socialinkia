@@ -272,8 +272,8 @@ export default function Mainsidebar({ menufunction, menustate, pagename }) {
             value={language}
             onChange={(e) => translatePage(e.target.value)}
           >
-            {supportedLanguages.map((lang) => (
-              <option key={lang.code} value={lang.code}>
+            {supportedLanguages.map((lang, index) => (
+              <option key={index} value={lang.code}>
                 {lang.name}
               </option>
             ))}

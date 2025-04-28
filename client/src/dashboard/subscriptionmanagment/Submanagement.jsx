@@ -12,7 +12,7 @@ export default function Submanagement() {
     cardNumber: "",
     expiryMonth: "",
     expiryYear: "",
-    cvc: ""
+    cvc: "",
   });
 
   // Fetch user details on mount
@@ -21,7 +21,7 @@ export default function Submanagement() {
       try {
         const response = await fetch(`/api/subscription/details`, {
           credentials: "include",
-          method: "GET"
+          method: "GET",
         });
 
         if (!response.ok) {
@@ -38,11 +38,13 @@ export default function Submanagement() {
 
     const fetchPaymentHistory = async () => {
       try {
-        const response = await fetch(
-          `${
-            import.meta.env.VITE_SERVER_BASE_URL
-          }/api/subscription/subscription-history`
-        );
+        const response = await fetch("/api/subscription/subscription-history", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch payment history");
+        }
         const data = await response.json();
         if (data.paymentHistory) {
           setPaymentHistory(data.paymentHistory);
@@ -68,19 +70,14 @@ export default function Submanagement() {
 
   const handleCancelSubscription = async () => {
     try {
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_SERVER_BASE_URL
-        }/api/subscription/cancel-subscription`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            subscriptionId: subscriptionData.subscriptionId
-          })
-        }
-      );
+      const response = await fetch("/api/subscription/cancel-subscription", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          subscriptionId: subscriptionData.subscriptionId,
+        }),
+      });
       if (response.ok) {
         alert("Subscription canceled successfully!");
         setSubscriptionData({ ...subscriptionData, status: "Cancelled" });
@@ -101,20 +98,15 @@ export default function Submanagement() {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_SERVER_BASE_URL
-        }/api/subscription/create-subscription`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            plan: selectedPlan,
-            cardDetails
-          })
-        }
-      );
+      const response = await fetch("/api/subscription/create-subscription", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plan: selectedPlan,
+          cardDetails,
+        }),
+      });
 
       const data = await response.json();
       if (response.ok) {
@@ -254,14 +246,14 @@ export default function Submanagement() {
                   paymentHistory.map((payment, index) => (
                     <tr key={index} className="border-b border-gray-200">
                       <td className="px-4 py-2">
-                        {new Date(payment.date).toLocaleDateString()}
+                        {new Date(payment?.date).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-2">{`$${(
-                        payment.amount / 100
+                        payment?.amount / 100
                       ).toFixed(2)}`}</td>
-                      <td className="px-4 py-2 capitalize">{payment.status}</td>
+                      <td className="px-4 py-2 capitalize">{payment?.status}</td>
                       <td className="px-4 py-2">
-                        {payment.currency.toUpperCase()}
+                        {payment?.currency.toUpperCase()}
                       </td>
                     </tr>
                   ))

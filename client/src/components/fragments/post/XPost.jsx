@@ -1,11 +1,11 @@
 import { useState, useMemo } from "react";
 import PostContainer from "./fragments/PostContainer";
 
-export default function FacebookPosts({ data }) {
+export default function Xposts({ data }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("all");
 
-  console.log("facePosts data", data);
+  console.log("xPosts data", data);
 
   // Safely get posts array from the `data` object
   const posts = Array.isArray(data?.[filter]) ? data[filter] : [];
