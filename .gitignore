@@ -12,3 +12,5 @@ client/.env
 
 /ngrok.yml
 /vite_test
+server/.env
+client/.env
