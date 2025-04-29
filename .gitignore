@@ -5,6 +5,9 @@
 server/node_modules/
 client/node_modules/
 
+server/.env
+client/.env
+
 # sever/client_info.json
 
 /ngrok.yml
