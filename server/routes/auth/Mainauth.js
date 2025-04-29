@@ -247,7 +247,8 @@ router.put(
         communication_style,
         communication_style_other
       } = req.body;
-      console.log({ "Uploaded files:": req.files });
+
+      console.log({ "Uploaded files:": req.files || "no file uploaded" });
 
       // Ensure companyDetails exists before accessing its properties
       const companyDetails = req.user.companyDetails || {};

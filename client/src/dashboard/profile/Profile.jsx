@@ -45,7 +45,7 @@ export default function Profile() {
     valuable_content: [],
     valuable_content_other: "",
     communication_style: "",
-    communication_style_other: ""
+    communication_style_other: "",
   });
   const [loading, setLoading] = useState(false);
   const [connectfb, setconnectfb] = useState(false);
@@ -56,18 +56,18 @@ export default function Profile() {
     async function fetchUserInfo() {
       setLoading(true);
       try {
-        const response = await fetch(`/api/auth/user/details`, {
+        const response = await fetch("/api/auth/user/details", {
           method: "GET",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          credentials: "include"
+          credentials: "include",
         });
         const data = await response.json();
         setFormData({
           ...formData,
           ...data.user.companyDetails,
-          photos: data.user.companyDetails?.photos || []
+          photos: data.user.companyDetails?.photos || [],
         });
         if (data.user.selectedXcom) {
           setconnectxcom(true);
@@ -92,8 +92,22 @@ export default function Profile() {
     if (name === "photos") {
       setFormData((prev) => ({
         ...prev,
-        photos: files ? Array.from(files) : []
+        photos: files ? Array.from(files) : [],
       }));
+    } else if (name === "logo" && files && files[0]) {
+      const file = files[0];
+
+      // Read the file as a Buffer and generate a preview URL
+      const reader = new FileReader();
+      console.log("FileReader", reader);
+      reader.onload = () => {
+        setFormData((prev) => ({
+          ...prev,
+          logo: reader.result, // Use the ArrayBuffer directly
+          logoPreview: URL.createObjectURL(file), // Generate preview URL
+        }));
+      };
+      reader.readAsArrayBuffer(file); // Read file as ArrayBuffer
     } else if (name === "business_definition") {
       setFormData((prev) => {
         const currentSelections = prev.business_definition || [];
@@ -102,7 +116,7 @@ export default function Profile() {
           if (currentSelections.length < 3) {
             return {
               ...prev,
-              business_definition: [...currentSelections, value]
+              business_definition: [...currentSelections, value],
             };
           } else {
             return prev;
@@ -112,7 +126,7 @@ export default function Profile() {
             ...prev,
             business_definition: currentSelections.filter(
               (item) => item !== value
-            )
+            ),
           };
         }
       });
@@ -124,7 +138,7 @@ export default function Profile() {
 
         return {
           ...prevData,
-          customer_type: updatedCustomerType
+          customer_type: updatedCustomerType,
         };
       });
     } else if (name === "age_range") {
@@ -135,13 +149,13 @@ export default function Profile() {
 
         return {
           ...prevData,
-          age_range: updatedAgeRange
+          age_range: updatedAgeRange,
         };
       });
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: value
+        [name]: value,
       }));
     }
   };
@@ -160,10 +174,10 @@ export default function Profile() {
     });
 
     try {
-      const response = await fetch(`/api/auth/user/details`, {
+      const response = await fetch("/api/auth/user/details", {
         method: "PUT",
         body: form,
-        credentials: "include"
+        credentials: "include",
       });
 
       if (response.ok) {
@@ -217,10 +231,6 @@ export default function Profile() {
       window.location.href = "/dashboard/profile";
     });
   }
-
-  // if (loading) {
-  //   return <Loader />;
-  // }
 
   return (
     <div className="w-full flex flex-row justify-center items-center">
@@ -350,7 +360,7 @@ export default function Profile() {
                   "Trips",
                   "Spirituality/Esotericism",
                   "Chiropodist",
-                  "Other"
+                  "Other",
                 ].map((sector) => (
                   <option key={sector} value={sector}>
                     {sector}
@@ -436,7 +446,7 @@ export default function Profile() {
                       "Valladolid",
                       "Biscay (Bizkaia)",
                       "Zamora",
-                      "Saragossa"
+                      "Saragossa",
                     ].map((province) => (
                       <option key={province} value={province}>
                         {province}
@@ -610,7 +620,7 @@ export default function Profile() {
                   "Speed",
                   "Technology",
                   "Traditional",
-                  "Vision"
+                  "Vision",
                 ].map((item) => (
                   <label key={item}>
                     <input
@@ -820,7 +830,7 @@ export default function Profile() {
                   "46_55",
                   "56_65",
                   "over_65",
-                  "companies"
+                  "companies",
                 ].map((age) => (
                   <label key={age}>
                     <input
@@ -850,7 +860,7 @@ export default function Profile() {
                   "sporting_events",
                   "cultural_activities",
                   "geeky_content",
-                  "social_issues"
+                  "social_issues",
                 ].map((content) => (
                   <label key={content}>
                     <input
@@ -908,7 +918,7 @@ export default function Profile() {
                   "persuasive",
                   "informative",
                   "technical",
-                  "motivational"
+                  "motivational",
                 ].map((style) => (
                   <option key={style} value={style}>
                     {style.charAt(0).toUpperCase() + style.slice(1)}
