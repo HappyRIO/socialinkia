@@ -2,11 +2,10 @@
 # server/.env
 # backup
 
-server/node_modules/
-client/node_modules/
-server/.env
-client/.env
-
+node_modules/
+.env
+.env
+client_info.json
 
 # sever/client_info.json
 
