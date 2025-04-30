@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
-import { Facebook, Instagram, X } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 import Loader from "../../components/fragments/Loader";
 
 export default function Profile() {
@@ -67,7 +67,9 @@ export default function Profile() {
         setFormData({
           ...formData,
           ...data.user.companyDetails,
+          logoPreview: data.user.companyDetails?.logo || null, // For preview
           photos: data.user.companyDetails?.photos || [],
+          photosPreview: data.user.companyDetails?.photos
         });
         if (data.user.selectedXcom) {
           setconnectxcom(true);
@@ -96,18 +98,11 @@ export default function Profile() {
       }));
     } else if (name === "logo" && files && files[0]) {
       const file = files[0];
-
-      // Read the file as a Buffer and generate a preview URL
-      const reader = new FileReader();
-      console.log("FileReader", reader);
-      reader.onload = () => {
-        setFormData((prev) => ({
-          ...prev,
-          logo: reader.result, // Use the ArrayBuffer directly
-          logoPreview: URL.createObjectURL(file), // Generate preview URL
-        }));
-      };
-      reader.readAsArrayBuffer(file); // Read file as ArrayBuffer
+      setFormData((prev) => ({
+        ...prev,
+        logo: file, // Save the File directly (like in photos)
+        logoPreview: URL.createObjectURL(file), // For preview
+      }));
     } else if (name === "business_definition") {
       setFormData((prev) => {
         const currentSelections = prev.business_definition || [];
@@ -167,9 +162,13 @@ export default function Profile() {
     const form = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === "photos" && Array.isArray(value)) {
-        value.forEach((file) => form.append(key, file));
+        value.forEach((file) => form.append(key, file)); // Append multiple photos
+      } else if (key === "logo" && value) {
+        form.append(key, value); // Append the logo file
+      } else if (Array.isArray(value)) {
+        value.forEach((item) => form.append(key, item)); // Handle arrays
       } else {
-        form.append(key, value);
+        form.append(key, value); // Append other fields
       }
     });
 
@@ -182,6 +181,7 @@ export default function Profile() {
 
       if (response.ok) {
         setLoading(false);
+        alert("Profile updated successfully!");
       } else {
         console.error("Update failed:", response.statusText);
         alert("Update failed. Please try again.");
@@ -583,7 +583,7 @@ export default function Profile() {
               >
                 <option value="">Choose an option</option>
                 <option value="have">Have</option>
-                <option value="dont_have">Don't have</option>
+                <option value="dont_have">Don&apos;t have</option>
               </select>
               <textarea
                 id="motto_field"

@@ -150,7 +150,7 @@ export default function Submanagement() {
                 <p>
                   <strong>Trial End:</strong>{" "}
                   {new Date(
-                    subscriptionData.trialEnd * 1000
+                    subscriptionData?.trialEnd * 1000
                   ).toLocaleDateString()}
                 </p>
               )}
@@ -162,7 +162,7 @@ export default function Submanagement() {
               >
                 Download History as PDF
               </button>
-              {subscriptionData.status === "Active" && (
+              {subscriptionData?.status === "Active" && (
                 <button
                   className="bg-red-500 text-white py-2 px-4 rounded-md"
                   onClick={handleCancelSubscription}
@@ -175,7 +175,7 @@ export default function Submanagement() {
               <label className="block mb-2 font-semibold">Upgrade Plan:</label>
               <select
                 className="px-4 py-2 border rounded"
-                value={subscriptionData.plan}
+                value={subscriptionData?.plan}
                 onChange={(e) => setSelectedPlan(e.target.value)}
               >
                 <option value="basic">Basic</option>

@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./page";
 import Error from "./error";
-import Dashboard from "./dashboard/page";
 import Login from "./login/page";
 import Contact from "./contact/page";
 import TemplatePage from "./dashboard/template/page";
@@ -19,6 +18,8 @@ import SignupMain from "./signup/subscription/signup/signup";
 import BusinessForm from "./signup/subscription/signup/companies/Details";
 import PostAnalysis from "./dashboard/posts/analysis/page";
 import CalendarPage from "./dashboard/calender/page";
+import DashboardRoutes from "./components/routes/DashboardRoutes";
+import MainWebRoutes from "./components/routes/MainWebRoutes";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -29,59 +30,70 @@ const router = createBrowserRouter([
   { path: "/subscription/signup", element: <SignupMain /> },
   {
     path: "/subscription/signup/details",
-    element: <PrivateRoute Component={BusinessForm} />
+    element: <PrivateRoute Component={BusinessForm} />,
   },
 
   // Direct routes with PrivateRoute applied to each protected route
-  // { path: "/dashboard", element: <PrivateRoute Component={Dashboard} /> },
   { path: "/dashboard", element: <PrivateRoute Component={CalendarPage} /> },
 
   {
     path: "/dashboard/profile",
-    element: <PrivateRoute Component={Profile} />
+    element: <PrivateRoute Component={Profile} />,
     // element: <Profile />,
   },
   {
     path: "/dashboard/subscription",
-    element: <PrivateRoute Component={Submanagement} />
+    element: <PrivateRoute Component={Submanagement} />,
   },
   {
     path: "/dashboard/create",
-    element: <PrivateRoute Component={CreatTemplate} />
+    element: <PrivateRoute Component={CreatTemplate} />,
   },
   {
     path: "/dashboard/create/post",
-    element: <PrivateRoute Component={PostCreation} />
+    element: <PrivateRoute Component={PostCreation} />,
   },
   { path: "/dashboard/posts", element: <PrivateRoute Component={Pending} /> },
   // { path: "/dashboard/posts", element: <Pending /> },
   { path: "/dashboard/calender", element: <CalendarPage /> },
   {
     path: "/dashboard/analize/:postId",
-    element: <PrivateRoute Component={PostAnalysis} />
+    element: <PrivateRoute Component={PostAnalysis} />,
   },
   {
     path: "/dashboard/posts/edit/:postId",
-    element: <PrivateRoute Component={Editpost} />
+    element: <PrivateRoute Component={Editpost} />,
   },
   {
     path: "/dashboard/create/design",
-    element: <CreateDesign />
+    element: <CreateDesign />,
   },
   {
     path: "/dashboard/templates",
-    element: <PrivateRoute Component={TemplatePage} />
+    element: <PrivateRoute Component={TemplatePage} />,
   },
 
-  { path: "*", element: <Error /> }
+  { path: "*", element: <Error /> },
 ]);
 
 function App() {
+  // const router = window.location.pathname.includes("/dashboard")
+  //   ? DashboardRoutes()
+  //   : MainWebRoutes();
+
   return (
     <div className="w-full bg-background text-text text-md sm:text-xl overflow-hidden flex flex-col justify-center items-center">
       <RouterProvider router={router} />
     </div>
   );
 }
+
+// function App() {
+//   return (
+//     <div className="w-full bg-background text-text text-md sm:text-xl overflow-hidden flex flex-col justify-center items-center">
+//       <RouterProvider router={routerMain} />
+//     </div>
+//   );
+// }
 
 export default App;
