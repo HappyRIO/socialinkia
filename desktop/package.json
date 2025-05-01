@@ -1,48 +1,17 @@
 {
-  "name": "desktop",
+  "name": "sociallinkia",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/mernking/my-electron-app",
   "main": "electron/main.js",
   "scripts": {
-    "vite-dev": "vite",
+    "dev-vite": "vite",
     "build": "vite build",
     "watch": "vite build --watch",
-    "dev": "concurrently \"vite\" \"npm:electron-dev\"",
-    "electron-dev": "cross-env NODE_ENV=development electron .",
-    "start": "electron .",
-    "electron-pack": "electron-builder",
     "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "build": {
-    "appId": "com.example.myapp",
-    "productName": "MyElectronApp",
-    "directories": {
-      "output": "release-builds"
-    },
-    "files": [
-      "dist/**/*",
-      "electron/**/*"
-    ],
-    "mac": {
-      "target": "dmg"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ],
-      "category": "Utility",
-      "maintainer": "Your Name <you@example.com>",
-      "synopsis": "Short description of your app",
-      "description": "A longer description of your Electron app for Linux users.",
-      "icon": "public/vit.svg"
-    }
+    "preview": "vite preview",
+    "dev": "concurrently \"vite\" \"wait-on http://localhost:5173/dashboard/ && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .\"",
+    "start": "electron ."
   },
   "dependencies": {
     "@rollup/rollup-win32-x64-msvc": "^4.29.1",
@@ -68,6 +37,9 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^36.0.1",
     "eslint": "^9.13.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
@@ -76,9 +48,6 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.10",
-    "concurrently": "^9.1.2",
-    "cross-env": "^7.0.3",
-    "electron": "^35.0.3",
-    "electron-builder": "^25.1.8"
+    "wait-on": "^8.0.3"
   }
 }
