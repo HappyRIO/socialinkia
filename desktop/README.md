@@ -1,5 +1,22 @@
-# note am using google my business component for x.com
-any changes you want to make for x.com, it in google my business component
+# Vite-Electron
 
+This is the source of the Dev.to tutorial in:
+https://dev.to/rafaelpimpa/how-to-create-electron-app-with-vite-2-with-minimal-boilerplate-4did
 
-## others .......
+## Install dependencies
+
+```
+npm install
+```
+
+## Run dev server
+
+```
+npm run electron:dev
+```
+
+## Build app
+
+```
+npm run electron:build
+```
