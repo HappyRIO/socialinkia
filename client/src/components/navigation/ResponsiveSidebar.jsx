@@ -9,7 +9,7 @@ export default function ResponsiveSidebar({ pagename }) {
     setOpenMenu(!menuOpen);
   }
   return (
-    <div className="w-fit">
+    <div className="w-fit bg-background/90">
       <div className="sidebar w-fit hidden sm:block">
         <Mainsidebar
           pagename={pagename}

@@ -7,7 +7,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <div className="w-full bg-background text-text text-md sm:text-xl overflow-hidden flex flex-col justify-center items-center">
+    <div className="w-full dark bg-background text-text text-md sm:text-xl overflow-hidden flex flex-col justify-center items-center">
       {location.pathname.startsWith("/dashboard") ? (
         <PrivateRoute content={<DashboardRoutes />} />
       ) : (

@@ -11,7 +11,6 @@ require("dotenv").config();
 
 const connectDB = require("./data/db");
 const { connectCloudinary } = require("./data/file");
-// Initialize express
 const app = express();
 
 // Middleware
@@ -29,6 +28,7 @@ app.use(
   })
 );
 
+// Middleware to handle CORS errors
 connectCloudinary();
 connectDB();
 TimeBasedPostGenerator();

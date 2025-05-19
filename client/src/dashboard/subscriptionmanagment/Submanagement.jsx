@@ -125,9 +125,7 @@ export default function Submanagement() {
 
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      <div className="navbarzone w-fit">
-        <ResponsiveSidebar pagename={"Subscription"} />
-      </div>
+     
       {loading ? (
         <Loader />
       ) : (

@@ -3,9 +3,9 @@ import { Navigate } from "react-router-dom";
 import Loader from "../fragments/Loader";
 
 // eslint-disable-next-line react/prop-types
-const PrivateRoute = ({ Component }) => {
+const PrivateRoute = ({ content }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // Start as `true` to show the loading spinner initially
+  const [loading, setLoading] = useState(true);
 
   const validateUser = async () => {
     try {
@@ -13,16 +13,12 @@ const PrivateRoute = ({ Component }) => {
         method: "GET",
         credentials: "include"
       });
-      if (response.ok) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
+      setIsAuthenticated(response.ok);
     } catch (err) {
       setIsAuthenticated(false);
       console.error("Error validating user:", err);
     } finally {
-      setLoading(false); // Ensure loading is stopped regardless of success or failure
+      setLoading(false);
     }
   };
 
@@ -31,7 +27,7 @@ const PrivateRoute = ({ Component }) => {
   }, []);
 
   if (loading) return <Loader />;
-  return isAuthenticated ? <Component /> : <Navigate to="/login" />;
+  return isAuthenticated ? content : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

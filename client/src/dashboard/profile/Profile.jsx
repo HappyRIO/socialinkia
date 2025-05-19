@@ -234,9 +234,6 @@ export default function Profile() {
 
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      <div className="side-bar">
-        <ResponsiveSidebar pagename="Profile" />
-      </div>
       {loading ? (
         <Loader />
       ) : (

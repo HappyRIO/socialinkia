@@ -97,9 +97,9 @@ export default function CalendarPage() {
 
   return (
     <div className="w-full flex flex-row justify-center items-start">
-      <div className="navbarzone w-fit">
-        <ResponsiveSidebar pagename={"calendar"} />
-      </div>
+      {/* <div className="navbarzone w-fit">
+        <ResponsiveSidebar pagename={"dashboard"} />
+      </div> */}
       <div className="contentzone flex flex-col gap-3 pt-3 px-2 ml-0 sm:ml-64 w-full">
         <h2 className="text-xl font-bold">Post Scheduler</h2>
 
@@ -111,8 +111,8 @@ export default function CalendarPage() {
               onClick={() => setStatusFilter(status)}
               className={`px-3 py-1 rounded-full border text-sm transition-all ${
                 statusFilter === status
-                  ? "bg-[var(--accent)] text-white"
-                  : "bg-[var(--background2)]"
+                  ? "bg-accent text-white"
+                  : "bg-background2"
               }`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -121,7 +121,7 @@ export default function CalendarPage() {
         </div>
 
         {/* Calendar */}
-        <div className="bg-[var(--background2)] p-4 rounded-xl shadow-md w-full max-w-5xl overflow-x-auto">
+        <div className="bg-background2 p-4 rounded-xl shadow-md w-full max-w-5xl overflow-x-auto">
           <div className="flex justify-between items-center mb-4 min-w-[300px]">
             <button
               onClick={() =>
@@ -133,7 +133,7 @@ export default function CalendarPage() {
                   )
                 )
               }
-              className="text-[var(--primary)] hover:text-[var(--accent)] text-lg font-bold"
+              className="text-primary hover:text-accent text-lg font-bold"
             >
               &lt;
             </button>
@@ -150,13 +150,13 @@ export default function CalendarPage() {
                   )
                 )
               }
-              className="text-[var(--primary)] hover:text-[var(--accent)] text-lg font-bold"
+              className="text-primary hover:text-accent text-lg font-bold"
             >
               &gt;
             </button>
           </div>
 
-          <div className="grid grid-cols-7 text-center mb-2 text-sm font-semibold text-[var(--primary)]">
+          <div className="grid grid-cols-7 text-center mb-2 text-sm font-semibold text-primary">
             {dayNames.map((day) => (
               <div key={day}>{day}</div>
             ))}
@@ -181,15 +181,15 @@ export default function CalendarPage() {
                     flex flex-col items-start justify-start border transition-all
                     ${
                       isSameDate(selectedDate, cellDate)
-                        ? "border-2 border-[var(--accent)]"
+                        ? "border-2 border-accent"
                         : "border border-transparent"
                     }
                     ${
                       isSameDate(today, cellDate)
-                        ? "bg-[var(--accent)] text-white"
+                        ? "bg-accent text-white"
                         : isWeekend
-                        ? "bg-[var(--background)]"
-                        : "hover:bg-[var(--secondary)] hover:text-white"
+                        ? "bg-background hover:bg-accent hover:text-background"
+                        : "hover:bg-secondary hover:text-white"
                     }`}
                 >
                   <div className="font-bold">{day}</div>
@@ -197,9 +197,9 @@ export default function CalendarPage() {
                     {dailyPosts.map((post) => {
                       let bgClass = "bg-transparent text-[var(--text)]";
                       if (post.status === "published")
-                        bgClass = "bg-[var(--primary)] text-white";
+                        bgClass = "bg-primary text-white";
                       else if (post.status === "scheduled")
-                        bgClass = "bg-[var(--secondary)] text-white";
+                        bgClass = "bg-secondary text-white";
                       else if (post.status === "failed")
                         bgClass = "bg-red-600 text-white";
 
@@ -225,7 +225,7 @@ export default function CalendarPage() {
           {["published", "scheduled", "failed"].map((status) => (
             <div
               key={status}
-              className="w-full sm:w-1/3 bg-[var(--background2)] p-3 rounded-md text-center"
+              className="w-full sm:w-1/3 bg-background2 p-3 rounded-md text-center"
             >
               <p className="text-sm capitalize">{status} posts</p>
               <p className="text-lg font-bold">{postCounts[status]}</p>
@@ -237,7 +237,7 @@ export default function CalendarPage() {
         {loading ? (
           <Loader />
         ) : (
-          <div className="flex flex-col gap-3 bg-[var(--background2)] w-full p-2 mt-3">
+          <div className="flex flex-col gap-3 bg-background2 w-full p-2 mt-3">
             <h3 className="font-bold">
               Posts for {selectedDate.toDateString()}{" "}
               {statusFilter !== "all" && `(${statusFilter})`}

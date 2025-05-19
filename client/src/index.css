@@ -1,35 +1,28 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-text: #000000;
+  --color-background: #ffffff;
+  --color-background2: #ececec;
+  --color-primary: #563b34;
+  --color-secondary: #bdb893;
+  --color-accent: #e96311;
+  --color-card: #242424;
+}
 
-@layer base {
-  :root {
-    --text: #000000;
-    --background: #ffffff;
-    --background2: #ececec;
-    --primary: #563b34;
-    --secondary: #bdb893;
-    --accent: #e96311;
-    --card: #242424;
-  }
-  .dark {
-    --text: #ffffff;
-    --background: #000000;
-    --background2: #242424;
-    --primary: #cbb0a9;
-    --secondary: #6c6742;
-    --accent: #e96311;
-    --card: #ececec;
-  }
+.dark {
+  --color-text: #ffffff;
+  --color-background: #000000;
+  --color-background2: #242424;
+  --color-primary: #e67255;
+  --color-secondary: #6c6742;
+  --color-accent: #e96311;
+  --color-card: #ececec;
 }
 
 body {
-  color: var(--text);
-  background: var(--background);
+  color: var(--color-text);
+  background: var(--color-background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
