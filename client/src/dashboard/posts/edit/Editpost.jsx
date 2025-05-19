@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import "../../../components/css/socialswich.css";
 import { useNavigate, useParams } from "react-router-dom";
-import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
 import { Facebook, Instagram } from "lucide-react";
-import Loader from "../../components/fragments/Loader";
+import { BsTwitterX } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
+import Loader from "../../../components/fragments/Loader";
 
 export default function Editpost() {
   const { postId } = useParams();
@@ -12,12 +14,12 @@ export default function Editpost() {
   const [filePreviews, setFilePreviews] = useState([]);
   const [platform, setplatform] = useState({
     all: true,
-    gmb: true,
+    xcom: true,
     insta: true,
-    fbook: true
+    fbook: true,
   });
   const [uploadDate, setUploaddata] = useState({
-    date: ""
+    date: "",
   });
   const navigate = useNavigate();
 
@@ -25,7 +27,7 @@ export default function Editpost() {
     setLoading(true);
     fetch(`/api/posts/${postId}`, {
       method: "GET",
-      credentials: "include"
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -36,7 +38,7 @@ export default function Editpost() {
           setUploaddata({ date: uploadDate });
           const previews = [
             ...(images || []).map((url) => ({ preview: url, type: "image" })),
-            ...(videos || []).map((url) => ({ preview: url, type: "video" }))
+            ...(videos || []).map((url) => ({ preview: url, type: "video" })),
           ];
           setFilePreviews(previews);
           setLoading(false);
@@ -61,13 +63,13 @@ export default function Editpost() {
         updatedState.fbook = isChecked;
       } else if (selectedValue === "insta") {
         updatedState.insta = isChecked;
-      } else if (selectedValue === "gmb") {
-        updatedState.gmb = isChecked;
+      } else if (selectedValue === "xcom") {
+        updatedState.xcom = isChecked;
       }
 
       // Update "all" to be true if any platform is selected, false if none are selected
       updatedState.all =
-        updatedState.fbook || updatedState.insta || updatedState.gmb;
+        updatedState.fbook || updatedState.insta || updatedState.xcom;
 
       return updatedState;
     });
@@ -95,7 +97,7 @@ export default function Editpost() {
     const previews = files.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
-      type: file.type.startsWith("video") ? "video" : "image"
+      type: file.type.startsWith("video") ? "video" : "image",
     }));
 
     setSelectedFiles((prev) => [...prev, ...files]);
@@ -127,7 +129,7 @@ export default function Editpost() {
     fetch(`/api/posts/${postId}`, {
       method: "PUT",
       body: formData,
-      credentials: "include"
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -148,7 +150,7 @@ export default function Editpost() {
     setLoading(true);
     fetch(`/api/posts/${postId}`, {
       method: "DELETE",
-      credentials: "include"
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -161,15 +163,8 @@ export default function Editpost() {
       });
   }
 
-  // if (loading) {
-  //   return <Loader />;
-  // }
-
   return (
     <div className="w-full flex flex-row justify-center items-center">
-      <div className="navzone w-fit">
-        <ResponsiveSidebar pagename={"Edit Post"} />
-      </div>
       {loading ? (
         <Loader />
       ) : (
@@ -187,49 +182,55 @@ export default function Editpost() {
               <div className="w-full flex flex-col gap-1 justify-center items-center">
                 <h1>select platform</h1>
               </div>
-              <div className="w-full flex flex-row gap-3 justify-center items-center">
-                <div className="fbook flex flex-col justify-center items-center">
-                  <label htmlFor="facebook">
-                    <Facebook />
+              <div className="w-full flex flex-row gap-10 justify-center items-center">
+                <div className="fbook gap-2 relative flex flex-col justify-center items-center">
+                  <Facebook />
+                  <label className="social-switch" htmlFor="facebook">
+                    <input
+                      className="social-input"
+                      onChange={handleChange}
+                      type="checkbox"
+                      name="platform"
+                      value="fbook"
+                      id="facebook"
+                      checked={platform.fbook}
+                    />
+                    <span className="social-slider round"></span>
                   </label>
-                  <input
-                    onChange={handleChange}
-                    type="checkbox"
-                    name="platform"
-                    value="fbook" // Set the value to "fbook"
-                    id="facebook"
-                    checked={platform.fbook} // Check if fbook is true
-                  />
                 </div>
-                <div className="insta flex flex-col justify-center items-center">
-                  <label htmlFor="instagram">
-                    <Instagram />
+                <div className="insta gap-2 relative flex flex-col justify-center items-center">
+                  <Instagram />
+                  <label className="social-switch" htmlFor="instagram">
+                    <input
+                      className="social-input"
+                      onChange={handleChange}
+                      type="checkbox"
+                      name="platform"
+                      value="insta"
+                      id="instagram"
+                      checked={platform.insta}
+                    />
+                    <span className="social-slider round"></span>
                   </label>
-                  <input
-                    onChange={handleChange}
-                    type="checkbox"
-                    name="platform"
-                    value="insta" // Set the value to "insta"
-                    id="instagram"
-                    checked={platform.insta} // Check if insta is true
-                  />
                 </div>
-                <div className="googl flex flex-col justify-center items-center">
-                  <label htmlFor="google">
-                  <img className="w-6 h-6" src="/icons/xcomb.svg" alt="" /> 
+                <div className="xcom gap-2 relative flex flex-col justify-center items-center">
+                  <BsTwitterX />
+                  <label className="social-switch" htmlFor="xcom">
+                    <input
+                      className="social-input"
+                      onChange={handleChange}
+                      type="checkbox"
+                      name="platform"
+                      value="xcom"
+                      id="xcom"
+                      checked={platform.xcom}
+                    />
+                    <span className="social-slider round"></span>
                   </label>
-                  <input
-                    onChange={handleChange}
-                    type="checkbox"
-                    name="platform"
-                    value="gmb" // Set the value to "gmb"
-                    id="google"
-                    checked={platform.gmb} // Check if gmb is true
-                  />
                 </div>
               </div>
             </div>
-            <div className="postText w-full flex flex-col gap-2">
+            <div className="postText border border-text w-full flex flex-col gap-2">
               <textarea
                 className="w-full rounded-lg focus:border-accent p-2"
                 name="postText"
@@ -257,10 +258,10 @@ export default function Editpost() {
                     />
                   )}
                   <button
-                    className="absolute top-1 right-1 text-red-500 font-bold"
+                    className="absolute top-1 right-1 text-red-500 hover:text-white font-bold"
                     onClick={() => handleImageRemove(index)}
                   >
-                    ✕
+                    <MdDelete />
                   </button>
                 </div>
               ))}
@@ -298,28 +299,31 @@ export default function Editpost() {
               </div>
             </div>
             <div className="w-full py-10 flex flex-col md:flex-row gap-2 justify-center items-center">
-              <div className="w-full flex flex-col gap-1 justify-center items-center">
-                <label>schedule date</label>
+              <div className="w-full flex flex-col gap-1 justify-center items-center cursor-pointer">
+                <label htmlFor="schedule-date-input">Schedule Date</label>
                 <input
+                  id="schedule-date-input"
+                  name="schedule-date-input"
                   type="datetime-local"
                   value={uploadDate.date}
                   onChange={handleDateChange}
-                  className="bg-background p-2 rounded-lg w-full"
+                  className="bg-white text-black p-2 rounded-lg w-full cursor-pointer max-w-xs"
                 />
               </div>
             </div>
             <div className="button-space w-full flex flex-col sm:flex-row gap-10 justify-center items-center">
               <button
                 onClick={handleSubmit}
-                className="bg-accent text-white px-6 py-2 rounded-md w-full sm:w-1/3 mt-4"
+                className="bg-accent text-white hover:bg-background hover:text-text px-6 py-2 rounded-md w-full sm:w-1/3 mt-4"
               >
                 Save Post
               </button>
               <button
                 onClick={handledeletepost}
-                className="animate-pulse w-fit text-accent text-center bg-red-500 p-1 px-3 rounded-lg"
+                className="animate-pulse flex flex-row justify-center items-center text-center hover:bg-background hover:text-text bg-red-800 text-white px-6 py-2 rounded-md w-fit mt-4"
               >
-                delete
+                <MdDelete />
+                <span>delete</span>
               </button>
             </div>
           </div>

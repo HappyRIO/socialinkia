@@ -1,0 +1,62 @@
+/* The social-switch - the box around the social-slider */
+.social-switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 19px;
+}
+
+/* Hide default HTML checkbox */
+.social-switch .social-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The social-slider */
+.social-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.social-slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.social-input:checked + .social-slider {
+  background-color: #2196f3;
+}
+
+.social-input:focus + .social-slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.social-input:checked + .social-slider:before {
+  -webkit-transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  transform: translateX(10px);
+}
+
+/* Rounded social-sliders */
+.social-slider.round {
+  border-radius: 34px;
+}
+
+.social-slider.round:before {
+  border-radius: 50%;
+}

@@ -1,4 +1,5 @@
 import { Facebook, GalleryHorizontal, Instagram } from "lucide-react";
+import { BsTwitterX } from "react-icons/bs";
 import AllPosts from "../../components/fragments/post/AllPosts";
 import FacebookPosts from "../../components/fragments/post/FacebookPosts";
 import Xposts from "../../components/fragments/post/XPost";
@@ -119,11 +120,7 @@ export default function Pending() {
               onClick={() => setCurrentTab("xcom")}
               className={tabStyles("xcom")}
             >
-              <img
-                className="w-6 h-6"
-                src="/icons/xcomb.svg"
-                alt="x.com icon"
-              />
+              <BsTwitterX />
               <span className="hidden sm:block">x.com</span>
             </div>
           </div>

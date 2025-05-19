@@ -49,6 +49,10 @@ details[open] summary ~ * {
   }
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Slower icon rotation */
 .group-open summary svg {
   transform: rotate(90deg);

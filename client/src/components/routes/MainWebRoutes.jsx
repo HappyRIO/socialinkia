@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router";
-import PrivateRoute from "../security/Privatepage";
 import BusinessForm from "../../signup/subscription/signup/companies/Details";
 import Home from "../../page";
 import Login from "../../login/page";
@@ -21,7 +20,7 @@ export default function MainWebRoutes() {
       <Route path="/aboutus" element={<Aboutus />} />
       <Route
         path="/subscription/signup/details"
-        element={<PrivateRoute Component={BusinessForm} />}
+        element={<BusinessForm />}
       />
       <Route path="/subscription" element={<Subscrptionmain />} />
       <Route path="*" element={<Error />} />

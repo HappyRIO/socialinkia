@@ -3,12 +3,12 @@ import ResponsiveSidebar from "../navigation/ResponsiveSidebar";
 import CalendarPage from "../../dashboard/calender/page";
 import Error from "../../error";
 import TemplatePage from "../../dashboard/template/page";
-import Editpost from "../../dashboard/edit/Editpost";
+import Editpost from "../../dashboard/posts/edit/Editpost";
 import PostAnalysis from "../../dashboard/posts/analysis/page";
 import Pending from "../../dashboard/posts/page";
 import Profile from "../../dashboard/profile/Profile";
 import Submanagement from "../../dashboard/subscriptionmanagment/Submanagement";
-import PostCreation from "../../dashboard/creat/post/PostCreation";
+import PostCreation from "../../dashboard/posts/create/PostCreation";
 
 // Layout with Sidebar and nested content
 const DashboardLayout = () => (

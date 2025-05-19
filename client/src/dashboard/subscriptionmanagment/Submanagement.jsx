@@ -125,9 +125,8 @@ export default function Submanagement() {
 
   return (
     <div className="w-full flex flex-row justify-center items-center">
-     
       {loading ? (
-        <Loader />
+          <Loader />
       ) : (
         <div className="contentzone mt-3 ml-0 sm:ml-64 w-full">
           <div className="subscription-info p-4 bg-background2 rounded-lg shadow-md">
@@ -249,7 +248,9 @@ export default function Submanagement() {
                       <td className="px-4 py-2">{`$${(
                         payment?.amount / 100
                       ).toFixed(2)}`}</td>
-                      <td className="px-4 py-2 capitalize">{payment?.status}</td>
+                      <td className="px-4 py-2 capitalize">
+                        {payment?.status}
+                      </td>
                       <td className="px-4 py-2">
                         {payment?.currency.toUpperCase()}
                       </td>

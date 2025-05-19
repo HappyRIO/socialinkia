@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useMemo } from "react"; // Import React and useMemo
 import {
   Facebook,
@@ -5,11 +6,11 @@ import {
   Instagram,
   ReplaceAll,
   Settings,
-  // X, // Not used in the icon logic, using xcom.svg instead
   Video,
   CassetteTape,
   CircleOff,
 } from "lucide-react";
+import { BsTwitterX } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 // Wrap the component definition with React.memo
@@ -20,12 +21,7 @@ const PostContainer = React.memo(({ data }) => {
 
   // --- Early exit or placeholder for invalid data ---
   // Improves robustness if data structure is sometimes incomplete
-  if (
-    !data ||
-    typeof data !== "object" ||
-    !data._id ||
-    !data.platform 
-  ) {
+  if (!data || typeof data !== "object" || !data._id || !data.platform) {
     console.warn("PostContainer received incomplete data:", data);
     return (
       <div className="w-full p-2 text-sm text-red-600 bg-red-100 border border-red-300 rounded-lg">
@@ -61,9 +57,9 @@ const PostContainer = React.memo(({ data }) => {
       case "published":
         return "text-green-600"; // Slightly darker green for better contrast
       case "scheduled":
-        return "text-blue-600"; // Example: color for scheduled
+        return "text-text"; // Example: color for scheduled
       default:
-        return "text-gray-800"; // Default text color
+        return "text-text"; // Default text color
     }
   }, [data.status]);
 
@@ -141,8 +137,9 @@ const PostContainer = React.memo(({ data }) => {
             ) : insta ? (
               <Instagram size={24} aria-label="Instagram" />
             ) : xcom ? (
-              <img className="w-6 h-6" src="/icons/xcom.svg" alt="X Platform" />
+              <BsTwitterX />
             ) : (
+              // <img className="w-6 h-6" src="/icons/xcom.svg" alt="X Platform" />
               <CircleOff size={24} aria-label="No platform" /> // Fallback
             )}
           </div>

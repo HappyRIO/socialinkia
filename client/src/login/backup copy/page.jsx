@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../components/navigation/Header";
-import Footer from "../components/navigation/Footer";
-import Loader from "../components/fragments/Loader";
+import Header from "../../components/navigation/Header";
+import Footer from "../../components/navigation/Footer";
+import Loader from "../../components/fragments/Loader";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const navigate = useNavigate();
 
@@ -24,10 +24,10 @@ export default function Login() {
       const response = await fetch(`/api/auth/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -81,55 +81,63 @@ export default function Login() {
       <div className="nav w-full">
         <Header />
       </div>
-      <div className="icon pt-[50px] w-fit min-w-[200px] h-fit">
-        <img src="/icons/login.svg" alt="login svg" />
+      <h1 className="py-4 text-2xl xl:text-3xl font-extrabold">Sign In</h1>
+      <div className="mx-auto max-w-xs">
+        <input
+          className="w-full px-8 py-4 rounded-lg border border-gray-200 placeholder-gray-500 text-sm "
+          type="email"
+          id="email"
+          autoComplete="off"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="w-full px-8 py-4 rounded-lg border border-gray-200 placeholder-gray-500 text-sm  mt-5"
+          type="password"
+          id="password"
+          autoComplete="off"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <button
+          onClick={handleSubmit}
+          className="mt-5 tracking-wide font-semibold bg-accent w-full py-4 rounded-lg hover:bg-primary transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+            />
+          </svg>
+
+          <span className="ml-3">Sign In</span>
+        </button>
       </div>
-      <div className="w-full py-10 flex flex-col justify-center items-center">
-        <div className="title text-4xl font-bold">
-          <h1>Login</h1>
+
+      <div className="my-12 text-center">
+        <div className="leading-none px-2 inline-block text-sm tracking-wide font-medium transform translate-y-1/2">
+          Or sign In with Google
         </div>
-        <form onSubmit={handleSubmit} className="form space-y-4 p-4">
-          <input
-            className="px-2 py-2 w-full rounded-lg border-2 border-accent focus:bg-secondary"
-            type="email"
-            id="email"
-            autoComplete="off"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+      </div>
 
-          <input
-            className="px-2 py-2 w-full rounded-lg border-2 border-accent focus:bg-secondary"
-            type="password"
-            id="password"
-            autoComplete="off"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-
-          <button
-            type="submit"
-            className="px-4 py-2 bg-accent text-white rounded-lg w-full hover:bg-secondary"
-          >
-            {loading ? "login in......" : "Login"}
-          </button>
-        </form>
-
-        <div className="my-12 text-center">
-          <div className="leading-none px-2 inline-block text-sm tracking-wide font-medium transform translate-y-1/2">
-            Or logIn with Google
-          </div>
-        </div>
-
-        <div className="social">
-          <button
-            onClick={googlelogin}
-            className="rounded-lg flex flex-row gap-3 px-3 py-2 bg-background2 hover:bg-primary hover:text-background transition-all duration-300 ease-in-out"
-          >
+      <div className="flex w-full flex-col items-center">
+        <button
+          onClick={googlelogin}
+          className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-background2 text-text border flex items-center justify-center hover:bg-background transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+        >
+          <div className="p-2 rounded-full">
             <svg className="w-4" viewBox="0 0 533.5 544.3">
               <path
                 d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z"
@@ -148,10 +156,12 @@ export default function Login() {
                 fill="#ea4335"
               />
             </svg>
-            <span> login up with Google</span>
-          </button>
-        </div>
-        <div className="dont-have-account py-4 underline hover:text-primary">
+          </div>
+          <span className="ml-4">Sign In with Google</span>
+        </button>
+      </div>
+      <div>
+        <div className="dont-have-account py-4 underline text-accent hover:text-primary">
           <Link to={"/subscription/signup"}>
             <p>Dont have an account? Sign up</p>
           </Link>

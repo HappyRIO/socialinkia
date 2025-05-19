@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Loader from "../../../../components/fragments/Loader";
 import { Facebook, Instagram, X } from "lucide-react";
+import { BsTwitterX } from "react-icons/bs";
 
 const BusinessForm = () => {
   const [loading, setLoading] = useState(false);
@@ -161,7 +162,7 @@ const BusinessForm = () => {
       setLoading(false);
     }
   };
-  
+
   function openAuthPopup(url, onSuccess) {
     const width = 500;
     const height = 600;
@@ -216,30 +217,29 @@ const BusinessForm = () => {
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <div className="useless w-full h-10 bg-background2"></div>
-       <div className="flex gap-2 flex-col sm:flex-row justify-between w-full px-4 py-2">
-            <button
-              className="bg-black w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
-              onClick={handleConnectXcom}
-            >
-              {connectxcom ? "x.com connected" : "connect x.com"}
-              {/* <X /> */}
-              <img className="w-6 h-6" src="/icons/xcom.svg" alt="" />
-            </button>
-            <button
-              onClick={handleconnectFacebook}
-              className="bg-blue-500 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
-            >
-              {connectfb ? "Facebook Connected" : "Connect Facebook"}
-              <Facebook />
-            </button>
-            <button
-              onClick={handleconnectInstagram}
-              className="bg-red-400 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
-            >
-              {connectig ? "Instagram Connected" : "Connect Instagram"}
-              <Instagram />
-            </button>
-          </div>
+      <div className="flex gap-2 flex-col sm:flex-row justify-between w-full px-4 py-2">
+        <button
+          className="bg-black/50 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+          onClick={handleConnectXcom}
+        >
+          {connectxcom ? "x.com connected" : "connect x.com"}
+          <BsTwitterX />
+        </button>
+        <button
+          onClick={handleconnectFacebook}
+          className="bg-blue-500 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+        >
+          {connectfb ? "Facebook Connected" : "Connect Facebook"}
+          <Facebook />
+        </button>
+        <button
+          onClick={handleconnectInstagram}
+          className="bg-red-400 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+        >
+          {connectig ? "Instagram Connected" : "Connect Instagram"}
+          <Instagram />
+        </button>
+      </div>
       <div className="form-space rounded-lg my-3">
         <form
           onSubmit={handleFormSubmission}
@@ -249,7 +249,7 @@ const BusinessForm = () => {
           <div className="form-section-1 bg-background2 flex flex-col justify-center items-center gap-3 rounded-lg p-2">
             <h2 className="text-lg font-bold">Block 1: YOUR BUSINESS</h2>
             <input
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               type="text"
               name="userName"
               placeholder="Your user name"
@@ -263,7 +263,7 @@ const BusinessForm = () => {
               logo
             </label>
             <input
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               type="file"
               name="logo"
               accept=".png,.jpg,.jpeg"
@@ -277,7 +277,7 @@ const BusinessForm = () => {
               />
             )}
             <input
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               type="text"
               name="companyTradeName"
               placeholder="Company trade name"
@@ -285,7 +285,7 @@ const BusinessForm = () => {
               onChange={handleChange}
             />
             <select
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               name="businessSector"
               value={formData.businessSector}
               onChange={handleChange}
@@ -344,7 +344,7 @@ const BusinessForm = () => {
               ))}
             </select>
             <select
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               name="language"
               value={formData.language}
               onChange={handleChange}
@@ -407,7 +407,7 @@ const BusinessForm = () => {
               ))}
             </select>
             <select
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               name="addressVisible"
               value={formData.addressVisible}
               onChange={handleChange}
@@ -421,7 +421,7 @@ const BusinessForm = () => {
             {formData.addressVisible === "YES" && (
               <>
                 <input
-                  className="p-2 rounded-lg w-full"
+                  className="p-2 bg-background rounded-lg w-full"
                   type="text"
                   name="country"
                   placeholder="Country (e.g., Spain)"
@@ -429,7 +429,7 @@ const BusinessForm = () => {
                   onChange={handleChange}
                 />
                 <select
-                  className="p-2 rounded-lg w-full"
+                  className="p-2 bg-background rounded-lg w-full"
                   name="province"
                   value={formData.province}
                   onChange={handleChange}
@@ -493,7 +493,7 @@ const BusinessForm = () => {
                   ))}
                 </select>
                 <input
-                  className="p-2 rounded-lg w-full"
+                  className="p-2 bg-background rounded-lg w-full"
                   type="text"
                   name="locality"
                   placeholder="Locality"
@@ -501,7 +501,7 @@ const BusinessForm = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="p-2 rounded-lg w-full"
+                  className="p-2 bg-background rounded-lg w-full"
                   type="text"
                   name="postalCode"
                   placeholder="Postal Code"
@@ -511,7 +511,7 @@ const BusinessForm = () => {
               </>
             )}
             <select
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               name="webPage"
               value={formData.webPage}
               onChange={handleChange}
@@ -522,7 +522,7 @@ const BusinessForm = () => {
             </select>
             {formData.webPage === "YES" && (
               <input
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 type="text"
                 name="webPageUrl"
                 placeholder="Website URL"
@@ -531,7 +531,7 @@ const BusinessForm = () => {
               />
             )}
             <select
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               name="showContactInfo"
               value={formData.showContactInfo}
               onChange={handleChange}
@@ -542,7 +542,7 @@ const BusinessForm = () => {
             </select>
             {formData.showContactInfo === "YES" && (
               <input
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 type="text"
                 name="contactInfo"
                 placeholder="Contact Information (e.g., +34...)"
@@ -563,7 +563,7 @@ const BusinessForm = () => {
             <select
               id="schedule"
               name="schedule"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               value={formData.schedule}
               onChange={handleChange}
             >
@@ -586,7 +586,7 @@ const BusinessForm = () => {
             <select
               id="sales_channels"
               name="sales_channels"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               value={formData.sales_channels}
               onChange={handleChange}
             >
@@ -611,7 +611,7 @@ const BusinessForm = () => {
             <select
               id="motto"
               name="motto"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               value={formData.motto}
               onChange={handleChange}
             >
@@ -622,7 +622,7 @@ const BusinessForm = () => {
             <textarea
               id="motto_field"
               name="motto_field"
-              className="mt-2 p-2 rounded-lg w-full"
+              className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
               placeholder="Add your motto here (if applicable)"
               value={formData.motto_field}
               onChange={handleChange}
@@ -670,7 +670,7 @@ const BusinessForm = () => {
               <textarea
                 id="business_definition_other"
                 name="business_definition_other"
-                className="mt-2 p-2 rounded-lg w-full"
+                className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                 placeholder="Other (please specify)"
                 value={formData.business_definition_other}
                 onChange={handleChange}
@@ -683,7 +683,7 @@ const BusinessForm = () => {
             <textarea
               id="highlight"
               name="highlight"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               placeholder="Free text field"
               value={formData.highlight}
               onChange={handleChange}
@@ -695,7 +695,7 @@ const BusinessForm = () => {
             <select
               id="star_product"
               name="star_product"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               value={formData.star_product}
               onChange={handleChange}
             >
@@ -708,7 +708,7 @@ const BusinessForm = () => {
               type="text"
               id="star_product_field"
               name="star_product_field"
-              className="mt-2 p-2 rounded-lg w-full"
+              className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
               placeholder="Free field, maximum 45 characters"
               value={formData.star_product_field}
               onChange={handleChange}
@@ -720,7 +720,7 @@ const BusinessForm = () => {
             <textarea
               id="features"
               name="features"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               placeholder="Free field without emoticons"
               value={formData.features}
               onChange={handleChange}
@@ -732,7 +732,7 @@ const BusinessForm = () => {
             <select
               id="add_products"
               name="add_products"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               value={formData.add_products}
               onChange={handleChange}
             >
@@ -743,7 +743,7 @@ const BusinessForm = () => {
               type="text"
               id="add_products_field"
               name="add_products_field"
-              className="mt-2 p-2 rounded-lg w-full"
+              className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
               placeholder="Free field, maximum 45 characters"
               value={formData.add_products_field}
               onChange={handleChange}
@@ -751,7 +751,7 @@ const BusinessForm = () => {
             <textarea
               id="add_features"
               name="add_features"
-              className="mt-2 p-2 rounded-lg w-full"
+              className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
               placeholder="Features and/or Benefits (Free field without emoticons)"
               value={formData.add_features}
               onChange={handleChange}
@@ -763,7 +763,7 @@ const BusinessForm = () => {
             <select
               id="objectives"
               name="objectives"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               value={formData.objectives}
               onChange={handleChange}
             >
@@ -816,7 +816,7 @@ const BusinessForm = () => {
             <select
               id="area_of_influence"
               name="area_of_influence"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               onChange={handleChange}
               value={formData.area_of_influence}
             >
@@ -913,7 +913,7 @@ const BusinessForm = () => {
               <textarea
                 id="valuable_content_other"
                 name="valuable_content_other"
-                className="mt-2 p-2 rounded-lg w-full"
+                className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                 rows={5}
                 placeholder="Other topics (please specify)"
                 onChange={handleChange}
@@ -931,7 +931,7 @@ const BusinessForm = () => {
             <select
               id="communication_style"
               name="communication_style"
-              className="p-2 rounded-lg w-full"
+              className="p-2 bg-background rounded-lg w-full"
               onChange={handleChange}
               value={formData.communication_style}
             >
@@ -960,7 +960,7 @@ const BusinessForm = () => {
             <textarea
               id="communication_style_other"
               name="communication_style_other"
-              className="mt-2 p-2 rounded-lg w-full"
+              className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
               placeholder="Other styles (please specify)"
               onChange={handleChange}
               value={formData.communication_style_other}

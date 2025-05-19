@@ -112,10 +112,8 @@ export default function Mainsidebar({ menufunction, menustate, pagename }) {
                     to={to}
                     end={to === "/dashboard"}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 hover:bg-muted hover:text-foreground/90 ${
-                        isActive
-                          ? "bg-accent text-accent-foreground font-semibold"
-                          : "text-muted-foreground"
+                      `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-400 hover:font-semibold hover:bg-accent/50 ${
+                        isActive ? "bg-accent font-semibold" : ""
                       }`
                     }
                   >

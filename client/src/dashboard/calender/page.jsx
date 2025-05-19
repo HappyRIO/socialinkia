@@ -197,11 +197,11 @@ export default function CalendarPage() {
                     {dailyPosts.map((post) => {
                       let bgClass = "bg-transparent text-[var(--text)]";
                       if (post.status === "published")
-                        bgClass = "bg-primary text-white";
+                        bgClass = "bg-green-800 text-white";
                       else if (post.status === "scheduled")
                         bgClass = "bg-secondary text-white";
                       else if (post.status === "failed")
-                        bgClass = "bg-red-600 text-white";
+                        bgClass = "bg-red-800 text-white";
 
                       return (
                         <div

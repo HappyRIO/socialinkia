@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ResponsiveSidebar from "../../components/navigation/ResponsiveSidebar";
 import { Facebook, Instagram } from "lucide-react";
+import { BsTwitterX } from "react-icons/bs";
 import Loader from "../../components/fragments/Loader";
 
 export default function Profile() {
@@ -240,12 +241,11 @@ export default function Profile() {
         <div className="w-full ml-0 sm:ml-64 py-3 px-2 flex flex-col justify-center items-center">
           <div className="flex gap-2 flex-col sm:flex-row justify-between w-full px-4 py-2">
             <button
-              className="bg-black w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
+              className="bg-black/50 w-full h-[100px] flex flex-col justify-center items-center text-white p-4 rounded-lg shadow-lg"
               onClick={handleConnectXcom}
             >
               {connectxcom ? "x.com connected" : "connect x.com"}
-              {/* <X /> */}
-              <img className="w-6 h-6" src="/icons/xcom.svg" alt="" />
+              <BsTwitterX />
             </button>
             <button
               onClick={handleconnectFacebook}
@@ -270,7 +270,7 @@ export default function Profile() {
             <div className="form-section-1 bg-background2 flex flex-col justify-center items-center gap-3 rounded-lg p-2">
               <h2 className="text-lg font-bold">Block 1: YOUR BUSINESS</h2>
               <input
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 type="text"
                 name="userName"
                 placeholder="Your user name"
@@ -284,7 +284,7 @@ export default function Profile() {
                 logo
               </label>
               <input
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 type="file"
                 name="logo"
                 accept=".png,.jpg,.jpeg"
@@ -298,7 +298,7 @@ export default function Profile() {
                 />
               )}
               <input
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 type="text"
                 name="companyTradeName"
                 placeholder="Company trade name"
@@ -306,7 +306,7 @@ export default function Profile() {
                 onChange={handleChange}
               />
               <select
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 name="businessSector"
                 value={formData.businessSector}
                 onChange={handleChange}
@@ -365,7 +365,7 @@ export default function Profile() {
                 ))}
               </select>
               <select
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 name="addressVisible"
                 value={formData.addressVisible}
                 onChange={handleChange}
@@ -379,7 +379,7 @@ export default function Profile() {
               {formData.addressVisible === "YES" && (
                 <>
                   <input
-                    className="p-2 rounded-lg w-full"
+                    className="p-2 bg-background rounded-lg w-full"
                     type="text"
                     name="country"
                     placeholder="Country (e.g., Spain)"
@@ -387,7 +387,7 @@ export default function Profile() {
                     onChange={handleChange}
                   />
                   <select
-                    className="p-2 rounded-lg w-full"
+                    className="p-2 bg-background rounded-lg w-full"
                     name="province"
                     value={formData.province}
                     onChange={handleChange}
@@ -451,7 +451,7 @@ export default function Profile() {
                     ))}
                   </select>
                   <input
-                    className="p-2 rounded-lg w-full"
+                    className="p-2 bg-background rounded-lg w-full"
                     type="text"
                     name="locality"
                     placeholder="Locality"
@@ -459,7 +459,7 @@ export default function Profile() {
                     onChange={handleChange}
                   />
                   <input
-                    className="p-2 rounded-lg w-full"
+                    className="p-2 bg-background rounded-lg w-full"
                     type="text"
                     name="postalCode"
                     placeholder="Postal Code"
@@ -469,7 +469,7 @@ export default function Profile() {
                 </>
               )}
               <select
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 name="webPage"
                 value={formData.webPage}
                 onChange={handleChange}
@@ -480,7 +480,7 @@ export default function Profile() {
               </select>
               {formData.webPage === "YES" && (
                 <input
-                  className="p-2 rounded-lg w-full"
+                  className="p-2 bg-background rounded-lg w-full"
                   type="text"
                   name="webPageUrl"
                   placeholder="Website URL"
@@ -489,7 +489,7 @@ export default function Profile() {
                 />
               )}
               <select
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 name="showContactInfo"
                 value={formData.showContactInfo}
                 onChange={handleChange}
@@ -500,7 +500,7 @@ export default function Profile() {
               </select>
               {formData.showContactInfo === "YES" && (
                 <input
-                  className="p-2 rounded-lg w-full"
+                  className="p-2 bg-background rounded-lg w-full"
                   type="text"
                   name="contactInfo"
                   placeholder="Contact Information (e.g., +34...)"
@@ -521,7 +521,7 @@ export default function Profile() {
               <select
                 id="schedule"
                 name="schedule"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 value={formData.schedule}
                 onChange={handleChange}
               >
@@ -548,7 +548,7 @@ export default function Profile() {
               <select
                 id="sales_channels"
                 name="sales_channels"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 value={formData.sales_channels}
                 onChange={handleChange}
               >
@@ -574,7 +574,7 @@ export default function Profile() {
               <select
                 id="motto"
                 name="motto"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 value={formData.motto}
                 onChange={handleChange}
               >
@@ -585,7 +585,7 @@ export default function Profile() {
               <textarea
                 id="motto_field"
                 name="motto_field"
-                className="mt-2 p-2 rounded-lg w-full"
+                className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                 placeholder="Add your motto here (if applicable)"
                 value={formData.motto_field}
                 onChange={handleChange}
@@ -633,7 +633,7 @@ export default function Profile() {
                 <textarea
                   id="business_definition_other"
                   name="business_definition_other"
-                  className="mt-2 p-2 rounded-lg w-full"
+                  className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                   placeholder="Other (please specify)"
                   value={formData.business_definition_other}
                   onChange={handleChange}
@@ -646,7 +646,7 @@ export default function Profile() {
               <textarea
                 id="highlight"
                 name="highlight"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 placeholder="Free text field"
                 value={formData.highlight}
                 onChange={handleChange}
@@ -658,7 +658,7 @@ export default function Profile() {
               <select
                 id="star_product"
                 name="star_product"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 value={formData.star_product}
                 onChange={handleChange}
               >
@@ -671,7 +671,7 @@ export default function Profile() {
                 type="text"
                 id="star_product_field"
                 name="star_product_field"
-                className="mt-2 p-2 rounded-lg w-full"
+                className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                 placeholder="Free field, maximum 45 characters"
                 value={formData.star_product_field}
                 onChange={handleChange}
@@ -683,7 +683,7 @@ export default function Profile() {
               <textarea
                 id="features"
                 name="features"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 placeholder="Free field without emoticons"
                 value={formData.features}
                 onChange={handleChange}
@@ -695,7 +695,7 @@ export default function Profile() {
               <select
                 id="add_products"
                 name="add_products"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 value={formData.add_products}
                 onChange={handleChange}
               >
@@ -706,7 +706,7 @@ export default function Profile() {
                 type="text"
                 id="add_products_field"
                 name="add_products_field"
-                className="mt-2 p-2 rounded-lg w-full"
+                className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                 placeholder="Free field, maximum 45 characters"
                 value={formData.add_products_field}
                 onChange={handleChange}
@@ -714,7 +714,7 @@ export default function Profile() {
               <textarea
                 id="add_features"
                 name="add_features"
-                className="mt-2 p-2 rounded-lg w-full"
+                className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                 placeholder="Features and/or Benefits (Free field without emoticons)"
                 value={formData.add_features}
                 onChange={handleChange}
@@ -726,7 +726,7 @@ export default function Profile() {
               <select
                 id="objectives"
                 name="objectives"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 value={formData.objectives}
                 onChange={handleChange}
               >
@@ -781,7 +781,7 @@ export default function Profile() {
               <select
                 id="area_of_influence"
                 name="area_of_influence"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 onChange={handleChange}
                 value={formData.area_of_influence}
               >
@@ -878,7 +878,7 @@ export default function Profile() {
                 <textarea
                   id="valuable_content_other"
                   name="valuable_content_other"
-                  className="mt-2 p-2 rounded-lg w-full"
+                  className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                   rows={5}
                   placeholder="Other topics (please specify)"
                   onChange={handleChange}
@@ -896,7 +896,7 @@ export default function Profile() {
               <select
                 id="communication_style"
                 name="communication_style"
-                className="p-2 rounded-lg w-full"
+                className="p-2 bg-background rounded-lg w-full"
                 onChange={handleChange}
                 value={formData.communication_style}
               >
@@ -925,7 +925,7 @@ export default function Profile() {
               <textarea
                 id="communication_style_other"
                 name="communication_style_other"
-                className="mt-2 p-2 rounded-lg w-full"
+                className="mt-2 border-[2px] outline-none focuse:outline-none border-background p-2 rounded-lg w-full"
                 placeholder="Other styles (please specify)"
                 onChange={handleChange}
                 value={formData.communication_style_other}

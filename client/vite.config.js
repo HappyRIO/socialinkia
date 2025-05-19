@@ -17,10 +17,14 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 1500, // Set to something higher than 500 KB
+
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
+            if (id.includes("react")) return "react";
+            if (id.includes("tailwind")) return "tailwind";
             return "vendor";
           }
         },
